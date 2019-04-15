@@ -1,0 +1,677 @@
+<!--
+  Generated template for the ManagementPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>관리 화면</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-datetime style="display: none;"
+  #timePicker (ionChange)="filter()"
+  displayFormat="HH:mm"
+  [(ngModel)]="myDateStart">
+</ion-datetime>
+<ion-datetime style="display: none;"
+  #timePicker2 (ionChange)="filter2()"
+  displayFormat="HH:mm" 
+  minuteValues="00,30"
+  [(ngModel)]="myDateEnd">
+</ion-datetime>
+
+<ion-datetime style="display: none;"
+#datePicker (ionChange)="dutyselect()"
+displayFormat="YYYY:MM:D"
+[(ngModel)]="dutySelected">
+</ion-datetime>
+<div class="storeInfo">
+    <div style="display: inline-table;
+  width: 100%;" class="description">
+    <p class="p">가게명</p> 
+    <p style="width: 100%;
+    display: -webkit-inline-box;">  {{storeName}}</p>
+  </div>
+
+  <div style="display: inline-table;
+  width: 100%;" class="description">
+    <p class="p">설명</p> <button class="btn" ion-button (click)="modify('description')" >수정
+    </button>
+    <p style="width: 100%;
+    display: -webkit-inline-box;">{{description}}</p>
+  </div>
+ 
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+    <p class="p">연락처 </p>
+    <button class="btn" ion-button (click)="modify('tel')" >수정
+    </button>
+    <p style="width: 100%;
+    display: -webkit-inline-box;"> {{tel}}</p>
+  </div>
+  <div *ngIf="descriptionImage"  style="display: inline-table;
+  width: 100%;" class="tel">
+
+    <p class="p">설명 이미지  </p>
+    <button class="btn" ion-button (click)="modify('descriptionImage')" >수정
+    </button>
+    <img *ngIf="descriptionImage" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{descriptionImage}}">
+
+    <!-- <p style="width: 100%;
+    display: -webkit-inline-box;"> {{tel}}</p> -->
+  </div>
+ 
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+    <p class="p">메인이미지  </p>
+    <button class="btn" ion-button (click)="modify('maim')" >수정
+    </button>
+    <img style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{mainImage}}">
+  </div>
+  <div  style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p  class="p">첫번째 이미지</p>
+    <button *ngIf="firstImage!='none'" class="btn" ion-button (click)="modify('first')" >수정
+    </button>
+    <button *ngIf="firstImage=='none'" class="btn" ion-button (click)="modify('first')" >추가
+    </button>
+    <img *ngIf="firstImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{firstImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+ <p class="p">두번째 이미지</p>
+    <button *ngIf="secondImage!='none'" class="btn" ion-button (click)="modify('second')" >수정
+    </button>
+    <button *ngIf="secondImage=='none'" class="btn" ion-button (click)="modify('second')" >추가
+    </button>
+    <img  *ngIf="secondImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{secondImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p class="p">세번째 이미지</p>
+    <button *ngIf="thirdImage!='none'" class="btn" ion-button (click)="modify('third')" >수정
+    </button>
+    <button *ngIf="thirdImage=='none'" class="btn" ion-button (click)="modify('third')" >추가
+    </button>
+    <img *ngIf="thirdImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{thirdImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p class="p">네번째 이미지</p>
+    <button *ngIf="fourthImage!='none'" class="btn" ion-button (click)="modify('fourth')" >수정
+    </button>
+    <button *ngIf="fourthImage=='none'" class="btn" ion-button (click)="modify('fourth')" >추가
+    </button>
+    <img *ngIf="fourthImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{fourthImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p class="p">다섯번째 이미지</p>
+    <button *ngIf="fifthImage!='none'" class="btn" ion-button (click)="modify('fifth')" >수정
+    </button>
+    <button *ngIf="fifthImage=='none'" class="btn" ion-button (click)="modify('fifth')" >추가
+    </button>
+    <img *ngIf="fifthImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{fifthImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p class="p">여번째 이미지</p>
+    <button *ngIf="sixthImage!='none'" class="btn" ion-button (click)="modify('sixth')" >수정
+    </button>
+    <button *ngIf="sixthImage=='none'" class="btn" ion-button (click)="modify('sixth')" >추가
+    </button>
+    <img *ngIf="sixthImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{sixthImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p class="p">일곱번째 이미지</p>
+    <button *ngIf="seventhImage!='none'" class="btn" ion-button (click)="modify('seventh')" >수정
+    </button>
+    <button *ngIf="seventhImage=='none'" class="btn" ion-button (click)="modify('seventh')" >추가
+    </button>
+    <img *ngIf="seventhImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{seventhImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p class="p">여덟번째 이미지</p>
+    <button *ngIf="eighthImage!='none'" class="btn" ion-button (click)="modify('eighth')" >수정
+    </button>
+    <button *ngIf="eighthImage=='none'" class="btn" ion-button (click)="modify('eighth')" >추가
+    </button>
+    <img *ngIf="eighthImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{eighthImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p *ngIf="ninethImage!='none||ninethImage!=undefined'" class="p">아홉번째 이미지</p>
+    <button *ngIf="ninethImage!='none'"  class="btn" ion-button (click)="modify('nineth')" >수정
+    </button>
+    <button *ngIf="ninethImage=='none'"  class="btn" ion-button (click)="modify('nineth')" >추가
+    </button>
+    <img *ngIf="ninethImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{ninethImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p class="p">열번째 이미지</p>
+    <button *ngIf="tenthImage!='none'" class="btn" ion-button (click)="modify('tenth')" >수정
+    </button>
+    <button *ngIf="tenthImage=='none'" class="btn" ion-button (click)="modify('tenth')" >추가
+    </button>
+    <img *ngIf="tenthImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{tenthImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+
+<p class="p">열한번째 이미지</p>
+    <button *ngIf="eleventhImage!='none'" class="btn" ion-button (click)="modify('eleventh')" >수정
+    </button>
+    <button *ngIf="eleventhImage=='none'" class="btn" ion-button (click)="modify('eleventh')" >추가
+    </button>
+    <img *ngIf="eleventhImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{eleventhImage}}">
+  </div>
+  <div style="display: inline-table;
+  width: 100%;" class="tel">
+<p class="p">열두번째 이미지</p>
+    <button *ngIf="twelvethImage!='none'" class="btn" ion-button (click)="modify('twelveth')" >수정
+    </button>
+    <button *ngIf="twelvethImage=='none'" class="btn" ion-button (click)="modify('twelveth')" >추가
+    </button>
+    <img *ngIf="twelvethImage!='none'" style="display: table-column;
+    width: 100%;
+    height: 200px;" src="{{twelvethImage}}">
+  </div>
+</div>
+<div  *ngIf="designarray!=undefined"  style="font-size: 13px; "> 디자인 </div>
+  <ion-scroll *ngIf="designarray!=undefined" style="height: 190px !important;"  scrollX="true">
+      <img class="imagedesign"  *ngFor="let a of designarray; let i = index" (click)="changedesign(i)"  src="{{a.url}}">
+   </ion-scroll>
+  <button style="    background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="addPhoto()" >디자인추가
+  </button>
+   <hr>
+  <div style="font-size: 13px; "> 디자이너 수정 {{designerCount}} </div>
+  <ion-scroll style="height: 300px !important;" scrollX="true">
+    <ion-row nowrap class="headerChip">
+
+        <div *ngIf="designerImage!='none'" class="imagereservation2">
+            <img  *ngIf="firstimage==true&&designerImage!='none'" class="imagereservation"  (click)="clickdesigner2(0)" src="{{designerImage}}">
+             <img  *ngIf="firstimage==false&&designerImage!='none'" class="selectedimagereservation"  (click)="clickdesigner2(0)" src="{{designerImage}}">
+            <div class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername" placeholder="이름입력" ></ion-input>
+                <button  (click)="offduty(designername)" class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(0)"  class="datepicker">수정/삭제</button>
+            </div>
+             
+          </div>
+          <div *ngIf="designerImage1!='none'" class="imagereservation2">
+            <img  *ngIf="secondimage==true&&designerImage1!='none'" class="imagereservation"  (click)="clickdesigner2(1)" src="{{designerImage1}}">
+             <img  *ngIf="secondimage==false&&designerImage1!='none'" class="selectedimagereservation"  (click)="clickdesigner2(1)" src="{{designerImage1}}">
+            <div  class="nameclass">
+               
+              <ion-input class="scrollspan"  style="   
+              float: left;" [(ngModel)]="designername1" placeholder="이름입력" ></ion-input>
+              <button  (click)="offduty(designername1)" class="datepicker">휴무지정</button>
+              <button style="    margin-top: 1em;" (click)="offdutycheck(designername1)"  class="datepicker">휴무확인</button>
+              <button style="    margin-top: 1em;" (click)="offdelete(1)"  class="datepicker">수정/삭제</button>
+            </div>
+
+            
+          </div>
+          <div *ngIf="designerImage2!='none'" class="imagereservation2">
+            <img  *ngIf="thirdimage==true&&designerImage2!='none'" class="imagereservation"  (click)="clickdesigner2(2)" src="{{designerImage2}}">
+             <img  *ngIf="thirdimage==false&&designerImage2!='none'" class="selectedimagereservation"  (click)="clickdesigner2(2)" src="{{designerImage2}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername2"   placeholder="이름입력" ></ion-input>
+                <button (click)="offduty(designername2)" class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername2)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(2)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage3!='none'" class="imagereservation2">
+            <img  *ngIf="fourthimage==true&&designerImage3!='none'" class="imagereservation"  (click)="clickdesigner2(3)" src="{{designerImage3}}">
+             <img  *ngIf="fourthimage==false&&designerImage3!='none'" class="selectedimagereservation"  (click)="clickdesigner2(3)" src="{{designerImage3}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername3"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername3)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(3)"  class="datepicker">수정/삭제</button>
+              </div>
+            
+          </div>
+          <div *ngIf="designerImage4!='none'" class="imagereservation2">
+            <img  *ngIf="fifthimage==true&&designerImage4!='none'" class="imagereservation"  (click)="clickdesigner2(4)" src="{{designerImage4}}">
+             <img  *ngIf="fifthimage==false&&designerImage4!='none'" class="selectedimagereservation"  (click)="clickdesigner2(4)" src="{{designerImage4}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername4"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername4)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(4)"  class="datepicker">수정/삭제</button>
+              </div>
+             
+          </div>
+          <div *ngIf="designerImage5!='none'" class="imagereservation2">
+            <img  *ngIf="sixthimage==true&&designerImage5!='none'" class="imagereservation"  (click)="clickdesigner2(5)" src="{{designerImage5}}">
+             <img  *ngIf="sixthimage==false&&designerImage5!='none'" class="selectedimagereservation"  (click)="clickdesigner2(5)" src="{{designerImage5}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername5"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername5)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(5)"  class="datepicker">수정/삭제</button>
+              </div>
+             
+          </div>
+          <div *ngIf="designerImage6!='none'" class="imagereservation2">
+            <img  *ngIf="seventhimage==true&&designerImage6!='none'" class="imagereservation"  (click)="clickdesigner2(6)" src="{{designerImage6}}">
+            <img  *ngIf="seventhimage==false&&designerImage6!='none'" class="selectedimagereservation"  (click)="clickdesigner2(6)" src="{{designerImage6}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername6"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername6)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(6)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage7!='none'" class="imagereservation2">
+            <img  *ngIf="image8==true&&designerImage7!='none'" class="imagereservation"  (click)="clickdesigner2(7)" src="{{designerImage7}}">
+            <img  *ngIf="image8==false&&designerImage7!='none'" class="selectedimagereservation"  (click)="clickdesigner2(7)" src="{{designerImage7}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername7"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername7)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(7)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage8!='none'" class="imagereservation2">
+            <img  *ngIf="image9==true&&designerImage8!='none'" class="imagereservation"  (click)="clickdesigner2(8)" src="{{designerImage8}}">
+            <img  *ngIf="image9==false&&designerImage8!='none'" class="selectedimagereservation"  (click)="clickdesigner2(8)" src="{{designerImage8}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername8"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername8)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(8)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage9!='none'" class="imagereservation2">
+            <img  *ngIf="image10==true&&designerImage9!='none'" class="imagereservation"  (click)="clickdesigner2(9)" src="{{designerImage9}}">
+             <img  *ngIf="image10==false&&designerImage9!='none'" class="selectedimagereservation"  (click)="clickdesigner2(9)" src="{{designerImage9}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername9"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername9)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(9)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage10!='none'" class="imagereservation2">
+            <img  *ngIf="image11==true&&designerImage10!='none'" class="imagereservation"  (click)="clickdesigner2(10)" src="{{designerImage10}}">
+             <img  *ngIf="image11==false&&designerImage10!='none'" class="selectedimagereservation"  (click)="clickdesigner2(10)" src="{{designerImage10}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername10"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername10)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(10)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage11!='none'" class="imagereservation2">
+            <img  *ngIf="image12==true&&designerImage11!='none'" class="imagereservation"  (click)="clickdesigner2(11)" src="{{designerImage11}}">
+            <img  *ngIf="image12==false&&designerImage11!='none'" class="selectedimagereservation"  (click)="clickdesigner2(11)" src="{{designerImage11}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername11"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername11)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(11)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage12!='none'" class="imagereservation2">
+            <img  *ngIf="image13==true&&designerImage12!='none'" class="imagereservation"  (click)="clickdesigner2(12)" src="{{designerImage12}}">
+            <img  *ngIf="image13==false&&designerImage12!='none'" class="selectedimagereservation"  (click)="clickdesigner2(12)" src="{{designerImage12}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername12"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername12)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(12)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage13!='none'" class="imagereservation2">
+            <img  *ngIf="image14==true&&designerImage13!='none'" class="imagereservation"  (click)="clickdesigner2(13)" src="{{designerImage13}}">
+             <img  *ngIf="image14==false&&designerImage13!='none'" class="selectedimagereservation"  (click)="clickdesigner2(13)" src="{{designerImage13}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername13"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername13)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(13)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage14!='none'" class="imagereservation2">
+            <img  *ngIf="image15==true&&designerImage14!='none'" class="imagereservation"  (click)="clickdesigner2(14)" src="{{designerImage14}}">
+            <img  *ngIf="image15==false&&designerImage14!='none'" class="selectedimagereservation"  (click)="clickdesigner2(14)" src="{{designerImage14}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername14"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername14)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(14)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage15!='none'" class="imagereservation2">
+            <img  *ngIf="image16==true&&designerImage15!='none'" class="imagereservation"  (click)="clickdesigner2(15)" src="{{designerImage15}}">
+             <img  *ngIf="image16==false&&designerImage15!='none'" class="selectedimagereservation"  (click)="clickdesigner2(15)" src="{{designerImage15}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername15"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername15)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(15)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage16!='none'" class="imagereservation2">
+            <img  *ngIf="image17==true&&designerImage16!='none'" class="imagereservation"  (click)="clickdesigner2(16)" src="{{designerImage16}}">
+            <img  *ngIf="image17==false&&designerImage16!='none'" class="selectedimagereservation"  (click)="clickdesigner2(16)" src="{{designerImage16}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername16"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername16)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(16)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage17!='none'" class="imagereservation2">
+            <img  *ngIf="image18==true&&designerImage17!='none'" class="imagereservation"  (click)="clickdesigner2(17)" src="{{designerImage17}}">
+             <img  *ngIf="image18==false&&designerImage17!='none'" class="selectedimagereservation"  (click)="clickdesigner2(17)" src="{{designerImage17}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername17"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername17)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(17)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage18!='none'" class="imagereservation2">
+            <img  *ngIf="image19==true&&designerImage18!='none'" class="imagereservation"  (click)="clickdesigner2(18)" src="{{designerImage18}}">
+            <img  *ngIf="image19==false&&designerImage18!='none'" class="selectedimagereservation"  (click)="clickdesigner2(18)" src="{{designerImage18}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername18"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername18)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(18)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+          <div *ngIf="designerImage19!='none'" class="imagereservation2">
+            <img  *ngIf="image20==true&&designerImage19!='none'" class="imagereservation"  (click)="clickdesigner2(19)" src="{{designerImage19}}">
+             <img  *ngIf="image20==false&&designerImage19!='none'" class="selectedimagereservation"  (click)="clickdesigner2(19)" src="{{designerImage19}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername19"   placeholder="이름입력" ></ion-input>
+                <button class="datepicker">휴무지정</button>
+                <button style="    margin-top: 1em;" (click)="offdutycheck(designername19)"  class="datepicker">휴무확인</button>
+                <button style="    margin-top: 1em;" (click)="offdelete(19)"  class="datepicker">수정/삭제</button>
+              </div>
+              
+          </div>
+
+      </ion-row>
+    
+   </ion-scroll>
+   <button style="    background: transparent;
+   color: cornflowerblue;
+   top: 2rem;
+   width: 80%;
+   left: 10%;" ion-button (click)="addDesigner()" >디자이너 추가
+   </button>
+   <div class='reservationclass' style=" padding-bottom: 0 !important; padding:16px;" >
+      &nbsp;{{month}}월
+      <br>
+    <br>
+    <div *ngIf="dayofweek!='false'" class="dateclass">
+      <!-- <span  style="left: 22px;
+      text-align: center;
+      position: relative;">
+    
+        {{dayofweek.substring(0,1)}}
+      </span> -->
+      <span
+      [ngClass]="(first == true) ? 'bold' : 'normal'"
+      (click)="selectDayy(0)"
+      style="
+border-radius: 20px;
+font-size: 11px;
+left: 0px;
+position: relative;
+padding: 0.5rem;">
+        {{today}}
+      </span>
+    </div>
+   <div *ngIf="dayofweek1!='false'" class="dateclass">
+    
+    <span
+    [ngClass]="(second == true) ? 'bold' : 'normal'"
+    (click)="selectDayy(1)"
+    style="
+    border-radius: 20px;
+    left: 0px;font-size: 11px;
+    position: relative;
+    padding: 0.5rem;">
+      {{firstdate}}
+    </span>
+
+   </div>
+   <div *ngIf="dayofweek2!='false'" class="dateclass">
+    
+    <span
+    [ngClass]="(third == true) ? 'bold' : 'normal'"
+    (click)="selectDayy(2)"
+    style="
+    border-radius: 20px;
+    left: 0px; font-size: 11px;
+    position: relative;
+    padding: 0.5rem;">
+      {{seconddate}}
+    </span>
+
+   </div>
+   <div *ngIf="dayofweek3!='false'" class="dateclass">
+  
+    <span
+    [ngClass]="(fourth == true) ? 'bold' : 'normal'"
+    (click)="selectDayy(3)"
+    style="
+    border-radius: 20px;
+    font-size: 11px;
+    left: 0px;
+    position: relative;
+    padding: 0.5rem;">
+       {{thirddate}}
+    </span>
+
+   </div>
+   <div *ngIf="dayofweek4!='false'" class="dateclass">
+    
+    <span
+    [ngClass]="(fifth == true) ? 'bold' : 'normal'"
+    (click)="selectDayy(4)"
+    style="
+    border-radius: 20px;
+   font-size: 11px;
+    left: 0px;
+    position: relative;
+    padding: 0.5rem;">
+     {{fourthdate}}
+    </span>
+
+   </div>
+   <div *ngIf="dayofweek5!='false'" class="dateclass">
+    
+    <span
+    [ngClass]="(sixth == true) ? 'bold' : 'normal'"
+    (click)="selectDayy(5)"
+    style="
+    border-radius: 20px;
+    font-size: 11px;
+    left: 0px;
+    position: relative;
+    padding: 0.5rem;">
+      {{fifthdate}}
+    </span>
+
+   </div>
+   <div *ngIf="dayofweek6!='false'" class="dateclass">
+    
+    <span
+    [ngClass]="(seventh == true) ? 'bold' : 'normal'"
+    (click)="selectDayy(6)"
+    style="font-size: 11px;
+    border-radius: 20px;
+    left: 0px;
+    position: relative;
+    padding: 0.5rem;">
+      {{sixthdate}}
+    </span>
+
+   </div>
+   <div *ngIf="dayofweek7!='false'" class="dateclass">
+    
+    <span
+    [ngClass]="(eighth == true) ? 'bold' : 'normal'"
+    (click)="selectDayy(7)"
+    style="
+    font-size: 11px;
+border-radius: 20px;
+left: 0px;
+position: relative;
+padding: 0.5rem;">
+      {{seventhdate}}
+    </span>
+
+   </div>
+   
+ 
+      <ion-scroll  scrollX="true">
+        <span *ngFor="let r of reservationfinal">
+            <button  disabled *ngIf="r.disabled==true" class="mybtn" ion-button  >
+              {{r.time}}
+             </button>
+             <button (click)="makethisdayoff(r)"  *ngIf="r.disabled==false" class="mybtn" ion-button  >
+                {{r.time}}
+             </button>
+        </span>
+  
+</ion-scroll>
+
+<!-- <p style="    font-size: 13px;">{{name}}</p>   -->
+
+  </div>
+  
+<div class="operatingtime">
+  <ion-label style="width: 30%;
+      float: left;">운영시간</ion-label>
+      <button (click)="start()" ion-button>{{myDateStart}}</button> <button (click)="end()" ion-button>{{myDateEnd}}</button>
+</div>
+<div class="timeinterval">
+  <ion-label style="width: 30%;
+  float: left;">시간간격</ion-label>
+    <ion-checkbox style="margin-top: 1em;" [(ngModel)]="thirty" (click)="checkbox(1)"></ion-checkbox><span style="    display: inline-block;line-height: 5px;
+    margin-bottom: 10px;
+    margin-left: 5px;">30분</span> <ion-checkbox (click)="checkbox(2)" [(ngModel)]="sixty" ></ion-checkbox><span style="    display: inline-block;line-height: 5px;
+    margin-bottom: 10px;
+    margin-left: 5px;">60분</span>  <ion-checkbox [(ngModel)]="ninety" (click)="checkbox(3)"></ion-checkbox><span style="    display: inline-block;line-height: 5px;
+    margin-bottom: 10px;
+    margin-left: 5px;">90분</span> 
+</div>
+<!-- <div class="peoplenumber">
+  <ion-label style="width: 30%; left: 1.2em;
+  display: inline-table;
+  position: absolute;
+  float: left;">가능인원</ion-label>
+    <ion-input style="width: 60%;
+    float: right;
+    display: inline-table;" type="number" placeholder="인원입력" [(ngModel)]="numberofpeople" ></ion-input>
+</div> -->
+<div class="keyword">
+  <ion-label style="width: 30%; left: 1.2em;
+  display: inline-table; 
+  position: absolute;
+  float: left;">키워드입력</ion-label>
+    <ion-input style="width: 60%;
+    float: right;
+    display: inline-table;"  (ionChange)="keywordchanged()"  placeholder=",로 구분됩니다." [(ngModel)]="keywords" ></ion-input>
+
+</div>
+<button style="background: transparent;
+color: black; top:2rem; width:80%;left:10%;border:solid 1px;" ion-button (click)="confirm()" >저장
+</button>
+    
+      
+      <!-- <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="myDate"></ion-datetime> -->
+</ion-content>

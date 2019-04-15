@@ -1,0 +1,540 @@
+<!--
+  Generated template for the RequestPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <ion-icon style="color: black;
+          float: left;
+          font-size: 2em; " (click)="gotoback();" name="close"></ion-icon>
+      
+    <ion-title>입점신청화면</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary">상호명</ion-label>
+      <ion-input placeholder="Text Input" [(ngModel)]="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">설명입력</ion-label>
+      <ion-textarea row="7" style="height:70px;" placeholder="Text Input" [(ngModel)]="description"></ion-textarea >
+        
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">편의사항</ion-label>
+      <ion-input placeholder="편의사항을 입력해주세요" [(ngModel)]="facility"></ion-input>
+        
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary">주소입력</ion-label>
+      <ion-input placeholder="서울시 강남구 논현로 10길" [(ngModel)]="address"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">전화번호</ion-label>
+      <ion-input placeholder="전화번호" type="number" [(ngModel)]="tel"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">사업자 등록번호</ion-label>
+      <ion-input placeholder="사업자 등록번호" type="number" [(ngModel)]="regnumber"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">업종업태</ion-label>
+      <ion-input placeholder="업종업태" [(ngModel)]="type"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">비상연락번호</ion-label>
+      <ion-input placeholder="비상연락번호" type="number" [(ngModel)]="emergencytel"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="primary">대표자명</ion-label>
+        <ion-input placeholder="대표자명" [(ngModel)]="representitive"></ion-input>
+      </ion-item>
+  </ion-list>
+  
+  <hr>
+  <div style="font-size: 13px; "> 카테고리 선택 </div>
+  <ion-scroll class="scrolltest" style="margin-top:20px; margin-bottom:0;" scrollX="true">
+             <button (click)="category('hair')" *ngIf="selectedbutton=='hair'" class="mybtnclicked" ion-button  >
+               Hair
+             </button>
+             <button (click)="category('hair')" *ngIf="selectedbutton!='hair'"  class="mybtn" ion-button  >
+                Hair
+              </button>
+             <button (click)="category('nail')"*ngIf="selectedbutton=='nail'" class="mybtnclicked"  ion-button  >
+                Nail
+              </button>
+              <button (click)="category('nail')" *ngIf="selectedbutton!='nail'"  class="mybtn" ion-button  >
+                  Nail
+                </button>
+              <button (click)="category('skincare')"  *ngIf="selectedbutton=='skincare'" class="mybtnclicked" ion-button  >
+                  Skincare
+                </button>
+              <button (click)="category('skincare')"  *ngIf="selectedbutton!='skincare'" class="mybtn" ion-button  >
+                  Skincare
+                </button>
+                <button (click)="category('massage')" *ngIf="selectedbutton=='massage'" class="mybtnclicked" ion-button  >
+                    Theraphy
+                  </button>
+                <button (click)="category('massage')" *ngIf="selectedbutton!='massage'" class="mybtn" ion-button  >
+                    Theraphy
+                  </button>
+                  <button (click)="category('makeup')" *ngIf="selectedbutton=='makeup'" class="mybtnclicked" ion-button  >
+                      Makeup
+                    </button>
+                    <button (click)="category('makeup')"  *ngIf="selectedbutton!='makeup'" class="mybtn" ion-button  >
+                        Makeup
+                      </button>
+                  <button (click)="category('waxing')" *ngIf="selectedbutton=='waxing'" class="mybtnclicked" ion-button  >
+                      Waxing<br>&Tanning
+                  </button>
+                  <button (click)="category('waxing')" *ngIf="selectedbutton!='waxing'" class="mybtn" ion-button  >
+                      Waxing<br>&Tanning
+                  </button>
+                 
+                <button (click)="category('diet')" *ngIf="selectedbutton=='diet'" class="mybtnclicked"  ion-button  >
+                    Diet
+                  </button>
+                <button (click)="category('diet')"  *ngIf="selectedbutton!='diet'" class="mybtn" ion-button  >
+                    Diet
+                  </button>
+                  <button (click)="category('plastic')" *ngIf="selectedbutton=='plastic'" class="mybtnclicked" ion-button  >
+                    Plastic<br> surgery
+                  </button>
+                  <button (click)="category('plastic')"  *ngIf="selectedbutton!='plastic'" class="mybtn" ion-button  >
+                      Plastic <br>surgery
+                    </button>
+
+  
+</ion-scroll>
+
+<hr>
+  <div *ngIf="designarray.length>0" style="font-size: 13px; "> 디자인 </div>
+  <ion-scroll *ngIf="designarray.length>0"  style="height: 190px !important;"  scrollX="true">
+        <img class="imagedesign" *ngFor="let a of designarray"  src="{{a.url}}">
+      
+   </ion-scroll>
+
+  <button style="    background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhotoForMulti()" >디자인추가
+  </button>
+
+  <hr style="    margin-top: 3em;">
+   <div style="font-size: 13px;  margin-bottom: 1em;
+   margin-top: 2em; "> 상품 / 가격 추가 </div>
+   <div style="  display: table;  height: 150px;">
+    
+     <ion-item *ngFor="let att of anArray; let idx = index">
+        <ion-input  style="   
+    width: 20%;
+    float: left;"  placeholder="상품명" [(ngModel)]="anArray[idx].value"></ion-input>
+    <ion-input style="    width: 20%;
+    float: right;"   placeholder="가격" [(ngModel)]="anArray[idx].price"></ion-input>
+    <ion-input style="    width: 20%;
+    float: right;"   placeholder="소요시간" [(ngModel)]="anArray[idx].time"></ion-input>
+    <ion-input style="    width: 20%;
+    float: right;"   placeholder="할인%" [(ngModel)]="anArray[idx].event"></ion-input>
+
+        <!-- <ion-label color="primary">{{att.label}}{{idx+1}}</ion-label>
+        <ion-input type="text"  text-right  [(ngModel)]="anArray[idx].value"></ion-input> -->
+    </ion-item>
+    <button style="    background: transparent;
+    color: cornflowerblue;
+    top: 2rem;
+    margin-bottom: 2em;
+    width: 80%;
+    left: 10%;" ion-button (click)="addInput()"> 상품 가격 정보추가</button>
+<!--     
+    -->
+   </div>
+  
+   <hr>
+
+  <div style="font-size: 13px; "> 디자이너 및 선생님 등록 </div>
+  <!-- <ion-scroll style="height: 250px !important; white-space: pre !important;" scrollX="true">
+    <ion-row nowrap class="headerChip">
+   
+      <div style="    height: 150px;
+      white-space: nowrap;
+      width: 150px;
+      float: left;" class="imagereservation2">
+        <img class="imagereservation" src="{{designerurl}}">
+          <ion-input class="scrollspan"  style="   
+      float: left;" [(ngModel)]="designername" placeholder="이름입력" ></ion-input>
+      </div>
+      <div class="imagereservation2">
+        <img class="imagereservation" src="{{designerurl1}}">
+          <ion-input class="scrollspan"  style="   
+      float: left;" [(ngModel)]="designername1" placeholder="이름입력" ></ion-input>
+      </div>
+      <div class="imagereservation2">
+        <img class="imagereservation" src="{{designerurl2}}">
+          <ion-input class="scrollspan"  style="   
+      float: left;" [(ngModel)]="designername2"   placeholder="이름입력" ></ion-input>
+      </div>
+      <div class="imagereservation2">
+        <img class="imagereservation" src="{{designerurl3}}">
+          <ion-input class="scrollspan"  style="   
+      float: left;" [(ngModel)]="designername3"   placeholder="이름입력" ></ion-input>
+      </div>
+      <div class="imagereservation2">
+        <img class="imagereservation" src="{{designerurl4}}">
+          <ion-input class="scrollspan"  style="   
+      float: left;" [(ngModel)]="designername4"   placeholder="이름입력" ></ion-input>
+      </div>
+      <div class="imagereservation2">
+        <img class="imagereservation" src="{{designerurl5}}">
+          <ion-input class="scrollspan"  style="   
+      float: left;" [(ngModel)]="designername5"   placeholder="이름입력" ></ion-input>
+      </div>
+      <div class="imagereservation2">
+        <img class="imagereservation" src="{{designerurl6}}">
+          <ion-input class="scrollspan"  style="   
+      float: left;" [(ngModel)]="designername6"   placeholder="이름입력" ></ion-input>
+      </div>
+      <div class="imagereservation2">
+        <img class="imagereservation" src="{{designerurl7}}">
+          <ion-input class="scrollspan"  style="   
+      float: left;" [(ngModel)]="designername7"   placeholder="이름입력" ></ion-input>
+      </div>
+      
+    </ion-row>
+   
+   </ion-scroll> -->
+
+   <ion-scroll style="height: 200px !important;" scrollX="true">
+    <ion-row nowrap class="headerChip">
+
+        <div class="imagereservation2">
+            <img class="imagereservation" src="{{designerurl}}">
+            <div class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername" placeholder="이름입력" ></ion-input>
+            </div>
+             
+          </div>
+          <div class="imagereservation2">
+            <img class="imagereservation" src="{{designerurl1}}">
+            <div  class="nameclass">
+               
+              <ion-input class="scrollspan"  style="   
+              float: left;" [(ngModel)]="designername1" placeholder="이름입력" ></ion-input>
+            </div>
+
+            
+          </div>
+          <div class="imagereservation2">
+            <img class="imagereservation" src="{{designerurl2}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername2"   placeholder="이름입력" ></ion-input>
+              </div>
+              
+          </div>
+          <div class="imagereservation2">
+            <img class="imagereservation" src="{{designerurl3}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername3"   placeholder="이름입력" ></ion-input>
+              </div>
+            
+          </div>
+          <div class="imagereservation2">
+            <img class="imagereservation" src="{{designerurl4}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername4"   placeholder="이름입력" ></ion-input>
+              </div>
+             
+          </div>
+          <div class="imagereservation2">
+            <img class="imagereservation" src="{{designerurl5}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername5"   placeholder="이름입력" ></ion-input>
+              </div>
+             
+          </div>
+          <div class="imagereservation2">
+            <img class="imagereservation" src="{{designerurl6}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername6"   placeholder="이름입력" ></ion-input>
+              </div>
+              
+          </div>
+          <div class="imagereservation2">
+            <img class="imagereservation" src="{{designerurl7}}">
+            <div  class="nameclass">
+                <ion-input class="scrollspan"  style="   
+                float: left;" [(ngModel)]="designername7"   placeholder="이름입력" ></ion-input>
+              </div>
+              
+          </div>
+          <div class="imagereservation2">
+              <img class="imagereservation" src="{{designerurl8}}">
+              <div  class="nameclass">
+                  <ion-input class="scrollspan"  style="   
+                  float: left;" [(ngModel)]="designername8"   placeholder="이름입력" ></ion-input>
+                </div>
+                
+            </div>
+            <div class="imagereservation2">
+                <img class="imagereservation" src="{{designerurl9}}">
+                <div  class="nameclass">
+                    <ion-input class="scrollspan"  style="   
+                    float: left;" [(ngModel)]="designername9"   placeholder="이름입력" ></ion-input>
+                  </div>
+                  
+              </div>
+
+
+
+              <div class="imagereservation2">
+                <img class="imagereservation" src="{{designerurl10}}">
+                <div class="nameclass">
+                    <ion-input class="scrollspan"  style="   
+                    float: left;" [(ngModel)]="designername10" placeholder="이름입력" ></ion-input>
+                </div>
+                 
+              </div>
+              <div class="imagereservation2">
+                <img class="imagereservation" src="{{designerurl11}}">
+                <div  class="nameclass">
+                   
+                  <ion-input class="scrollspan"  style="   
+                  float: left;" [(ngModel)]="designername11" placeholder="이름입력" ></ion-input>
+                </div>
+    
+                
+              </div>
+              <div class="imagereservation2">
+                <img class="imagereservation" src="{{designerurl12}}">
+                <div  class="nameclass">
+                    <ion-input class="scrollspan"  style="   
+                    float: left;" [(ngModel)]="designername12"   placeholder="이름입력" ></ion-input>
+                  </div>
+                  
+              </div>
+              <div class="imagereservation2">
+                <img class="imagereservation" src="{{designerurl13}}">
+                <div  class="nameclass">
+                    <ion-input class="scrollspan"  style="   
+                    float: left;" [(ngModel)]="designername13"   placeholder="이름입력" ></ion-input>
+                  </div>
+                
+              </div>
+              <div class="imagereservation2">
+                <img class="imagereservation" src="{{designerurl14}}">
+                <div  class="nameclass">
+                    <ion-input class="scrollspan"  style="   
+                    float: left;" [(ngModel)]="designername14"   placeholder="이름입력" ></ion-input>
+                  </div>
+                 
+              </div>
+              <div class="imagereservation2">
+                <img class="imagereservation" src="{{designerurl15}}">
+                <div  class="nameclass">
+                    <ion-input class="scrollspan"  style="   
+                    float: left;" [(ngModel)]="designername15"   placeholder="이름입력" ></ion-input>
+                  </div>
+                 
+              </div>
+              <div class="imagereservation2">
+                <img class="imagereservation" src="{{designerurl16}}">
+                <div  class="nameclass">
+                    <ion-input class="scrollspan"  style="   
+                    float: left;" [(ngModel)]="designername16"   placeholder="이름입력" ></ion-input>
+                  </div>
+                  
+              </div>
+              <div class="imagereservation2">
+                <img class="imagereservation" src="{{designerurl17}}">
+                <div  class="nameclass">
+                    <ion-input class="scrollspan"  style="   
+                    float: left;" [(ngModel)]="designername17"   placeholder="이름입력" ></ion-input>
+                  </div>
+                  
+              </div>
+              <div class="imagereservation2">
+                  <img class="imagereservation" src="{{designerurl18}}">
+                  <div  class="nameclass">
+                      <ion-input class="scrollspan"  style="   
+                      float: left;" [(ngModel)]="designername18"   placeholder="이름입력" ></ion-input>
+                    </div>
+                    
+                </div>
+                <div class="imagereservation2">
+                    <img class="imagereservation" src="{{designerurl19}}">
+                    <div  class="nameclass">
+                        <ion-input class="scrollspan"  style="   
+                        float: left;" [(ngModel)]="designername19"   placeholder="이름입력" ></ion-input>
+                      </div>
+                      
+                  </div>
+
+
+      </ion-row>
+    
+   </ion-scroll>
+
+   <button style="    background: transparent;
+   color: cornflowerblue;
+   top: 2rem;
+   width: 80%;
+   left: 10%;" ion-button (click)="takePhoto('designer')" >디자이너 추가
+   </button>
+   
+   <hr style="    margin-top: 3em;">
+  <button style="    background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('main')" >대표사진
+  </button>
+  <img *ngIf="picurl" class="im" style="width:50%; margintext-align: center" src="{{picurl}}"/>
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('first')" >소개이미지1
+  </button>
+  <img *ngIf="firsturl" class="im" style="width:50%; margintext-align: center" src="{{firsturl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('second')" >소개이미지2
+  </button>
+  <img *ngIf="secondurl" class="im" style="width:50%; margintext-align: center" src="{{secondurl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('third')" >소개이미지3
+  </button>
+  <img *ngIf="thirdurl" class="im" style="width:50%; margintext-align: center" src="{{thirdurl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('fourth')" >소개이미지4
+  </button>
+  <img *ngIf="fourthurl" class="im" style="width:50%; text-align: center" src="{{fourthurl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('fifth')" >소개이미지5
+  </button>
+  <img *ngIf="fifthurl" class="im" style="width:50%; text-align: center" src="{{fifthurl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('sixth')" >소개이미지6
+  </button>
+  <img *ngIf="sixthurl" class="im" style="width:50%; margintext-align: center" src="{{sixthurl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('seventh')" >소개이미지7
+  </button>
+
+  <img *ngIf="seventhurl" class="im" style="width:50%; margintext-align: center" src="{{seventhurl}}"/>
+
+
+
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('eighth')" >소개이미지8
+  </button>
+  <img *ngIf="eighthurl" class="im" style="width:50%; margintext-align: center" src="{{eighthurl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('nineth')" >소개이미지9
+  </button>
+  <img *ngIf="ninethurl" class="im" style="width:50%; text-align: center" src="{{ninethurl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('tenth')" >소개이미지10
+  </button>
+  <img *ngIf="tenthurl" class="im" style="width:50%; text-align: center" src="{{tenthurl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('eleventh')" >소개이미지11
+  </button>
+  <img *ngIf="eleventhurl" class="im" style="width:50%; margintext-align: center" src="{{eleventhurl}}"/>
+
+  <button style="background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('twelveth')" >소개이미지12
+  </button>
+
+  <img *ngIf="twelvethurl" class="im" style="width:50%; margintext-align: center" src="{{twelvethurl}}"/>
+
+
+   <!-- <div style="font-size: 13px; "> 디자이너 </div>
+  <ion-scroll  scrollX="true">
+        <img class="imagedesign"  src="{{designurl}}">
+        <img class="imagedesign"  src="{{designurl1}}">
+        <img class="imagedesign"  src="{{designurl2}}">
+        <img class="imagedesign"  src="{{designurl3}}">
+        <img class="imagedesign"  src="{{designurl4}}">
+   </ion-scroll> -->
+
+
+  <ion-list style="margin-top: 2em;">
+    <ion-item>
+      <ion-label color="primary">키워드입력</ion-label>
+      <ion-input  (ionChange)="keywordchanged()"  placeholder=",로 구분됩니다." [(ngModel)]="keywords"></ion-input>
+    </ion-item>
+    </ion-list>
+  
+  <button style="background: transparent;
+  color: black; top:2rem; width:80%;left:10%;border:solid 1px;" ion-button (click)="requesting()" >입점신청하기
+  </button>
+
+
+
+
+
+
+  
+</ion-content>

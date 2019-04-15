@@ -1,0 +1,112 @@
+page-main {
+    .mybtnclicked{
+        color: black;
+        width: 22%;
+        height: 2.8rem;
+        font-size: 11px;
+        background: transparent;
+        box-shadow: none !important;
+    }
+    .scroll-content{
+        margin-top:45px !important;
+    }
+    .menu-inner{
+        width: 60%;
+    }
+ .menu-content-open{
+    z-index: 99999999999999 !important;
+    }
+    .slide-zoom{
+    }
+    ion-menu.show-menu{
+        z-index: 499 !important;
+        top:8.5%;
+    }
+    .title{
+        color: black !important;
+    }
+    .bar-button-default-ios, .bar-button-default.bar-button-ios-default, .bar-button-clear-ios-default{
+        color:gray !important;
+    }
+    .toolbar-background toolbar-background-ios{
+        background:white;
+        border-style:none;
+    }
+    .c{
+        .scroll-content{
+            margin-top:0px !important;
+            margin-bottom: 56px;
+        }
+        .profile{
+          height: 15%;
+          background: aliceblue;
+          margin-top: 0;
+          text-align: center;
+          width: 100%;
+          margin-left: auto;
+          margin-right: auto;
+          p{
+              font-size: 1.2rem;
+              text-align: left;
+              float: left;
+              width: 60%;
+              margin: 0;
+              margin-left: 1rem;
+              margin-top: 1rem;
+          }
+        }
+        
+        img{
+            float: left;
+            object-fit: cover;
+            border-radius: 50%;
+            height: 60%;
+            margin-left: 1.5rem;
+            margin-top: 2rem;
+        }
+        .left{
+            float: right;
+            height: 100%;
+            width: 60%;
+            margin-top: 1rem;
+        }
+        
+          top:0%;
+        .scroll-content{
+            .list list-md{
+                text-align: center;
+            }
+          top:0%;
+        }
+        
+    }
+
+    .menu-content menu-content-overlay{
+     
+    }
+    .toolbar-background-md {
+        background-color:aliceblue !important
+    }
+    .scroll-content{
+        padding:0 !important;
+    }
+    .item-md.item-block .item-inner {
+    padding-right:0 !important;
+    }
+    ionmenu{
+        top:7% !important;
+        z-index: 150 !important;
+    }
+    ion-header {
+        height: 45px;//by default 56px
+      }
+      ion-navbar.toolbar {
+        min-height: 45px;
+      }
+    ion-label{
+        font-size: 13px;
+    }
+    .profile{
+        text-align: center;
+    }
+}

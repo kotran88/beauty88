@@ -1,0 +1,141 @@
+export interface Store{
+    name:string;
+    id:string;
+    address:string;
+    description:string;
+    keywords:string;
+    lat:string;
+    lng:string;
+    mainImage:string
+    firstImage:string;
+    secondImage:string;
+    thirdImage:string;
+    fourthImage:string;
+    fifthImage:string;
+    sixthImage:string;
+    seventhImage:string;
+    eighthImage:string;
+    ninethImage:string;
+    tenthImage:string;
+    eleventhImage:string;
+    twelvethImage:string;
+    designarray:any;
+    type:any;
+    designImage:string;
+    designImage1:string;
+    designImage2:string;
+    designImage3:string;
+    designImage4:string;
+    designImage5:string;
+    designImage6:string;
+    designImage7:string;
+    designImage8:string;
+    designImage9:string;
+    designImage10:string;
+    designImage11:string;
+    designImage12:string;
+    designImage13:string;
+    designImage14:string;
+    designImage15:string;
+    designImage16:string;
+    designImage17:string;
+    designImage18:string;
+    designImage19:string;
+    designImage20:string;
+    designImage21:string;
+    designImage22:string;
+    designImage23:string;
+    designImage24:string;
+    designImage25:string;
+    designImage26:string;
+    designImage27:string;
+    designImage28:string;
+    designImage29:string;
+    designImage30:string;
+    designImage31:string;
+    designImage32:string;
+    designImage33:string;
+    designImage34:string;
+    designImage35:string;
+    designImage36:string;
+    designImage37:string;
+    designImage38:string;
+    designImage39:string;
+
+    arrayPrice:any;
+    designerImage:string;
+    designerImage1:string;
+    designerImage2:string;
+    designerImage3:string;
+    designerImage4:string;
+    designerImage5:string;
+    designerImage6:string;
+    designerImage7:string;
+    designerImage8:string;
+    designerImage9:string;
+    designerImage10:string;
+    designerImage11:string;
+    designerImage12:string;
+    designerImage13:string;
+    designerImage14:string;
+    designerImage15:string;
+    designerImage16:string;
+    designerImage17:string;
+    designerImage18:string;
+    designerImage19:string;
+
+    designername:string;
+    designername1:string;
+    designername2:string;
+    designername3:string;
+    designername4:string;
+    designername5:string;
+    designername6:string;
+    designername7:string;
+    designername8:string;
+    designername9:string;
+    designername10:string;
+    designername11:string;
+    designername12:string;
+    designername13:string;
+    designername14:string;
+    designername15:string;
+    designername16:string;
+    designername17:string;
+    designername18:string;
+    designername19:string;
+    category:string;
+    tel:string;
+    requestedDate:string;
+    approval:boolean;
+    requestedby:string;
+    descriptionImage:string;
+    representitive:string;
+    emergencytel:string;
+    regnumber:string;
+    facility:string;
+
+    /**
+     * 
+     * address: 
+"서울시 영등포구 여의도동 122"
+description: 
+"\"놀러와jjj는 어쩌고 저쩌고 이러쿵 저러쿵 하는 뭐하는 곳입니다. 야부리 야부리 요..."
+id: 
+91232
+keywords: 
+"종로/맛집/좋음"
+lat: 
+"32.3232"
+lng: 
+"127.2321"
+mainImage: 
+"http://i3.ruliweb.com/img/18/09/29/1662304d8103..."
+name: 
+"nuri"
+reservation
+tel: 
+"02-3117-3232"
+
+     */
+}

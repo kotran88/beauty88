@@ -1,0 +1,243 @@
+<!--
+  Generated template for the MainPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header style="z-index: 11 !important">
+  <ion-navbar>
+        <div style="  font-size:19px;  text-align: center;" class="title">
+                네가 젤 예뻐
+              </div>
+    <img src="./../../assets/imgs/magnify.png" (click)="search();" style="font-size: 1.8em;
+    right: 15%;
+    width:22px;
+    position: absolute;
+    color:gray;
+    bottom: 10px;
+     " name="search"/>
+
+      <button  style="right: 0px;
+      position: absolute;"  ion-button menuToggle>
+          <img src="./../../assets/imgs/menumenu.png" style="width:22px;" right name="menu"/>
+        </button>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="    z-index: 10 !important;" padding>
+
+  <ion-slides style="width:100% !important;" pager style="height:35%; ">
+    <ion-slide style="width:100% !important;" *ngFor="let slide of slides">
+        <img style="width:100% !important; height:100% !important;" (click)="enlarge(slide)" [src]="slide.powerlink">
+    </ion-slide>
+  </ion-slides>
+
+  <div style="  margin-top: 3rem;
+  margin-bottom: 3rem;">
+      <button (click)="category('hair')" style="font-size: 1.05em;" class="mybtnclicked" ion-button  >
+          Hair
+      </button>   
+      <button (click)="category('nail')"  style="font-size: 1.05em;" class="mybtnclicked" ion-button  >
+          Nail
+      </button>
+      <button (click)="category('skincare')" style="font-size: 1.05em;"  class="mybtnclicked" ion-button  >
+          Skin care
+      </button>   
+      <button (click)="category('massage')" style="font-size: 1.05em;"  class="mybtnclicked" ion-button  >
+          Theraphy
+      </button>
+
+
+      <button (click)="category('makeup')" style="font-size: 1.05em; margin-top:1em;" class="mybtnclicked" ion-button  >
+          Makeup
+      </button>   
+      <button (click)="category('waxing')"  class="mybtnclicked" ion-button  >
+          Waxing<br>&Tanning
+      </button>
+     
+      <button (click)="category('plastic')"  class="mybtnclicked" ion-button  >
+        Plastic<br>
+        Surgery
+    </button>
+      <button (click)="category('diet')" style="font-size: 1.05em; margin-top:15px;" class="mybtnclicked" ion-button  >
+          Diet
+      </button>
+  </div>
+  <ion-slides  pager style="height:35%; ">
+      <ion-slide style="width:100% !important;" *ngFor="let slide of slides2">
+          <img style="width:100% !important; height:100% !important;" (click)="enlarge(slide)" [src]="slide.powerlink">
+      </ion-slide>
+    </ion-slides>
+</ion-content>
+<div style="left: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 99990;
+    height:45px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    opacity: 0;
+    background: white;
+    opacity: 1;" id="tabber" class="tabber">
+      <a href="" style=" color: #488aff;
+      padding: 0;
+      min-height: 5.6rem;
+      margin: 0;
+      text-align: center;
+      border-radius: 0;
+      position: relative;
+      z-index: 0;
+      display: flex;
+      overflow: hidden;
+      -webkit-box-flex: 1;
+      width: 30%;
+      justify-content: center;
+      border: 0;
+      text-decoration: none;
+      background: none;
+      left: 0;
+      cursor: pointer;" class="tabbutton">
+      
+    <span style="    color: gray;
+    font-size: 1.2rem;"><img src="./../../assets/imgs/homeicon.png" style="margin-top:5px; font-size: 2em; height:24px;margin-bottom: -2px;
+    " ><br>홈</span>
+
+    </a>
+    <a href="#" style=" color: #488aff;
+    padding: 0;
+    min-height: 5.6rem;
+    margin: 0;
+    text-align: center;
+    width: 30%;
+    border-radius: 0;
+    
+    position: relative;
+    z-index: 0;
+    display: flex;
+    overflow: hidden;
+    -webkit-box-flex: 1;
+    justify-content: center;
+    border: 0;
+    text-decoration: none;
+    background: none;
+    left: 5%;
+    cursor: pointer;" class="tabbutton"
+     (click)="locate();"
+    >
+    
+    <span style="    color: gray;
+    font-size: 1.2rem;"><img src="./../../assets/imgs/locationicon.png" style="margin-top:5px;  font-size: 2em; height:22px;
+      " ><br>내주변</span>
+  </a>
+<a href="#" style=" color: #488aff;
+padding: 0;
+min-height: 5.6rem;
+width: 30%;
+margin: 0;
+text-align: center;
+border-radius: 0;
+position: absolute;
+z-index: 0;
+display: flex;
+overflow: hidden;
+-webkit-box-flex: 1;
+justify-content: center;
+border: 0;
+text-decoration: none;
+background: none;
+right: 0;
+cursor: pointer;" (click)="mypage();" class="tabbutton">
+
+<span style="    color: gray;
+font-size: 1.2rem;"><img src="./../../assets/imgs/hearticon.png" style="margin-top:5px;  font-size: 2em; height:22px;
+  " ><br>내예약</span>
+ 
+</a>
+
+    </div>
+
+    <ion-menu style="    z-index: 9999999999 !important;"class="ionmenu" [content]="content"  side="right">
+            <ion-content class="c">
+                
+                
+               <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+                  
+      
+                  </button>
+                  
+                  <div *ngIf="logined=='true'" class="profile">
+                      <img class="img" src="{{imageUrl}}"/>
+                      <div class="left" >
+                        <p style="line-height: 6rem;">{{name}} 님</p>
+                        
+                      </div>
+                      <div class="right">
+                       
+                      </div>
+                      
+                  </div>
+                  <div  *ngIf="logined=='false'||logined==undefined||logined==''" class="profile">
+        
+                    <button style="    background: transparent;
+                    color: black;
+                    border: solid 1px;
+                    width: 70%;
+                    font-size: 13px;" ion-button (click)="kakaoLogin()" >카카오톡 로그인
+                    </button>
+                    <!-- <button class="naver"  icon-left (click)="kakaoLogin()" > </button> -->
+                  </div>
+                  <ion-list>
+                      <ion-item >
+                          버전 정보 1.0.0 
+                        </ion-item>
+                        <ion-item (click)="openrulepage()">
+                            이용약관 
+                          </ion-item>
+                          <ion-item  (click)="openrule2page()">
+                            위치정보 이용약관
+                          </ion-item>
+                          <ion-item *ngIf="logined=='true'&&flag=='승인됨'" (click)="requesttoopen()" >
+                            설정페이지
+                          </ion-item>
+                          <ion-item *ngIf="logined=='true'" (click)="requesttoconfig()" >
+                            {{requestFlag}}
+                            </ion-item>
+                            <ion-item *ngIf="logined=='true'&&flag=='승인됨'" (click)="sharing('new')" >
+                                공유코드발급/변경
+                                </ion-item>
+                                <ion-item *ngIf="logined=='true'&&requestFlag=='입점신청'" (click)="entersharing('new')" >
+                                    공유코드입력
+                                    </ion-item>
+                                   
+                            
+                           
+                  </ion-list>
+                  <button style="background: aliceblue;
+                  color: black;
+                  top: 2rem;
+                  height: 5%;
+                  width: 70%;
+                  left: 15%;
+                  font-size: 13px;" ion-button (click)="share()" >친구에게 알리기
+                      </button>
+      
+                      <button *ngIf="logined=='true'" style="background: aliceblue;
+                      color: black;
+                      top: 2rem;
+                      height: 5%;
+                      width: 70%;
+                      left: 15%;
+                      font-size: 13px;" ion-button (click)="logout()" >로그아웃
+                      </button>
+                  
+          
+        </ion-content>
+        </ion-menu>
+        
+        <ion-nav id="nav" #content [root]="rootPage"></ion-nav>
+

@@ -1,0 +1,412 @@
+<!--
+  Generated template for the StoredetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    
+  <ion-navbar>
+      <ion-icon style="color: black;
+      float: left;
+
+    width: 22px;
+      font-size: 2em; " (click)="gotoback();" name="close"></ion-icon>
+  
+    <ion-title style="  
+    float: left;
+">{{name}} </ion-title>
+    <img src="./../../assets/imgs/shareindetail.png" style="
+    float: right;
+
+    width: 22px;
+    font-size: 2em; " (click)="gotoshare();" name="share"/>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-slides pager style="max-height:200px">
+    <ion-slide style="width:100% !important;" *ngFor="let slide of slides">
+        <img style='width: 100%;'  [src]="slide">
+    </ion-slide>
+  </ion-slides>
+    
+  <br>
+  <div class="desc" style=" padding:16px;">
+    <div style="font-size: 15px;"> {{name}} 소개 </div>
+    <div style="white-space: pre-wrap; margin-top: 1em; margin-left:1em;
+    color: gray;">{{description}}</div>
+      
+  </div>
+  <hr>
+    <!-- <img *ngIf="descriptionImage!=undefined" src="{{descriptionImage}}"> -->
+    
+
+        <!-- <div  *ngFor="let r of reservation" style="padding-left:0;"  >
+        <div>
+          <p class="reserve">  {{r.name}} {{r.time}} </p>
+          <button class="mybtn" ion-button (click)="join(r)" >Join
+          </button></div>
+         
+          </div> -->
+
+          <div *ngIf="arrayPrice.length!=0" style="padding:16px; font-size: 15px;"> 가격정보  </div>
+          <div [ngClass]="i==0?'centeralign_first':'centeralign'" *ngFor="let r of arrayPrice let i = index ">
+             {{r.value}} &nbsp;&nbsp;&nbsp; {{r.price}}원&nbsp;&nbsp;&nbsp; {{r.time}}분 소요&nbsp;&nbsp;&nbsp; <span *ngIf="r.event!=''" style="color:red;">{{r.event}}% 할인 제공</span>
+          </div>
+          <br>
+              <hr style="height:1px">
+          <div *ngIf="facility!=undefined" class="desc" style=" padding:16px;">
+            <div style="font-size: 15px;"> 편의사항 </div>
+            <div style="margin-top: 1em;margin-left:1em;
+            color: gray;">{{facility}}</div>
+             
+          </div>
+          <hr style="    height: 1px;">
+          <div *ngIf="designarray!=undefined" style="font-size: 15px; padding:16px;"> 디자인 </div>
+          <ion-scroll *ngIf="designarray!=undefined"  scrollX="true">
+                <img  class="imagedesign" *ngFor="let a of designarray; let i = index"  (click)="gotoalbum(i)" src="{{a}}">
+               
+           </ion-scroll>
+           <br>
+              <hr>
+          <div *ngIf="designerImage!=undefined" style="font-size: 15px;padding:16px;"> 예약하기</div>
+          <ion-scroll style="height:130px !important;" *ngIf="designerImage!=undefined" scrollX="true">
+       
+                <img style="margin-left:1em;"  *ngIf="firstimage==true&&designerImage!='none'" class="imagereservation"  (click)="clickdesigner2(0)" src="{{designerImage}}">
+                <img style="margin-left:1em;"  *ngIf="firstimage==false&&designerImage!='none'" class="selectedimagereservation" (click)="clickdesigner2(0)" src="{{designerImage}}">
+               
+    <span *ngIf="designername!='none'&&designername.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername}}</span>
+    <span *ngIf="designername!='none'&&designername.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername}}</span>
+              <img  *ngIf="secondimage==true&&designerImage1!='none'" class="imagereservation" (click)="clickdesigner2(1)" src="{{designerImage1}}">
+              <img   *ngIf="secondimage==false&&designerImage1!='none'" class="selectedimagereservation" (click)="clickdesigner2(1)" src="{{designerImage1}}">
+              <span *ngIf="designername1!='none'&&designername1.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername1}}</span>
+              <span *ngIf="designername1!='none'&&designername1.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername1}}</span>
+            
+              <img  *ngIf="thirdimage==true&&designerImage2!='none'" class="imagereservation" (click)="clickdesigner2(2)" src="{{designerImage2}}">
+              <img   *ngIf="thirdimage==false&&designerImage2!='none'" class="selectedimagereservation" (click)="clickdesigner2(2)" src="{{designerImage2}}">
+              <span *ngIf="designername2!='none'&&designername2.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername2}}</span>
+              <span *ngIf="designername2!='none'&&designername2.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername2}}</span>
+
+              <img  *ngIf="fourthimage==true&&designerImage3!='none'" class="imagereservation" (click)="clickdesigner2(3)" src="{{designerImage3}}">
+              <img   *ngIf="fourthimage==false&&designerImage3!='none'" class="selectedimagereservation" (click)="clickdesigner2(3)" src="{{designerImage3}}">
+              <span *ngIf="designername3!='none'&&designername3.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername3}}</span>
+              <span *ngIf="designername3!='none'&&designername3.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername3}}</span>
+              <img  *ngIf="fifthimage==true&&designerImage4!='none'" class="imagereservation" (click)="clickdesigner2(4)" src="{{designerImage4}}">
+              <img   *ngIf="fifthimage==false&&designerImage4!='none'" class="selectedimagereservation" (click)="clickdesigner2(4)" src="{{designerImage4}}">
+              <span *ngIf="designername4!='none'&&designername4.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername4}}</span>
+              <span *ngIf="designername4!='none'&&designername4.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername4}}</span>
+               <img  *ngIf="sixthimage==true&&designerImage5!='none'" class="imagereservation" (click)="clickdesigner2(5)" src="{{designerImage5}}">
+              <img   *ngIf="sixthimage==false&&designerImage5!='none'" class="selectedimagereservation" (click)="clickdesigner2(5)" src="{{designerImage5}}">
+              <span *ngIf="designername5!='none'&&designername5.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername5}}</span>
+              <span *ngIf="designername5!='none'&&designername5.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername5}}</span>
+              <img  *ngIf="seventhimage==true&&designerImage6!='none'" class="imagereservation" (click)="clickdesigner2(6)" src="{{designerImage6}}">
+              <img   *ngIf="seventhimage==false&&designerImage6!='none'" class="selectedimagereservation" (click)="clickdesigner2(6)" src="{{designerImage6}}">
+              <span *ngIf="designername6!='none'&&designername6.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername6}}</span>
+              <span *ngIf="designername6!='none'&&designername6.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername6}}</span>
+              <img  *ngIf="image8==true&&designerImage7!='none'" class="imagereservation" (click)="clickdesigner2(7)" src="{{designerImage7}}">
+              <img   *ngIf="image8==false&&designerImage7!='none'" class="selectedimagereservation" (click)="clickdesigner2(7)" src="{{designerImage7}}">
+              <span *ngIf="designername7!='none'&&designername7.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername7}}</span>
+              <span *ngIf="designername7!='none'&&designername7.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername7}}</span>
+              <img  *ngIf="image9==true&&designerImage8!='none'" class="imagereservation" (click)="clickdesigner2(8)" src="{{designerImage8}}">
+              <img   *ngIf="image9==false&&designerImage8!='none'" class="selectedimagereservation" (click)="clickdesigner2(8)" src="{{designerImage8}}">
+              <span *ngIf="designername8!='none'&&designername8.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername8}}</span>
+              <span *ngIf="designername8!='none'&&designername8.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername8}}</span>
+
+              <img  *ngIf="image10==true&&designerImage9!='none'" class="imagereservation" (click)="clickdesigner2(9)" src="{{designerImage9}}">
+              <img   *ngIf="image10==false&&designerImage9!='none'" class="selectedimagereservation" (click)="clickdesigner2(9)" src="{{designerImage9}}">
+              <span *ngIf="designername9!='none'&&designername9.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername9}}</span>
+              <span *ngIf="designername9!='none'&&designername9.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername9}}</span>
+              <img  *ngIf="image11==true&&designerImage10!='none'" class="imagereservation" (click)="clickdesigner2(10)" src="{{designerImage10}}">
+              <img  *ngIf="image11==false&&designerImage10!='none'" class="selectedimagereservation" (click)="clickdesigner2(10)" src="{{designerImage10}}">
+              <span *ngIf="designername10!='none'&&designername10.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername10}}</span>
+              <span *ngIf="designername10!='none'&&designername10.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername10}}</span>
+              <img  *ngIf="image12==true&&designerImage11!='none'" class="imagereservation" (click)="clickdesigner2(11)" src="{{designerImage11}}">
+              <img   *ngIf="image12==false&&designerImage11!='none'" class="selectedimagereservation" (click)="clickdesigner2(11)" src="{{designerImage11}}">
+              <span *ngIf="designername11!='none'&&designername11.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername11}}</span>
+              <span *ngIf="designername11!='none'&&designername11.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername11}}</span>
+              <img  *ngIf="image13==true&&designerImage12!='none'" class="imagereservation" (click)="clickdesigner2(12)" src="{{designerImage12}}">
+              <img   *ngIf="image13==false&&designerImage12!='none'" class="selectedimagereservation" (click)="clickdesigner2(12)" src="{{designerImage12}}">
+              <span *ngIf="designername12!='none'&&designername12.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername12}}</span>
+              <span *ngIf="designername12!='none'&&designername12.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername12}}</span>
+
+              <img  *ngIf="image14==true&&designerImage13!='none'" class="imagereservation" (click)="clickdesigner2(13)" src="{{designerImage13}}">
+              <img   *ngIf="image14==false&&designerImage13!='none'" class="selectedimagereservation" (click)="clickdesigner2(13)" src="{{designerImage13}}">
+              <span *ngIf="designername13!='none'&&designername13.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername13}}</span>
+              <span *ngIf="designername13!='none'&&designername13.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername13}}</span>
+              <img  *ngIf="image15==true&&designerImage14!='none'" class="imagereservation" (click)="clickdesigner2(14)" src="{{designerImage14}}">
+              <img  *ngIf="image15==false&&designerImage14!='none'" class="selectedimagereservation" (click)="clickdesigner2(14)" src="{{designerImage14}}">
+              <span *ngIf="designername14!='none'&&designername14.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername14}}</span>
+              <span *ngIf="designername14!='none'&&designername14.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername14}}</span>
+              <img  *ngIf="image16==true&&designerImage15!='none'" class="imagereservation" (click)="clickdesigner2(15)" src="{{designerImage15}}">
+              <img   *ngIf="image16==false&&designerImage15!='none'" class="selectedimagereservation" (click)="clickdesigner2(15)" src="{{designerImage15}}">
+              <span *ngIf="designername15!='none'&&designername15.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername15}}</span>
+              <span *ngIf="designername15!='none'&&designername15.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername15}}</span> 
+              <img  *ngIf="image17==true&&designerImage16!='none'" class="imagereservation" (click)="clickdesigner2(16)" src="{{designerImage16}}">
+              <img   *ngIf="image17==false&&designerImage16!='none'" class="selectedimagereservation" (click)="clickdesigner2(16)" src="{{designerImage16}}">
+              <span *ngIf="designername16!='none'&&designername16.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername16}}</span>
+              <span *ngIf="designername16!='none'&&designername16.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername16}}</span> 
+              <img  *ngIf="image18==true&&designerImage17!='none'" class="imagereservation" (click)="clickdesigner2(17)" src="{{designerImage17}}">
+              <img   *ngIf="image18==false&&designerImage17!='none'" class="selectedimagereservation" (click)="clickdesigner2(15)" src="{{designerImage17}}">
+              <span *ngIf="designername17!='none'&&designername17.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername17}}</span>
+              <span *ngIf="designername17!='none'&&designername17.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername17}}</span> 
+              <img  *ngIf="image19==true&&designerImage18!='none'" class="imagereservation" (click)="clickdesigner2(18)" src="{{designerImage18}}">
+              <img   *ngIf="image19==false&&designerImage18!='none'" class="selectedimagereservation" (click)="clickdesigner2(16)" src="{{designerImage18}}">
+              <span *ngIf="designername18!='none'&&designername18.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername18}}</span>
+              <span *ngIf="designername18!='none'&&designername18.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername18}}</span> 
+              <img  *ngIf="image20==true&&designerImage19!='none'" class="imagereservation" (click)="clickdesigner2(19)" src="{{designerImage19}}">
+              <img   *ngIf="image20==false&&designerImage19!='none'" class="selectedimagereservation" (click)="clickdesigner2(19)" src="{{designerImage19}}">
+              <span *ngIf="designername19!='none'&&designername19.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername19}}</span>
+              <span *ngIf="designername19!='none'&&designername19.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername19}}</span> 
+             
+           </ion-scroll>
+
+          <div class='reservationclass' style=" padding-bottom: 0 !important; padding:16px;" >
+              &nbsp;{{month}}월
+              <br>
+            <br>
+            <div *ngIf="dayofweek!='false'" class="dateclass">
+              <!-- <span  style="left: 22px;
+              text-align: center;
+              position: relative;">
+            
+                {{dayofweek.substring(0,1)}}
+              </span> -->
+              <span
+              [ngClass]="(first == true) ? 'bold' : 'normal'"
+              (click)="selectDayy(0)"
+              style="
+border-radius: 20px;
+    font-size: 11px;
+    left: 0px;
+    position: relative;
+    padding: 0.5rem;">
+                {{today}}
+              </span>
+            </div>
+           <div *ngIf="dayofweek1!='false'" class="dateclass">
+            
+            <span
+            [ngClass]="(second == true) ? 'bold' : 'normal'"
+            (click)="selectDayy(1)"
+            style="
+            border-radius: 20px;
+            left: 0px;font-size: 11px;
+            position: relative;
+            padding: 0.5rem;">
+              {{firstdate}}
+            </span>
+
+           </div>
+           <div *ngIf="dayofweek2!='false'" class="dateclass">
+            
+            <span
+            [ngClass]="(third == true) ? 'bold' : 'normal'"
+            (click)="selectDayy(2)"
+            style="
+            border-radius: 20px;
+            left: 0px; font-size: 11px;
+            position: relative;
+            padding: 0.5rem;">
+              {{seconddate}}
+            </span>
+
+           </div>
+           <div *ngIf="dayofweek3!='false'" class="dateclass">
+          
+            <span
+            [ngClass]="(fourth == true) ? 'bold' : 'normal'"
+            (click)="selectDayy(3)"
+            style="
+            border-radius: 20px;
+            font-size: 11px;
+            left: 0px;
+            position: relative;
+            padding: 0.5rem;">
+               {{thirddate}}
+            </span>
+
+           </div>
+           <div *ngIf="dayofweek4!='false'" class="dateclass">
+            
+            <span
+            [ngClass]="(fifth == true) ? 'bold' : 'normal'"
+            (click)="selectDayy(4)"
+            style="
+            border-radius: 20px;
+           font-size: 11px;
+            left: 0px;
+            position: relative;
+            padding: 0.5rem;">
+             {{fourthdate}}
+            </span>
+
+           </div>
+           <div *ngIf="dayofweek5!='false'" class="dateclass">
+            
+            <span
+            [ngClass]="(sixth == true) ? 'bold' : 'normal'"
+            (click)="selectDayy(5)"
+            style="
+            border-radius: 20px;
+            font-size: 11px;
+            left: 0px;
+            position: relative;
+            padding: 0.5rem;">
+              {{fifthdate}}
+            </span>
+
+           </div>
+           <div *ngIf="dayofweek6!='false'" class="dateclass">
+            
+            <span
+            [ngClass]="(seventh == true) ? 'bold' : 'normal'"
+            (click)="selectDayy(6)"
+            style="font-size: 11px;
+            border-radius: 20px;
+            left: 0px;
+            position: relative;
+            padding: 0.5rem;">
+              {{sixthdate}}
+            </span>
+
+           </div>
+           <div *ngIf="dayofweek7!='false'" class="dateclass">
+            
+            <span
+            [ngClass]="(eighth == true) ? 'bold' : 'normal'"
+            (click)="selectDayy(7)"
+            style="
+            font-size: 11px;
+    border-radius: 20px;
+    left: 0px;
+    position: relative;
+    padding: 0.5rem;">
+              {{seventhdate}}
+            </span>
+
+           </div>
+           
+         
+              <ion-scroll  scrollX="true">
+                <span *ngFor="let r of reservationfinal">
+                    <button  disabled *ngIf="r.disabled==true" class="mybtn" ion-button  >
+                      {{r.time}}
+                     </button>
+                     <button (click)="join(r)"  *ngIf="r.disabled==false" class="mybtn" ion-button  >
+                        {{r.time}}
+                     </button>
+                </span>
+          
+        </ion-scroll>
+       
+   <!-- <p style="    font-size: 13px;">{{name}}</p>   -->
+  
+          </div>
+          <hr>
+          <div style="font-size: 15px; padding:16px;"> 연락처 </div>
+   
+          <div style="    margin-top: 1em;
+          margin-left: 2em;
+          color: gray;
+          width: 35%;
+          float: left;">{{tel}}</div>
+          <button style="    
+          background: aliceblue;
+          border-radius:10px;
+          margin-top: 1em;
+          margin-right:1em;
+          width: 50%;
+
+    margin-left: 10px;
+          position: relative;
+    right: 5%;
+          min-height: 25px;" (click)="call(tel)" >
+       전화 상담하기
+          </button>
+                     <hr style="    height: 1px;
+                     margin-top: 10px;">
+         
+                     <div style="font-size: 15px; padding:16px;"> 위치 </div>
+           <p style="    font-size: 1.4rem;
+           margin-left: 2em;
+           margin-top: 1px;
+           color: gray; ">{{address}}</p> 
+          <div id="mapp" ></div>
+     <!-- <p style="    font-size: 13px;">{{name}}</p>   -->
+     <div style="font-size: 15px; padding:16px;"> 리뷰  </div>
+     <ion-input  style="   
+     margin-left: 1em;
+     width: 50%;
+     float: left;"  placeholder="리뷰를 입력해주세요" [(ngModel)]="reviewtowrite"></ion-input> 
+     <button style="    
+   background: aliceblue;
+   border-radius:10px;
+   margin-top: 1em;
+   position: relative;
+    right: 5%;
+   width: 42%;
+   min-height: 25px;" (click)="enterreview()" >
+리뷰 등록
+   </button>
+   <ion-list   style=" padding:16px; height: 200px;" *ngIf="reviewarray.length!=0" >
+   
+    <div [ngClass]="!reviewmoreflag&&i<4 ? 'testing' : 'noshow'"  *ngFor="let review of reviewarray let i = index"    style="padding-left:0;"  >
+          
+
+        <span *ngIf="i<4" style=" margin-top: 5px;
+        position: absolute; "> {{review.nickname}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{review.contents}} </span>
+                
+               
+   
+               
+     
+        </div>
+        <div [ngClass]="!reviewmoreflag ? 'noshow' : 'testing'"  *ngFor="let review of reviewarray let i = index"    style="padding-left:0;"  >
+          
+
+          <div class="subtest">
+            <span  style=" margin-top: 5px;
+            position: absolute; "> {{review.nickname}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{review.contents}}</span>
+          </div>
+                    
+                   
+       
+                   
+         
+            </div>
+        <button ion-button (click)="reviewmore()" *ngIf="!reviewmoreflag" style="     background: aliceblue;
+        border-radius: 10px;
+        margin-top: 1em;
+        /* margin-right: 1em; */
+        width: 50%;
+        color: black;
+        min-height: 25px;
+        width: 80%;
+        /* margin: auto; */
+        margin-left: 2em;
+        margin-right: 2em;"> 더 보기 </button>
+    
+</ion-list>
+     <ion-list  style="padding:16px;" *ngIf="reviewarray.length==0" >
+      <ion-item  style="padding-left:0;"  >
+                 
+                  리뷰가 없습니다. 리뷰를 남겨주세요
+                 
+      </ion-item>
+      
+         <br>
+       
+             <br>
+     
+      
+</ion-list>
+          
+                           
+    
+
+
+</ion-content>

@@ -1,0 +1,29 @@
+<!--
+  Generated template for the AlbumpagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Design album page</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div style="margin:auto;">
+    <img style="width:100%; height:343px; " src="{{selected}}">
+
+  </div>
+
+  <div class="container">
+    <img class="imagedesign" *ngFor="let a of array;  let i = index" (click)="gotoalbum(i)" src="{{a}}">
+
+  </div>
+  
+  
+</ion-content>

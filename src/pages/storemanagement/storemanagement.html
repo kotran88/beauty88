@@ -1,0 +1,97 @@
+<!--
+  Generated template for the StoremanagementPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+
+  <ion-navbar>
+      <ion-icon style="color: black;
+      float: left;
+      font-size: 2em; " (click)="gotoback();" name="close"></ion-icon>
+  
+ 
+    <ion-title>예약 관리 페이지</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <!-- <ion-list>
+    <ion-item *ngFor="let reserve of newarrayy; let i = index" style="padding-left:0;"  >
+                <ion-card style="border-radius: 20px;" *ngIf="reserve?.name?.length" style="width:95%; left:5%;" >
+                
+                <ion-card-content>
+                   예약자명 : {{reserve.name}}<br>
+                   연락처 :     {{reserve.phone}}<br>
+                   총인원수 :     {{reserve.numberofpeople}}<br>
+                   예약일 :     {{reserve.month}}월 {{reserve.day}}일 {{reserve.time}}시<br>
+                   예약신청시간 :     {{reserve.requestDate}}<br>
+
+                   <button *ngIf="reserve.matched" ion-button (click)="disabledd(reserve,'toable')">해당 시간 활성화</button>
+                   <button *ngIf="!reserve.matched" ion-button (click)="disabledd(reserve,'todisable')">해당 시간 비활성화</button>
+                </ion-card-content>
+                </ion-card  >
+
+
+               
+    </ion-item>
+    
+</ion-list> -->
+
+<div class="calendar-header">
+  <ion-row class="calendar-month">
+    <ion-col col-2 (click)="goToLastMonth()"><ion-icon name="arrow-back"></ion-icon></ion-col>
+    <ion-col col-8>{{currentMonth}} {{currentYear}}</ion-col>
+    <ion-col col-2 (click)="goToNextMonth()"><ion-icon name="arrow-forward"></ion-icon></ion-col>
+  </ion-row>
+</div>
+<div class="calendar-body">
+  <ion-grid>
+    <ion-row class="calendar-weekday">
+      <ion-col>Su</ion-col>
+      <ion-col>Mo</ion-col>
+      <ion-col>Tu</ion-col>
+      <ion-col>We</ion-col>
+      <ion-col>Th</ion-col>
+      <ion-col>Fr</ion-col>
+      <ion-col>Sa</ion-col>
+    </ion-row>
+    <ion-row class="calendar-date">
+      <ion-col col-1 *ngFor="let lastDay of daysInLastMonth" class="last-month" (click)="goToLastMonth()">{{lastDay}}</ion-col>
+      <ion-col style="height:85px; border-top:1px solid #3D3E3F;" col-1 *ngFor="let day of daysInThisMonth" (click)="selectDate(day)">
+        <span class="currentDate" *ngIf="currentDate === day; else otherDate">{{day}}
+          </span>
+       
+        <ng-template #otherDate class="otherDate">
+          {{day}}<br>
+         
+        </ng-template>
+        
+      </ion-col>
+      <ion-col col-1 *ngFor="let nextDay of daysInNextMonth" class="next-month" (click)="goToNextMonth()">{{nextDay}}</ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+<ion-list *ngIf="thisdayarray!=undefined">
+  <ion-item *ngFor="let array of thisdayarray; let i = index" style="padding-left:0;"  >
+              <ion-card style="border-radius: 20px;"  style="width:95%; left:5%;" >
+              <ion-card-content>
+                  {{array.designer}}<br>
+                    {{array.month}} 월 {{array.day}}일  {{array.time}} <br>
+                    {{array.name}}<br>
+                   {{array.phone}}<br>
+                   {{array.numberofpeople}}
+              </ion-card-content>
+              </ion-card  >
+              </ion-item>
+</ion-list>
+<div class="name" style="text-align: center" *ngIf="thisdayarray.length==0">
+  해당일 예약이 없습니다. 
+</div>
+</ion-content>

@@ -1,0 +1,45 @@
+<!--
+  Generated template for the MypagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-icon style="color: black;
+        float: left;
+        font-size: 2em; " (click)="gotoback();" name="close"></ion-icon>
+    
+      <ion-title>내 예약 리스트</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+      <p style="text-align: center;" >예약 내역이 아래 표시됩니다.</p>
+    <ion-list>
+      <ion-item *ngFor="let store of storearray; let i = index" style="padding-left:0;"  >
+
+        <div class="i">
+            <img class="image" (click)="detail(store)" src="{{store.mainImage}}">
+        </div>
+                    
+                     <span style="
+                     font-size: 13px; display:block;"> {{store.storeName}}</span>
+                          <span style="
+                          font-size: 13px;margin-top:5px; display:block;"> {{store.month}}월 {{store.day}}일 {{store.time}} 으로 예약</span>
+                          <span style="
+                          font-size: 13px;margin-top:5px; display:block;"> {{store.designer}}</span>
+                          <span style="
+                          font-size: 13px;margin-top:5px; display:block;">{{store.requestDate}} 에 예약완료</span>
+                          
+  
+  
+                 
+      </ion-item>
+      
+  </ion-list>
+  </ion-content>
+  
