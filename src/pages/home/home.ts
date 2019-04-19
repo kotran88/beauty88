@@ -1,5 +1,5 @@
 import { Component,ViewChild } from '@angular/core';
-import { NavController,ViewController,AlertController,MenuController,Platform,LoadingController,NavParams } from 'ionic-angular';
+import { NavController,IonicPage,ViewController,AlertController,MenuController,Platform,LoadingController,NavParams } from 'ionic-angular';
 import { KakaoCordovaSDK, AuthTypes } from 'kakao-sdk';
 import firebase from 'firebase';
 import { Scroll } from 'ionic-angular';
@@ -18,7 +18,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 import { Device } from '@ionic-native/device';
 
 declare var naver: any;
- 
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'

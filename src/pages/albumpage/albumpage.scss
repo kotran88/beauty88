@@ -6,17 +6,33 @@ page-albumpage {
     .scroll-content{
     /* overflow-y: scroll; */
     overflow-y: hidden;
+    padding: 0 16px 16px 16px !important;
 
+    }
+    .back-button.show-back-button{
+        display:none !important;
+
+    }
+    .bar-header {
+        border: 0px !important;
+        border-bottom-color: transparent !important;
+        background-image: none !important;
+        border-bottom: none !important;
+    }
+    .toolbar-background-md {
+        background-color:white !important
     }
     .imagedesign{
         float: left;
         width: 30%;
         height: 100px;
-        margin-left: 5px;
+        margin-left: 7px;
      }
+     .toolbar-md{
+        min-height: 40px !important;
+    }
      .container{
         text-align: center;
-        left: 2%;
         
         position: relative;
     width: 100%;

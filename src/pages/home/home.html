@@ -1,9 +1,15 @@
-<ion-header>
-    <ion-navbar style="background: white">
+<ion-header no-border style="border: 0px !important;
+border-bottom-color: transparent !important;
+background-image: none !important;
+border-bottom: none !important; z-index: 11 !important">
+  <ion-navbar style="border: 0px !important;
+  border-bottom-color: transparent !important;
+  background-image: none !important;
+  border-bottom: none !important;">
      
           <ion-icon style="color: black;
           float: left;
-          font-size: 2em; " (click)="gotoback();" name="close"></ion-icon>
+          font-size: 1.5em; " (click)="gotoback();" name="close"></ion-icon>
       
      
       <div style="    font-size: 16px;
@@ -91,7 +97,7 @@
     <span (click)="locate()" style="line-height: 2em;
     font-size: 13px; margin-top:-2.5em; margin-bottom: 0.2em; margin : 0; text-align: center; font-size: 13px;">  {{location}} <img style="    width: 13px;
     height: 13px;
-    vertical-align: middle;"  src="./../../assets/imgs/locate.png"></span>
+    vertical-align: middle;"  src="assets/imgs/locate.png"></span>
     <p *ngIf="storearray.length==0" style="text-align: center;">{{storemention}}</p>
     <ion-list>
                     <ion-item *ngFor="let store of storearray; let i = index" style="padding-left:0;"  >

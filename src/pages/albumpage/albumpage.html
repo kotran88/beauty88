@@ -4,10 +4,19 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header  no-border>
 
   <ion-navbar>
-    <ion-title>Design album page</ion-title>
+      <ion-icon style="color: black;
+          float: left;
+          font-size: 1.5em; " (click)="gotoback();" name="close"></ion-icon>
+      
+     
+    <div style="    font-size: 16px;
+    text-align: center;
+    margin-top: 0.2em;" class="title">
+     Design album page
+    </div>
   </ion-navbar>
 
 </ion-header>
@@ -16,7 +25,7 @@
 <ion-content padding>
 
   <div style="margin:auto;">
-    <img style="width:100%; height:343px; " src="{{selected}}">
+    <img style="width:100%;  " src="{{selected}}">
 
   </div>
 

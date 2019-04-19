@@ -7,7 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { MainPage } from '../pages/main/main';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ImagePicker } from '@ionic-native/image-picker';
-import { Deeplinks } from '@ionic-native/deeplinks/ngx';
+import { Deeplinks } from '@ionic-native/deeplinks';
 
 
 @Component({
@@ -16,16 +16,14 @@ import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 export class MyApp {
   rootPage:any = MainPage;
 
-  constructor(screenOrientation:ScreenOrientation, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,deeplinks:Deeplinks) {
+  constructor(screenOrientation:ScreenOrientation, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
 
       // deeplinks.route({
-      //   '/about-us': AboutPage,
-      //   '/universal-links-test': AboutPage,
-      //   '/products/:productId': ProductPage
+      //   '/about': HomePage
       // }).subscribe(match => {
       //   // match.$route - the route we matched, which is the matched entry from the arguments to route()
       //   // match.$args - the args passed in the link
@@ -36,11 +34,11 @@ export class MyApp {
       //   console.error('Got a deeplink that didn\'t match', nomatch);
       // });
 
-      if(platform.is("android")||platform.is("ios")){
+      // if(platform.is("android")||platform.is("ios")){
     
-        screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT);
+      //   screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT);
   
-      }
+      // }
 
       // splashScreen.hide();
     });

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage,ViewController, NavController, NavParams } from 'ionic-angular';
 
 /**
  * Generated class for the AlbumpagePage page.
@@ -30,7 +30,7 @@ export class AlbumpagePage {
   twelvethImage:any;
 
   selected:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public viewCtrl:ViewController,public navCtrl: NavController, public navParams: NavParams) {
     this.array=this.navParams.get("albumList");
     this.selected=this.navParams.get("selected");
     console.log(this.array);
@@ -46,6 +46,10 @@ this.selected=this.array[value];
 
 
   }
+  gotoback(){
+    this.viewCtrl.dismiss();
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlbumpagePage');
   }

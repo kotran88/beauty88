@@ -25,7 +25,7 @@ import { Rule2pagePage } from '../rule2page/rule2page';
  */
 
 declare var naver: any;
- 
+
 @Component({
   selector: 'page-main',
   templateUrl: 'main.html',

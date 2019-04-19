@@ -5,7 +5,10 @@ page-mypage{
         padding: 0 !important;
     }
     .header-ios .toolbar-ios:last-child .toolbar-background-ios{
-        background:aliceblue;
+        background-color:white !important;
+    }
+    .toolbar-background-md{
+        background-color:white !important;
     }
     .item-ios.item-block .item-inner{
         padding-right:0px !important;
@@ -13,7 +16,9 @@ page-mypage{
     .label-ios {
         margin: 11px 0 11px 0 !important;
     }
-
+    .toolbar-md{
+        min-height: 40px !important;
+    }
     .i{
         position: relative;
         width: 100%;
@@ -47,6 +52,6 @@ page-mypage{
         
     }
     .toolbar-background-md {
-        background-color:aliceblue !important
+        background-color:white !important;
     }
 }

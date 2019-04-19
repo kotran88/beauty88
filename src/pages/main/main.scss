@@ -3,7 +3,7 @@ page-main {
         color: black;
         width: 22%;
         height: 2.8rem;
-        font-size: 11px;
+        font-size: 14px;
         background: transparent;
         box-shadow: none !important;
     }
@@ -13,8 +13,11 @@ page-main {
     .menu-inner{
         width: 60%;
     }
+    .toolbar-background-md {
+        background-color:white !important
+    }
  .menu-content-open{
-    z-index: 99999999999999 !important;
+    z-index: 0 !important;
     }
     .slide-zoom{
     }
@@ -39,7 +42,7 @@ page-main {
         }
         .profile{
           height: 15%;
-          background: aliceblue;
+          background: white;
           margin-top: 0;
           text-align: center;
           width: 100%;
@@ -82,11 +85,9 @@ page-main {
     }
 
     .menu-content menu-content-overlay{
-     
+     z-index:0 !important;
     }
-    .toolbar-background-md {
-        background-color:aliceblue !important
-    }
+   
     .scroll-content{
         padding:0 !important;
     }

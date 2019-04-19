@@ -4,21 +4,24 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-border>
     
   <ion-navbar>
       <ion-icon style="color: black;
       float: left;
 
     width: 22px;
-      font-size: 2em; " (click)="gotoback();" name="close"></ion-icon>
-  
-    <ion-title style="  
-    float: left;
-">{{name}} </ion-title>
-    <img src="./../../assets/imgs/shareindetail.png" style="
+      font-size: 1.5em; " (click)="gotoback();" name="close"></ion-icon>
+    <div style="    font-size: 16px;
+    text-align: center;
+    margin-top: 0.2em;" class="title">
+     {{name}}
+    </div>
+    <img src="assets/imgs/shareindetail.png" style="
     float: right;
-
+    position:absolute;
+    top:10px;
+    right: 0;
     width: 22px;
     font-size: 2em; " (click)="gotoshare();" name="share"/>
   </ion-navbar>
@@ -291,7 +294,8 @@ border-radius: 20px;
            </div>
            
          
-              <ion-scroll  scrollX="true">
+              <ion-scroll style="
+              margin-top: 0 !important;" scrollX="true">
                 <span *ngFor="let r of reservationfinal">
                     <button  disabled *ngIf="r.disabled==true" class="mybtn" ion-button  >
                       {{r.time}}

@@ -4,12 +4,18 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header style="z-index: 11 !important">
-  <ion-navbar>
-        <div style="  font-size:19px;  text-align: center;" class="title">
+<ion-header no-border style="border: 0px !important;
+border-bottom-color: transparent !important;
+background-image: none !important;
+border-bottom: none !important; z-index: 11 !important">
+  <ion-navbar style="border: 0px !important;
+  border-bottom-color: transparent !important;
+  background-image: none !important;
+  border-bottom: none !important;">
+        <div style="  font-size:17px;  text-align: center;" class="title">
                 네가 젤 예뻐
               </div>
-    <img src="./../../assets/imgs/magnify.png" (click)="search();" style="font-size: 1.8em;
+    <img src="assets/imgs/magnify.png" (click)="search();" style="font-size: 1.8em;
     right: 15%;
     width:22px;
     position: absolute;
@@ -19,7 +25,7 @@
 
       <button  style="right: 0px;
       position: absolute;"  ion-button menuToggle>
-          <img src="./../../assets/imgs/menumenu.png" style="width:22px;" right name="menu"/>
+          <img src="assets/imgs/menumenu.png" style="width:22px;" right name="menu"/>
         </button>
   </ion-navbar>
 
@@ -36,21 +42,21 @@
 
   <div style="  margin-top: 3rem;
   margin-bottom: 3rem;">
-      <button (click)="category('hair')" style="font-size: 1.05em;" class="mybtnclicked" ion-button  >
+      <button (click)="category('hair')"  class="mybtnclicked" ion-button  >
           Hair
       </button>   
-      <button (click)="category('nail')"  style="font-size: 1.05em;" class="mybtnclicked" ion-button  >
+      <button (click)="category('nail')"   class="mybtnclicked" ion-button  >
           Nail
       </button>
-      <button (click)="category('skincare')" style="font-size: 1.05em;"  class="mybtnclicked" ion-button  >
+      <button (click)="category('skincare')" class="mybtnclicked" ion-button  >
           Skin care
       </button>   
-      <button (click)="category('massage')" style="font-size: 1.05em;"  class="mybtnclicked" ion-button  >
+      <button (click)="category('massage')"   class="mybtnclicked" ion-button  >
           Theraphy
       </button>
 
 
-      <button (click)="category('makeup')" style="font-size: 1.05em; margin-top:1em;" class="mybtnclicked" ion-button  >
+      <button (click)="category('makeup')" style=" margin-top:1em;" class="mybtnclicked" ion-button  >
           Makeup
       </button>   
       <button (click)="category('waxing')"  class="mybtnclicked" ion-button  >
@@ -61,7 +67,7 @@
         Plastic<br>
         Surgery
     </button>
-      <button (click)="category('diet')" style="font-size: 1.05em; margin-top:15px;" class="mybtnclicked" ion-button  >
+      <button (click)="category('diet')" style=" margin-top:15px;" class="mybtnclicked" ion-button  >
           Diet
       </button>
   </div>
@@ -104,7 +110,7 @@
       cursor: pointer;" class="tabbutton">
       
     <span style="    color: gray;
-    font-size: 1.2rem;"><img src="./../../assets/imgs/homeicon.png" style="margin-top:5px; font-size: 2em; height:24px;margin-bottom: -2px;
+    font-size: 1.2rem;"><img src="assets/imgs/homeicon.png" style="margin-top:5px; font-size: 2em; height:24px;margin-bottom: -2px;
     " ><br>홈</span>
 
     </a>
@@ -131,7 +137,7 @@
     >
     
     <span style="    color: gray;
-    font-size: 1.2rem;"><img src="./../../assets/imgs/locationicon.png" style="margin-top:5px;  font-size: 2em; height:22px;
+    font-size: 1.2rem;"><img src="assets/imgs/locationicon.png" style="margin-top:5px;  font-size: 2em; height:22px;
       " ><br>내주변</span>
   </a>
 <a href="#" style=" color: #488aff;
@@ -154,7 +160,7 @@ right: 0;
 cursor: pointer;" (click)="mypage();" class="tabbutton">
 
 <span style="    color: gray;
-font-size: 1.2rem;"><img src="./../../assets/imgs/hearticon.png" style="margin-top:5px;  font-size: 2em; height:22px;
+font-size: 1.2rem;"><img src="assets/imgs/hearticon.png" style="margin-top:5px;  font-size: 2em; height:22px;
   " ><br>내예약</span>
  
 </a>

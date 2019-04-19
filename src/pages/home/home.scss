@@ -9,6 +9,7 @@ page-home {
     ion-menu[type=reveal] {
         z-index: 11111;
     }
+   
     .back-button.show-back-button{
         display:none !important;
 
@@ -27,7 +28,7 @@ page-home {
         margin-bottom:0px;
     }
     .toolbar-content-md{
-        margin-right:20% !important;
+        // margin-right:20% !important;
     }
     .c{
         .scroll-content{
@@ -123,7 +124,7 @@ page-home {
         
     }
     .header-ios .toolbar-ios:last-child .toolbar-background-ios{
-        background:aliceblue;
+        background:white;
     }
     .i{
         position: relative;
@@ -146,7 +147,7 @@ page-home {
         
     }
     .toolbar-background-md {
-        background-color:aliceblue !important
+        background-color:white !important
     }
    .label-ios{
 
@@ -280,9 +281,6 @@ page-home {
         /* width: auto; */
         -webkit-transform: translate(0%, -40%);
         
-    }
-    .toolbar-background-md {
-        background-color:aliceblue !important
     }
 
 }
