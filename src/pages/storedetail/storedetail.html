@@ -18,12 +18,12 @@
      {{name}}
     </div>
     <img src="assets/imgs/shareindetail.png" style="
-    float: right;
-    position:absolute;
-    top:10px;
-    right: 0;
-    width: 22px;
-    font-size: 2em; " (click)="gotoshare();" name="share"/>
+    font-size: 1.8em;
+    right: 2%;
+    width:22px;
+    position: absolute;
+    color:gray;
+    bottom: 10px;" (click)="gotoshare();" name="share"/>
   </ion-navbar>
 
 </ion-header>
@@ -294,8 +294,7 @@ border-radius: 20px;
            </div>
            
          
-              <ion-scroll style="
-              margin-top: 0 !important;" scrollX="true">
+              <ion-scroll style="" scrollX="true">
                 <span *ngFor="let r of reservationfinal">
                     <button  disabled *ngIf="r.disabled==true" class="mybtn" ion-button  >
                       {{r.time}}

@@ -3,9 +3,13 @@ page-main {
         color: black;
         width: 22%;
         height: 2.8rem;
+        text-transform: capitalize;
         font-size: 14px;
         background: transparent;
         box-shadow: none !important;
+    }
+    .toolbar-background-ios{
+        background-color:white !important;
     }
     .scroll-content{
         margin-top:45px !important;

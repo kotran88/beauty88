@@ -83,6 +83,101 @@ this.alertC=alertC;
     this.rule2=snap.val().content;
   })
 
+  var photo="";
+  var name="";
+  var id="";
+  
+  photo =localStorage.getItem("photo");
+  name =localStorage.getItem("name");
+  id =localStorage.getItem("id");
+  console.log("this is basic")
+  console.log(photo);
+  console.log(name);
+  console.log(id);
+  if(photo!=null){
+   if(photo.length==9){
+    // this.logined="true";
+    // this.id="1000334014";
+    // this.userUid="1000334014"
+  
+    // this.name="마스터이름2";
+    
+    // this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
+ 
+    // this.generateStore("서울특별시");
+    // this.generateId();
+  
+  }else{
+
+    console.log("showing kakao");
+    this.imageUrl=photo;
+    this.id=id;
+    this.name=name;
+    this.logined="true";
+    
+    this.userUid=this.id;
+   }
+  
+    }else{
+      console.log("photo is null!")
+      // this.logined="false";
+      // this.uniqueDeviceID.get().then((e)=>{
+      //   console.log("size is : "+e);
+      // }).catch((e)=>{
+      //   window.alert("err"+e);
+      // })
+      
+
+      // this.logined="true";
+      // this.id="1000334014";
+      // this.userUid="1000334014"
+    
+      // this.name="마스터이름33";
+      
+      // this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
+      // localStorage.setItem("photo",this.imageUrl);
+    // localStorage.setItem("name",this.name);
+    // localStorage.setItem("id",this.userUid);
+    }
+  
+      console.log("ioniv view did loaded');")
+      // this.loading = this.loading.create({
+      //   content: `Loading..`,
+      //   });
+      //   this.loading.present();
+     
+     
+  console.log(this.userUid);
+
+          
+            this.lat=localStorage.getItem("lat");
+            this.lng=localStorage.getItem("lng");
+            this.location=localStorage.getItem("location");
+            console.log("this is location info")
+            console.log(this.lat);
+            console.log(this.lng);
+            console.log(this.location);
+            
+            if(this.lat!=null){
+
+
+          this.generateStore("서울특별시");
+          this.generateId();
+
+            }else{
+              setTimeout(()=>{
+                this.getGeo();
+              
+              },1000)
+            }
+
+  
+    // if(this.userUid!=undefined){
+    //   this.generateId();
+     
+    // }else{
+    // }
+//  }
 
     // setTimeout(()=>{
     //   if(this.platform.is("ios")){
@@ -346,103 +441,7 @@ this.alertC=alertC;
       //         });
       //         this.loading.present();
 
-              var photo="";
-    var name="";
-    var id="";
-    
-    photo =localStorage.getItem("photo");
-    name =localStorage.getItem("name");
-    id =localStorage.getItem("id");
-    console.log("this is basic")
-    console.log(photo);
-    console.log(name);
-    console.log(id);
-    if(photo!=null){
-     if(photo.length==9){
-      this.logined="true";
-      this.id="1000334014";
-      this.userUid="1000334014"
-    
-      this.name="마스터이름2";
-      
-      this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
    
-      this.generateStore("서울특별시");
-      this.generateId();
-    
-    }else{
-  
-      console.log("showing kakao");
-      this.imageUrl=photo;
-      this.id=id;
-      this.name=name;
-      this.logined="true";
-      
-      this.userUid=this.id;
-     }
-    
-      }else{
-        console.log("photo is null!")
-        // this.logined="false";
-        // this.uniqueDeviceID.get().then((e)=>{
-        //   console.log("size is : "+e);
-        // }).catch((e)=>{
-        //   window.alert("err"+e);
-        // })
-        
-
-        this.logined="true";
-        this.id="1000334014";
-        this.userUid="1000334014"
-      
-        this.name="마스터이름33";
-        
-        this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
-        // localStorage.setItem("photo",this.imageUrl);
-      // localStorage.setItem("name",this.name);
-      // localStorage.setItem("id",this.userUid);
-      }
-    
-    
-        console.log("ioniv view did loaded');")
-        // this.loading = this.loading.create({
-        //   content: `Loading..`,
-        //   });
-        //   this.loading.present();
-       
-       
-    console.log(this.userUid);
-
-            
-              this.lat=localStorage.getItem("lat");
-              this.lng=localStorage.getItem("lng");
-              this.location=localStorage.getItem("location");
-              console.log("this is location info")
-              console.log(this.lat);
-              console.log(this.lng);
-              console.log(this.location);
-              
-              if(this.lat!=null){
-
-
-            this.generateStore("서울특별시");
-            this.generateId();
-
-              }else{
-                setTimeout(()=>{
-                  this.getGeo();
-                
-                },600)
-              }
-  
-    
-      // if(this.userUid!=undefined){
-      //   this.generateId();
-       
-      // }else{
-      // }
-  //  }
-
   
 }
 generateId(){
@@ -548,7 +547,7 @@ getGeo(){
           this.generateStore("서울특별시");
           this.generateId();
         }else{
-          // this.getGeo();
+          this.getGeo();
           this.generateStore("서울특별시");
           this.generateId();
         console.log("geo loading error:");
@@ -741,6 +740,7 @@ requesttoopen(){
     // 
   }
   logout(){
+    localStorage.setItem("logined","false");
     localStorage.setItem("photo",undefined);
       localStorage.setItem("name",undefined);
       localStorage.setItem("id",undefined);
@@ -794,7 +794,8 @@ requesttoopen(){
         localStorage.setItem("photo",res.properties.thumbnail_image)
             localStorage.setItem("name",res.properties.nickname);
             localStorage.setItem("id",res.id);
-           
+            localStorage.setItem("logined","true");
+
             this.userUid=res.id;
             this.name=localStorage.getItem("name");
             this.imageUrl=localStorage.getItem("photo");
@@ -885,10 +886,11 @@ share(){
       androidExecutionParams: "param1=value1&param2=value2",
       iosExecutionParams: "param1=value1&param2=value2"
     };
+  
     let feedContent: KLContentObject = {
       title: '토탈 뷰티 앱 “네가 젤 예뻐”',
       link: feedLink,
-      imageURL: 'http://i3.ruliweb.com/img/19/03/17/1698a25f6353051.png'
+      imageURL: 'http://i1.ruliweb.com/img/19/04/20/16a3a295ff73051.png'
     };
     feedContent.imageWidth="750";
     feedContent.imageHeight="500";

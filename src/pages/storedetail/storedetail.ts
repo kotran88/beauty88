@@ -25,6 +25,7 @@ declare var naver: any;
 export class StoredetailPage {
   designermanagement=[];
   reviewarray=[];
+  logined:any="false";
   designImage:any;
   reviewmoreflag:boolean=false;
   designImage1:any;
@@ -209,6 +210,7 @@ export class StoredetailPage {
      this.userId=this.navParams.get("userId");
      this.storeId=this.navParams.get("storeId");
      this.nick=this.navParams.get("nick");
+     this.logined=localStorage.getItem("logined");
      this.categoryy=this.navParams.get("category");
      this.viewCtrl=viewCtrl;
      console.log("constructor")
@@ -689,7 +691,9 @@ export class StoredetailPage {
 
   }
   gotoshare(){
-window.alert(this.categoryy);
+    console.log(this.name);
+    console.log(this.address);
+    console.log(this.categoryy);
   let feedLink: KLLinkObject = {
     androidExecutionParams: "param1=value1&param2=value2",
     iosExecutionParams: "param1=value1&param2=value2"
@@ -698,7 +702,7 @@ window.alert(this.categoryy);
     title: '토탈 뷰티 앱 “네가 젤 예뻐”',
     desc:this.name+"("+this.address+")/"+this.categoryy,
     link: feedLink,
-    imageURL: 'http://i3.ruliweb.com/img/19/03/17/1698a25f6353051.png'
+    imageURL: 'http://i1.ruliweb.com/img/19/04/20/16a3a295ff73051.png'
   };
   feedContent.imageWidth="750";
   feedContent.imageHeight="500";
@@ -2539,18 +2543,24 @@ makeAllOff(){
   
   }
   join(r){
+    if(this.logined=="false"||this.logined==null){
+
+      window.alert("로그인을 해주세요")
+    }else{
+      if(this.selectedDesigner!="none"){
+        console.log("r is :"+r);
+       
+        this.navCtrl.push(JoinedPage,{"mainImage":this.mainImage,"idd":this.userId,"storeName":this.name,"time":r,"store":this.storeId,"dayofweek":this.selectDayOfWeek,"day":this.selectDay,"month":this.month,"designer":this.selectedDesigner})
+      }else{
+        alert("디자이너를 선택해주세요")
+      }
+    }
     console.log(this.selectDayOfWeek);
     console.log(this.selectDay);
     console.log(this.month);
     console.log(r.time);
     console.log(this.selectedDesigner);
-    if(this.selectedDesigner!="none"){
-      console.log("r is :"+r);
-     
-      this.navCtrl.push(JoinedPage,{"mainImage":this.mainImage,"idd":this.userId,"storeName":this.name,"time":r,"store":this.storeId,"dayofweek":this.selectDayOfWeek,"day":this.selectDay,"month":this.month,"designer":this.selectedDesigner})
-    }else{
-      alert("디자이너를 선택해주세요")
-    }
+    
     // 
   }
   ionViewDidLoad() {
