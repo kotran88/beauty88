@@ -15,6 +15,7 @@ import { ReserveFinishPage } from '../reserve-finish/reserve-finish';
   templateUrl: 'joined.html',
 })
 export class JoinedPage {
+  closeflag:boolean=false;
   firedata2 = firebase.database().ref('clients');
   firedata = firebase.database().ref('store');
   reserver:any;
@@ -60,10 +61,11 @@ export class JoinedPage {
     var minute = thisday.getMinutes();
     var fullyear = thisday.getFullYear();
     var second=thisday.getSeconds();
-    console.log("this is the day")
+    console.log("this is the dayㅛㅛㅛㅛ")
     // new Date().toString("hh:mm tt")
     console.log(thisday)
     console.log(month+1);
+    this.month=month+1;
     console.log(date);
     console.log((hour)+"시");
     console.log(minute);
@@ -96,15 +98,24 @@ export class JoinedPage {
     console.log(this.storeName);
     console.log(this.time);
   }
+  gotoback(){
+
+    this.closeflag=true
+    // this.matchedKeyword="t";
+    this.view.dismiss();
+  }
   finishing(){
 
     console.log(this.reserver);
     console.log(this.phone);
     console.log(this.store);
-    console.log(this.month);
+    console.log(this.month+"가 ㅡㅐㅜ소");
     console.log(this.day);
     console.log(this.dayofweek);
     console.log(this.userId);
+    if(this.numberofpeople==undefined){
+      this.numberofpeople="-";
+    }
     var newRef = this.firedata.child(this.store).child("reservationList").push();
     var newItem = { "name":this.reserver,
     "flag":"normal",
@@ -148,7 +159,9 @@ export class JoinedPage {
   }
   
   ionViewDidLoad() {
+    this.closeflag=false;
     console.log('ionViewDidLoad JoinedPage');
+    console.log(this.closeflag);
   }
 
 }

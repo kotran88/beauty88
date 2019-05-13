@@ -43,7 +43,10 @@ import { RulepagePage } from '../pages/rulepage/rulepage';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Cameraselect2Page } from '../pages/cameraselect2/cameraselect2';
 import { Cameraselect3Page } from '../pages/cameraselect3/cameraselect3';
+
 import { OffanddeletePage } from '../pages/offanddelete/offanddelete';
+import { Cameraselect4Page } from '../pages/cameraselect4/cameraselect4';
+import { AddproductPage } from '../pages/addproduct/addproduct';
 
 // import {
 //   CalendarCommonModule,
@@ -91,10 +94,12 @@ firebase.initializeApp(firebaseConfig);
     AlbumpagePage,
     DutyoffPage,
     HomePage,
+    AddproductPage,
     SearchPage,
     CalendarWeekPage,
     CameraselectPage,
 
+    Cameraselect4Page,
     Cameraselect2Page,
     StoredetailPage,
     ReserveFinishPage
@@ -139,6 +144,8 @@ firebase.initializeApp(firebaseConfig);
     Cameraselect2Page,
     Rule2pagePage,
     RulepagePage,
+    AddproductPage,
+    Cameraselect4Page,
     DutyoffPage,
     StoremanagementPage,
     MyApp,

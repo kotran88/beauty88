@@ -15,7 +15,7 @@
     <div style="    font-size: 16px;
     text-align: center;
     margin-top: 0.2em;" class="title">
-     Design album page
+     {{titlee}}
     </div>
   </ion-navbar>
 
@@ -24,10 +24,11 @@
 
 <ion-content padding>
 
-  <div style="margin:auto;">
-    <img style="width:100%;  " src="{{selected}}">
+  <div class="i">
+    <img class="image"   src="{{selected}}">
 
   </div>
+
 
   <div class="container">
     <img class="imagedesign" *ngFor="let a of array;  let i = index" (click)="gotoalbum(i)" src="{{a}}">

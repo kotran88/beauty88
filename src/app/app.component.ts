@@ -34,11 +34,11 @@ export class MyApp {
       //   console.error('Got a deeplink that didn\'t match', nomatch);
       // });
 
-      // if(platform.is("android")||platform.is("ios")){
+      if(platform.is("android")||platform.is("ios")){
     
-      //   screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT);
+        screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT);
   
-      // }
+      }
 
       // splashScreen.hide();
     });

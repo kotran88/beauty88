@@ -1,4 +1,4 @@
-import { Component ,ViewChild} from '@angular/core';
+import { Component ,ViewChild, ElementRef} from '@angular/core';
 import { IonicPage,DateTime,AlertController,ModalController, NavController,Navbar,ViewController, NavParams } from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -19,6 +19,8 @@ import { empty } from 'rxjs/Observer';
 import { Cameraselect2Page } from '../cameraselect2/cameraselect2';
 import { Cameraselect3Page } from '../cameraselect3/cameraselect3';
 import { OffanddeletePage } from '../offanddelete/offanddelete';
+import { Cameraselect4Page } from '../cameraselect4/cameraselect4';
+import { AddproductPage } from '../addproduct/addproduct';
 @Component({
   selector: 'page-management',
   templateUrl: 'management.html',
@@ -26,6 +28,19 @@ import { OffanddeletePage } from '../offanddelete/offanddelete';
 export class ManagementPage {
 
 
+  name:any;
+  aa=[];
+  bb=[];
+  cc=[];
+  a:any;
+  b:any;
+  c:any;
+  d:any;
+  dd=[];
+  pname:any;
+  pprice:any;
+  ptime:any;
+  priceArray=[];
   matchedDay=[];
   reservationDes=[];
   designername:any;
@@ -105,7 +120,7 @@ export class ManagementPage {
   designerurl5:string="";
   designerurl6:string="";
   designerurl7:string="";
-  
+  newPriceArray=[];
   dutySelected:any;
 
  
@@ -448,17 +463,219 @@ export class ManagementPage {
   });
   }
 
+  async addnewDesigner(flag,picd,name){
+    console.log("name is : "+name);
+    var newvalue="designer"+flag;
+    console.log(newvalue);
+    this.mypicref.child(this.store).child(newvalue)
+    .putString(picd,'base64',{contentType:'image/jpeg'})
+    .then(savepic=>{
+      console.log(this.store);
+      console.log("savinggggggg pic");
+      console.log(savepic);
+      this.mypicref.child(this.store).child(newvalue).getDownloadURL().then((url)=> {
+        console.log(flag+"new url is and flag: "+url);
+       
+        console.log(flag);
+        flag=Number(flag);
+        if(flag==0){
+          this.firedata.child(this.store).update({
+            "designerImage":url,
+            "designername":name
+          })
+        }
+
+        if(flag==1){
+          this.firedata.child(this.store).update({
+            "designerImage1":url,
+            "designername1":name
+          })
+        }
+        if(flag==2){
+          this.firedata.child(this.store).update({
+            "designerImage2":url,
+            "designername2":name
+          })
+        }
+        if(flag==3){
+          this.firedata.child(this.store).update({
+            "designerImage3":url,
+            "designername3":name
+          })
+        }
+        if(flag==4){
+          this.firedata.child(this.store).update({
+            "designerImage4":url,
+            "designername4":name
+          })
+        }
+        if(flag==5){
+          this.firedata.child(this.store).update({
+            "designerImage5":url,
+            "designername5":name
+          })
+        }
+        if(flag==6){
+         
+          this.firedata.child(this.store).update({
+            "designerImage6":url,
+            "designername6":name
+          })
+        }
+        if(flag==7){
+          this.firedata.child(this.store).update({
+            "designerImage7":url,
+            "designername7":name
+          })
+        }
+        if(flag==8){
+          this.firedata.child(this.store).update({
+            "designerImage8":url,
+            "designername8":name
+          })
+        }
+        if(flag==9){
+          this.firedata.child(this.store).update({
+            "designerImage9":url,
+            "designername9":name
+          })
+        }
+        if(flag==10){
+          this.firedata.child(this.store).update({
+            "designerImage10":url,
+            "designername10":name
+          })
+        }
+        if(flag==11){
+          this.firedata.child(this.store).update({
+            "designerImage11":url,
+            "designername11":name
+          })
+        }
+        if(flag==12){
+          this.firedata.child(this.store).update({
+            "designerImage12":url,
+            "designername12":name
+          })
+        }
+        if(flag==13){
+          this.firedata.child(this.store).update({
+            "designerImage13":url,
+            "designername13":name
+          })
+        }
+        if(flag==14){
+          this.firedata.child(this.store).update({
+            "designerImage14":url,
+            "designername14":name
+          })
+        }
+        if(flag==15){
+          this.firedata.child(this.store).update({
+            "designerImage15":url,
+            "designername15":name
+          })
+        }
+        if(flag==16){
+          this.firedata.child(this.store).update({
+            "designerImage16":url,
+            "designername16":name
+          })
+        }
+        if(flag==17){
+          this.firedata.child(this.store).update({
+            "designerImage17":url,
+            "designername17":name
+          })
+        }
+        if(flag==18){
+          this.firedata.child(this.store).update({
+            "designerImage18":url,
+            "designername18":name
+          })
+        }
+        if(flag==19){
+          this.firedata.child(this.store).update({
+            "designerImage19":url,
+            "designername19":name
+          })
+        }
+        window.alert("추가완료")
+      })
+    })
+  }
+  addProduct(){
+    let modal = this.modal.create(AddproductPage);
+      modal.present();
+      modal.onDidDismiss(data => {
+        console.log(data.value);
+        var value=data.value
+        var time=data.time;
+        var price=data.price;
+        var event=data.event;
+        this.priceArray.push({"value":value,"price":price,"time":time,"event":event})
+                 
+        console.log(this.priceArray);
+        this.firedata.child(this.store).child("arrayPrice").update(this.priceArray)
+
+      });
+  }
+  deleteProduct(a){
+    console.log(a);
+    let alert = this.alertCtrl.create({
+      title: "삭제 하시겠습니까"
+      ,
+      buttons: [
+        {
+          text: '취소',
+          handler: data => {
+          }
+        },
+        {
+          text: '검색',
+          handler: data => {
+            for(var i=0; i<this.priceArray.length; i++){
+              if(this.priceArray[i].value==a.value){
+                console.log(this.priceArray[i]+"삭제");
+                this.priceArray.splice(i,1);
+                console.log(this.priceArray); 
+               
+                this.firedata.child(this.store).child("arrayPrice").remove().then(()=>{
+                  this.firedata.child(this.store).child("arrayPrice").update(this.priceArray)
+
+                  window.alert("삭제완료")
+                }).catch((e)=>{
+                  window.alert(e);
+                  console.log(e);
+                })
+              
+              }
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+
+   
+  }
   addDesigner(){
+    console.log("adding designer");
 
     if(this.designerCount>19){
       window.alert("20개 이상 등록불가능합니다.");
     }else{
 
-      let modal = this.modal.create(CameraselectPage);
+      console.log("registering..");
+      let modal = this.modal.create(Cameraselect4Page);
+      modal.present();
       modal.onDidDismiss(imagedata => {
         var value="";
        
           console.log("get pic");
+
+          console.log()
+          console.log(imagedata.name);
           if(imagedata!=undefined){
             if(imagedata.flag=="delete"){
   
@@ -466,14 +683,24 @@ export class ManagementPage {
               // this.generateagain();
   
             }else{
+              if(imagedata.name==undefined){
+                window.alert("이름을 반드시 입력해주세요");
+              }else{
+    console.log(imagedata.name);
+              console.log("aababab");
               console.log(this.designerCount);
+              this.name=imagedata.name;
               this.picdata=imagedata.data;
               this.base64Image = "data:image/jpeg;base64," + imagedata.data;
     
-                  value="designer"+this.designerCount;
+                  value=this.designerCount;
                   this.picurl=this.base64Image;
                   this.picdata=imagedata.data;
-                  this.upload(value,this.picdata);
+                  
+                  console.log(value);
+                  this.addnewDesigner(value,this.picdata,this.name);
+              }
+          
             }
            
           }
@@ -753,13 +980,9 @@ export class ManagementPage {
         }
       ],
       buttons: [
+       
         {
-          text: '취소',
-          handler: data => {
-          }
-        },
-        {
-          text: '검색',
+          text: '확인',
           handler: data => {
             console.log(data.keyword);
             this.firedata.child(this.store).update({
@@ -781,13 +1004,9 @@ export class ManagementPage {
         }
       ],
       buttons: [
+       
         {
-          text: '취소',
-          handler: data => {
-          }
-        },
-        {
-          text: '검색',
+          text: '완료',
           handler: data => {
             console.log(data.keyword);
             this.firedata.child(this.store).update({
@@ -804,16 +1023,20 @@ export class ManagementPage {
     }else{
       let modal = this.modal.create(CameraselectPage);
     modal.onDidDismiss(imagedata => {
-      var value="";
+      if(imagedata!=undefined){
+        var value="";
         this.picdata=imagedata.data;
         this.base64Image = "data:image/jpeg;base64," + imagedata.data;
         console.log("get pic");
+        window.alert(v);
         if(imagedata.data!=undefined){
               value=v;
               this.picurl=this.base64Image;
               this.picdata=imagedata.data;
               this.upload(v,this.picdata);
         }
+      }
+  
 
         
     });
@@ -1025,6 +1248,40 @@ export class ManagementPage {
    return todayLabel;
  }
 
+ modifyProducts(){
+   this.a =document.getElementsByClassName("first");
+   console.log(this.a);
+   for(var i=0; i<this.a.length; i++){
+     this.aa.push(this.a[i].value);
+   }
+   this.b =document.getElementsByClassName("second");
+   console.log(this.b);
+   for(var i=0; i<this.b.length; i++){
+     console.log(this.b[i].value);
+     this.bb.push(this.b[i].value);
+   }
+    this.c =document.getElementsByClassName("third");
+   console.log(this.c);
+   for(var i=0; i<this.c.length; i++){
+     console.log(this.c[i].value);
+     this.cc.push(this.c[i].value);
+   }
+   this.d =document.getElementsByClassName("fourth");
+   console.log(this.d);
+   for(var i=0; i<this.d.length; i++){
+     console.log(this.d[i].value);
+     this.dd.push(this.d[i].value);
+   }
+   for(var j=0; j<this.bb.length; j++){
+     console.log(this.aa[j]);
+     console.log(this.bb[j]);
+       console.log(this.cc[j]);
+       this.newPriceArray.push({"value":this.aa[j],"price":this.bb[j],"time":this.cc[j],"event":this.dd[j]})
+   }
+   this.firedata.child(this.store).child("arrayPrice").update(this.newPriceArray);
+   window.alert("수정완료!")
+   console.log(this.priceArray);
+ }
   generateagain(){
     console.log(this.store);
     this.firedata.child(this.store).once('value',(snapshot)=>{
@@ -1038,6 +1295,7 @@ export class ManagementPage {
         if(result=="address"){
           this.address=snapshot.val()[result]
         }
+
         if(result=="mainImage"){
           this.mainImage=snapshot.val()[result]
         }
@@ -1081,7 +1339,15 @@ export class ManagementPage {
         if(result=="name"){
           this.storeName=snapshot.val()[result]
         }
+        if(result=="arrayPrice"){
+          this.priceArray=[];
 
+          for(var i=0; i<snapshot.val()[result].length; i++){
+            this.priceArray.push(snapshot.val()[result][i]);
+          }
+          console.log(this.priceArray);
+        }
+        console.log(this.priceArray);
         if(result=="designarray"){
           this.designarray=[];
 
@@ -1545,10 +1811,6 @@ export class ManagementPage {
         if(result=="designername19"){
           this.designername19=snapshot.val()[result]
         }
-        console.log(this.designImage);
-        console.log(this.designerImage);
-        console.log(this.designername);
-        console.log("mmmmmmmmmmmm")
         if(result=="reservationList"){
           for(var p in snapshot.val().reservationList){
             this.reservationDes.push(snapshot.val().reservationList[p]);
@@ -1561,12 +1823,6 @@ export class ManagementPage {
           this.tel=snapshot.val()[result]
         }
 
-        console.log(this.description);
-        console.log(this.address);
-        console.log(this.mainImage);
-        console.log(this.secondImage);
-        console.log(this.thirdImage);
-        console.log(this.fourthImage);
         if(result=="keywords"){
           this.keywords=snapshot.val()[result]
         }

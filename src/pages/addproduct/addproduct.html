@@ -1,0 +1,29 @@
+
+
+
+
+<ion-content class="main-view" style="background: transparent;
+background-color: transparent;
+height: 40%;
+top: 30%;" padding>
+    
+  <div class="modal_content">
+      
+        <div class="img">
+          
+          <ion-input style="
+          border: solid 1px;" placeholder="상품명 입력하세요" [(ngModel)]="value"></ion-input>
+          <ion-input style="
+          border: solid 1px;" placeholder="가격 입력하세요" [(ngModel)]="price"></ion-input>
+          <ion-input style="
+          border: solid 1px;" placeholder="소요시간 입력하세요" [(ngModel)]="time"></ion-input>
+          <ion-input style="
+          border: solid 1px;" placeholder="할인률 입력하세요" [(ngModel)]="event"></ion-input>
+      </div>
+      <div class="footer">
+        <button class="btn" ion-button (click)="confirm()">돌아가기</button>
+      </div>
+   
+  </div>
+  </ion-content>
+  

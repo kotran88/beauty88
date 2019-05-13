@@ -14,6 +14,42 @@ page-storedetail {
     .toolbar-background-md{
         background-color:white !important;
     }
+    .ff{
+        float: left;
+        width: 30%;
+    }
+    .ss{
+        float: left;
+        width: 20%;
+
+    text-align: right;
+    }
+    .priceIndex{
+
+        width:100%;
+        max-height: 150px;
+        overflow: scroll;
+    }
+    .tt{
+        float: left;
+        width: 22%;
+        margin-right:5px;
+
+    text-align: right;
+    }
+    .alert-wrapper{
+        border-radius: 15px;
+    }
+   
+    
+    .fff{
+            float: left;
+    width: 23%;
+
+    font-size: 11px;
+    line-height: 20px;
+    overflow: hidden;
+    }
     .reserve{
         width: 70%;
     float: left;
@@ -48,11 +84,11 @@ page-storedetail {
      }
      .selectedimagereservation{
         border-radius: 100px;
-        width: 100px;
-        height: 100px;
-        margin-left: 4em;
+        width: 70px;
+        height: 70px;
+        margin-left:2.2em;
         position: relative;
-        border: solid 3px;
+        border: solid 3px aquamarine;
      }
      .imagereservation2{
         height: 150px;
@@ -113,7 +149,7 @@ page-storedetail {
     .scrollspan{
         margin-top: 6em;
         position: relative;
-        margin-left: -3.8em;
+        margin-left: -5.5em;
     }
     // .scroll-content{
     //     padding:0;

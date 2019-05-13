@@ -14,6 +14,7 @@ import { IonicPage,ViewController, NavController, NavParams } from 'ionic-angula
 })
 export class AlbumpagePage {
 
+  titlee:any;
   array=[];
   firstImage:any;
   secondImage:any;
@@ -47,10 +48,14 @@ this.selected=this.array[value];
 
   }
   gotoback(){
+    this.titlee="";
     this.viewCtrl.dismiss();
   }
 
   ionViewDidLoad() {
+    setTimeout(()=>{
+      this.titlee="Design album page"
+    },500)
     console.log('ionViewDidLoad AlbumpagePage');
   }
 

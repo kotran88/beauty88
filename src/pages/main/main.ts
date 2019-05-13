@@ -83,69 +83,7 @@ this.alertC=alertC;
     this.rule2=snap.val().content;
   })
 
-  var photo="";
-  var name="";
-  var id="";
-  
-  photo =localStorage.getItem("photo");
-  name =localStorage.getItem("name");
-  id =localStorage.getItem("id");
-  console.log("this is basic")
-  console.log(photo);
-  console.log(name);
-  console.log(id);
-  if(photo!=null){
-   if(photo.length==9){
-    // this.logined="true";
-    // this.id="1000334014";
-    // this.userUid="1000334014"
-  
-    // this.name="마스터이름2";
-    
-    // this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
- 
-    // this.generateStore("서울특별시");
-    // this.generateId();
-  
-  }else{
-
-    console.log("showing kakao");
-    this.imageUrl=photo;
-    this.id=id;
-    this.name=name;
-    this.logined="true";
-    
-    this.userUid=this.id;
-   }
-  
-    }else{
-      console.log("photo is null!")
-      // this.logined="false";
-      // this.uniqueDeviceID.get().then((e)=>{
-      //   console.log("size is : "+e);
-      // }).catch((e)=>{
-      //   window.alert("err"+e);
-      // })
-      
-
-      // this.logined="true";
-      // this.id="1000334014";
-      // this.userUid="1000334014"
-    
-      // this.name="마스터이름33";
-      
-      // this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
-      // localStorage.setItem("photo",this.imageUrl);
-    // localStorage.setItem("name",this.name);
-    // localStorage.setItem("id",this.userUid);
-    }
-  
       console.log("ioniv view did loaded');")
-      // this.loading = this.loading.create({
-      //   content: `Loading..`,
-      //   });
-      //   this.loading.present();
-     
      
   console.log(this.userUid);
 
@@ -158,18 +96,7 @@ this.alertC=alertC;
             console.log(this.lng);
             console.log(this.location);
             
-            if(this.lat!=null){
-
-
-          this.generateStore("서울특별시");
-          this.generateId();
-
-            }else{
-              setTimeout(()=>{
-                this.getGeo();
-              
-              },1000)
-            }
+           
 
   
     // if(this.userUid!=undefined){
@@ -306,14 +233,50 @@ this.alertC=alertC;
 
     this.categoryselected=value;
 
-    this.navCtrl.push(HomePage,{"flag":"normal","nick":this.name,"category":value,"userId":this.userUid,"x":this.lat,"y":this.lng,"location":this.location})
+    this.navCtrl.push(HomePage,{"flag":"normal","nick":this.name,"category":value,"userId":this.userUid,"x":this.lat,"y":this.lng,"location":this.location,"logined":this.logined}).then(() => {
+      this.navCtrl.getActive().onDidDismiss(data => {
+       
+        this.generateId();
+      })
 
+    });
 
   }
   mypage(){
 
     console.log(this.userUid);
-    this.navCtrl.push(MypagePage,{"userid":this.userUid});
+
+    if(this.logined==true||this.logined=="true"){
+
+      this.navCtrl.push(MypagePage,{"userid":this.userUid});
+    }else{
+
+      var alert = this.alertC.create({
+        title: '로그인을 해야합니다.',
+        buttons: [
+          {
+            text: '취소',
+            handler: data => {
+  
+            }
+          },
+          {
+            text: '로그인하기',
+            handler: data => {
+                this.kakaoLogin();
+                    }
+                  
+            }
+          ]
+          });
+      
+        alert.present();
+
+
+      };
+     
+  
+    
   }
   entersharing(v){
     
@@ -364,11 +327,11 @@ this.alertC=alertC;
                 console.log("flag : "+flag);
                 if(flag){
                   window.alert("매치 완료!")
-                                this.id="1000334014";
-                  this.userUid="1000334014"
-                this.logined="true";
-                  this.name="마스터이름";
-                  this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
+                //                 this.id="1000334014";
+                //   this.userUid="1000334014"
+                // this.logined="true";
+                //   this.name="마스터이름";
+                //   this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
                   this.generateId();
                 }else{
                   window.alert("찾을수없습니다")
@@ -392,6 +355,7 @@ this.alertC=alertC;
     this.navCtrl.push(RulepagePage,{"rule":this.rule})
   }
   openrule2page(){
+    console.log(this.rule2);
     this.navCtrl.push(Rule2pagePage,{"rule2":this.rule2})
   }
   sharing(v){
@@ -434,6 +398,21 @@ this.alertC=alertC;
     alert.present();
   }
   ionViewDidLoad(){
+
+    if(this.lat!=null){
+
+
+      this.generateStore("서울특별시");
+      this.generateId();
+
+        }else{
+          setTimeout(()=>{ this.generateStore("서울특별시");
+          // this.generateId();
+            this.getGeo();
+          
+          },1000)
+        }
+
   //  if(this.platform.is("android")){
     
       // this.loading = this.loading.create({
@@ -445,6 +424,76 @@ this.alertC=alertC;
   
 }
 generateId(){
+
+  console.log("come to generateId")
+  var photo="";
+  var name="";
+  var id="";
+  
+  photo =localStorage.getItem("photo");
+  name =localStorage.getItem("name");
+  id =localStorage.getItem("id");
+  this.logined =localStorage.getItem("logined");
+  console.log("this is basic")
+  console.log(photo);
+  console.log(name);
+  console.log(id);
+
+  if(photo!=null){
+   if(photo.length==9){
+   
+    this.logined="true";
+    this.id="1000334014222";
+    this.userUid="1000334014222"
+  
+    this.name="마스터이름2";
+    
+    this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
+ 
+    this.generateStore("서울특별시");
+    this.generateId();
+    console.log("photo is null!")
+  //   this.logined="true";
+  // this.id="1000334014";
+  // this.userUid="1000334014"
+
+  // this.name="마스터이름2";
+  
+  // this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
+
+  }else{
+
+    // console.log("showing kakao");
+    this.imageUrl=photo;
+    this.id=id;
+    this.name=name;
+    this.logined="true";
+    
+    this.userUid=this.id;
+  //   console.log("photo is null!")
+  //   this.logined="true";
+  // this.id="1000334014";
+  // this.userUid="1000334014"
+
+  // this.name="마스터이름112";
+  
+  // this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
+
+   }
+  
+    }else{
+      console.log("photo is null!")
+      
+      this.logined="true";
+    this.id="10003340143";
+    this.userUid="10003340143"
+  
+    this.name="마스터이름3";
+    
+    this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
+ 
+    }
+
   this.firedata2.once('value',(snapshot)=>{
     var value:any;
     for(var result in snapshot.val()){
@@ -482,6 +531,7 @@ generateId(){
   console.log("?????")
 }
 getGeo(){
+  console.log("get geo come");
   var options = {
     timeout: 10000,
     enableHighAccuracy: false
@@ -535,27 +585,32 @@ getGeo(){
     console.log("failed");
     console.log(e);
    
-    this.count++;
 
+    console.log("count is : "+this.count);
     // if(this.loading!=null){
     //   this.loading.dismiss();
     // }
     if(this.geoflag!=true){
-      setTimeout(()=>{
-        if(e.code==1){
-          this.geoflag=false;
-          this.generateStore("서울특별시");
-          this.generateId();
-        }else{
-          this.getGeo();
-          this.generateStore("서울특별시");
-          this.generateId();
-        console.log("geo loading error:");
-
-        console.log(e);
-        }
-        
-      },300)
+      if(this.count<5){
+        setTimeout(()=>{
+          if(e.code==1){
+            
+            this.geoflag=false;
+            this.generateStore("서울특별시");
+            this.generateId();
+          }else{
+            console.log("gggg");
+            this.getGeo();
+            // this.generateStore("서울특별시");
+            // this.generateId();
+          console.log("geo loading error:");
+  
+          console.log(e);
+          }
+          
+        },500)
+      }
+     
     
     }else{
     }
@@ -740,21 +795,28 @@ requesttoopen(){
     // 
   }
   logout(){
-    localStorage.setItem("logined","false");
+    
+      this._kakaoCordovaSDK.logout().then(()=>{
+      console.log("success logout");
+      localStorage.setItem("logined","false");
     localStorage.setItem("photo",undefined);
       localStorage.setItem("name",undefined);
       localStorage.setItem("id",undefined);
       this.logined="false";
-      this._kakaoCordovaSDK.requestMe().then((e=>{
-        console.log("result is : ")
-        console.log(e);
-      })).catch((e)=>{
-        window.alert(e);
-      })
-      this._kakaoCordovaSDK.logout().then(()=>{
-      console.log("success logout");
       
-      alert("로그아웃완료");
+      var alert = this.alertC.create({
+        title: '로그아웃 되었습니다.',
+        buttons: [
+          {
+            text: '확인',
+            handler: data => {
+              
+                    }
+            }
+          ]
+          });
+      
+        alert.present();
     }).catch((e)=>{
       window.alert(e);
     })
@@ -795,7 +857,6 @@ requesttoopen(){
             localStorage.setItem("name",res.properties.nickname);
             localStorage.setItem("id",res.id);
             localStorage.setItem("logined","true");
-
             this.userUid=res.id;
             this.name=localStorage.getItem("name");
             this.imageUrl=localStorage.getItem("photo");

@@ -16,14 +16,19 @@ import { StoredetailPage } from '../storedetail/storedetail';
 export class MypagePage {
   storearray=[];
   userId:any;
+  closerflag:boolean=false;
   viewCtrl:any;
   firedata = firebase.database();
+  titlee:any="";
   constructor(viewCtrl:ViewController,public navCtrl: NavController, public navParams: NavParams) {
 
     this.viewCtrl=viewCtrl;
 
     this.userId=navParams.get("userid");
     console.log("user id issss : "+this.userId);
+    setTimeout(()=>{
+      this.titlee="내 예약 리스트";
+    },300)
     this.firedata.ref("clients").child(this.userId).child("reservationList").once('value',(snapshot)=>{
       this.storearray=[];
       for(var result in snapshot.val()){
@@ -57,6 +62,7 @@ export class MypagePage {
     });
   }
   detail(store){
+    console.log(store);
     this.navCtrl.push(StoredetailPage,{"storeId":store.id,"userId":this.userId,"store":store}).then(()=>{
       this.navCtrl.getActive().onDidDismiss(data => {
        
@@ -65,10 +71,13 @@ export class MypagePage {
     })
   }
   gotoback(){
+    this.closerflag=true;
+    this.titlee="";
     this.viewCtrl.dismiss();
   }
 
   ionViewDidLoad() {
+    this.closerflag=false;
     console.log('ionViewDidLoad MypagePage');
   }
 

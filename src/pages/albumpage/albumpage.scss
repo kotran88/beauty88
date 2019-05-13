@@ -6,13 +6,34 @@ page-albumpage {
     .scroll-content{
     /* overflow-y: scroll; */
     overflow-y: hidden;
-    padding: 0 16px 16px 16px !important;
+    padding: 0 16px 0px 16px !important;
 
     }
     .back-button.show-back-button{
         display:none !important;
 
     }
+    .i{
+        position: relative;
+        width: 100%;
+        height: 340px;
+        overflow: hidden;
+    }
+    .image{
+       
+        
+    }
+
+    // .i{
+    //     position: relative;
+    //     width: 100%;
+    //     height: auto;
+    //     overflow: hidden;
+    // }
+    // .image{
+       
+        
+    // }
     .bar-header {
         border: 0px !important;
         border-bottom-color: transparent !important;
@@ -23,20 +44,19 @@ page-albumpage {
         background-color:white !important
     }
     .imagedesign{
-        float: left;
         width: 30%;
         height: 100px;
         margin-left: 7px;
+
+    float: left;
      }
      .toolbar-md{
         min-height: 40px !important;
     }
      .container{
-        text-align: center;
         
-        position: relative;
     width: 100%;
-    height: 100%;
+    height: 300px;
     overflow-y: scroll;
     overflow-y: scroll;
 

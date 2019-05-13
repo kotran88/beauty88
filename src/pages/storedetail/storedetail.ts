@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController,ViewController, NavParams } from 'ionic-angular';
+import { IonicPage, AlertController,NavController,ViewController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import {Reservation} from './../../models/reservation';
 import { JoinedPage } from '../joined/joined';
@@ -24,10 +24,12 @@ declare var naver: any;
 })
 export class StoredetailPage {
   designermanagement=[];
+  newmon:any;
   reviewarray=[];
   logined:any="false";
   designImage:any;
   reviewmoreflag:boolean=false;
+  closeflag:boolean=false;
   designImage1:any;
   designImage2:any;
 
@@ -206,11 +208,11 @@ export class StoredetailPage {
   categoryy:any;
   firedataa = firebase.database();
   firedata = firebase.database().ref('store');
-  constructor(public kakao:KakaoCordovaSDK,viewCtrl:ViewController,public callNumber:CallNumber,public viewer:PhotoViewer,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public alertCtrl:AlertController,public _kakaoCordovaSDK: KakaoCordovaSDK,viewCtrl:ViewController,public callNumber:CallNumber,public viewer:PhotoViewer,public navCtrl: NavController, public navParams: NavParams) {
      this.userId=this.navParams.get("userId");
      this.storeId=this.navParams.get("storeId");
      this.nick=this.navParams.get("nick");
-     this.logined=localStorage.getItem("logined");
+     this.logined=this.navParams.get("logined");
      this.categoryy=this.navParams.get("category");
      this.viewCtrl=viewCtrl;
      console.log("constructor")
@@ -245,6 +247,8 @@ export class StoredetailPage {
      this.month=month+1;
      console.log("this month is : "+this.month);
      this.today=date;
+
+
      this.selectDay=this.today;
      this.endofthismonth=this.getDaysInMonth(this.month,fullyear)
      this.dayofweek1=this.getTodayLabel(1);
@@ -396,7 +400,12 @@ export class StoredetailPage {
       
 
        console.log("1");
-       this.name=snapshot.val().name
+       setTimeout(()=>{
+        this.name=snapshot.val().name
+      },500)
+    
+      
+     
        this.tel=snapshot.val().tel
        this.facility=snapshot.val().facility;
        console.log(this.arrayPrice);
@@ -709,7 +718,7 @@ export class StoredetailPage {
   let feedTemplate: KLFeedTemplate = {
     content: feedContent
   };
-  this.kakao
+  this._kakaoCordovaSDK
     .sendLinkFeed(feedTemplate)
     .then(
       res => {
@@ -726,7 +735,9 @@ export class StoredetailPage {
   }
   gotoback(){
     // this.matchedKeyword="t";
+    this.closeflag=true;
     this.viewCtrl.dismiss();
+    this.name="";
   }
    getDaysInMonth = function(month,year) {
     // Here January is 1 based
@@ -742,8 +753,15 @@ export class StoredetailPage {
 
     
 
+      this.closeflag=true;
     var array=[];
-    this.navCtrl.push(AlbumpagePage,{"selected":selectedImage,"albumList":this.designarray})
+    this.navCtrl.push(AlbumpagePage,{"selected":selectedImage,"albumList":this.designarray}).then(()=>{
+      this.navCtrl.getActive().onDidDismiss(data => {
+       
+    this.closeflag=false;
+        console.log("dismiss");
+      });
+    })
   }
 call(tel){
   console.log(tel);
@@ -794,10 +812,10 @@ enlarge(v){
       // }
       if(this.firstdate-this.endofthismonth==1){
         this.newmonth=1;
-        this.firstdate=this.newmonth;
+        this.firstdate=(this.today+1)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
       }else if(this.today+1>this.endofthismonth){
-        this.firstdate=this.newmonth;
+        this.firstdate=(this.today+1)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
       }
 
@@ -812,15 +830,40 @@ enlarge(v){
      
       if(this.seconddate-this.endofthismonth==1){
         this.newmonth=1;
-        this.seconddate=this.newmonth;
+        this.seconddate=(this.today+2)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
       }else if(this.today+2>this.endofthismonth){
-        this.seconddate=this.newmonth;
+        this.seconddate=(this.today+2)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
       }
     }else if(v==3){
-      
-      todayLabel = week[today+3];
+      if((today+3)-6==1){
+        console.log("1");
+        todayLabel = week[0];
+      }else if((today+3)-6==2){
+        console.log("2");
+        todayLabel = week[1];
+      }else if((today+3)-6==3){
+        console.log("3");
+        todayLabel = week[2];
+      }else if((today+3)-6==4){
+        console.log("4");
+        todayLabel = week[3];
+      }else if((today+3)-6==5){
+        console.log("5");
+        todayLabel = week[4];
+      }else if((today+3)-6==6){
+        console.log("6");
+        todayLabel = week[5];
+      }else if((today+3)-6==7){
+        console.log("7");
+        todayLabel = week[6];
+      }else{
+        console.log("8");
+        todayLabel = week[today+3];
+      }
+      console.log(todayLabel);
+
       if(todayLabel==undefined){
         todayLabel = week[this.flag];
         this.flag+=1;
@@ -830,70 +873,201 @@ enlarge(v){
       if(this.today+3-this.endofthismonth==1){
         // todayLabel="false";
         this.newmonth=1;
-        this.thirddate=this.newmonth;
+        this.thirddate=(this.today+3)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
       }else if(this.today+3>this.endofthismonth){
-        this.thirddate=this.newmonth;
+        this.thirddate=(this.today+3)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
       }
     }else if(v==4){
-      todayLabel = week[today+4];
+      if((today+4)-6==1){
+        console.log("1");
+        todayLabel = week[0];
+      }else if((today+4)-6==2){
+        console.log("2");
+        todayLabel = week[1];
+      }else if((today+4)-6==3){
+        console.log("3");
+        todayLabel = week[2];
+      }else if((today+4)-6==4){
+        console.log("4");
+        todayLabel = week[3];
+      }else if((today+4)-6==5){
+        console.log("5");
+        todayLabel = week[4];
+      }else if((today+4)-6==6){
+        console.log("6");
+        todayLabel = week[5];
+      }else if((today+4)-6==7){
+        console.log("7");
+        todayLabel = week[6];
+      }else{
+        console.log("7");
+        todayLabel = week[today+4];
+      }
+      
       if(todayLabel==undefined){
        
         todayLabel = week[this.flag];
         this.flag+=1;
       }
       this.fourthdate=this.today+4;
-      if(this.today+4-this.endofthismonth==1){
+      if(this.fifthdate-this.endofthismonth==1){
         this.newmonth=1;
-        this.fourthdate=this.newmonth;
+        this.fourthdate=(this.today+4)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
       }else if(this.today+4>this.endofthismonth){
-        this.fourthdate=this.newmonth;
+        this.fourthdate=(this.today+4)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
-        // todayLabel="false";
       }
     }else if(v==5){
-      todayLabel = week[today+5];
+      if((today+5)-6==1){
+        console.log("1");
+        todayLabel = week[0];
+      }else if((today+5)-6==2){
+        console.log("2");
+        todayLabel = week[1];
+      }else if((today+5)-6==3){
+        console.log("3");
+        todayLabel = week[2];
+      }else if((today+5)-6==4){
+        console.log("4");
+        todayLabel = week[3];
+      }else if((today+5)-6==5){
+        console.log("5");
+        todayLabel = week[4];
+      }else if((today+5)-6==6){
+        console.log("6");
+        todayLabel = week[5];
+      }else if((today+5)-6==7){
+        console.log("7");
+        todayLabel = week[6];
+      }else{
+        console.log("7");
+        todayLabel = week[today+5];
+      }
       if(todayLabel==undefined){
         todayLabel = week[this.flag];
         this.flag+=1;
 
       }
       this.fifthdate=this.today+5;
-      if(this.today+5>this.endofthismonth){
-        this.fifthdate=this.newmonth;
+      if(this.fifthdate-this.endofthismonth==1){
+        this.newmonth=1;
+        this.fifthdate=(this.today+5)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
-        // todayLabel="false";
+      }else if(this.today+5>this.endofthismonth){
+        this.fifthdate=(this.today+5)-this.endofthismonth;
+        this.newmonth=this.newmonth+1;
       }
+
+      // if(this.today+5>this.endofthismonth){
+      //   this.fifthdate=this.newmonth;
+      //   this.newmonth=this.newmonth+1;
+      //   // todayLabel="false";
+      // }
     }else if(v==6){
-      todayLabel = week[today+6];
+      console.log("this is 6")
+      if((today+6)-6==1){
+        console.log("1");
+        todayLabel = week[0];
+      }else if((today+6)-6==2){
+        console.log("2");
+        todayLabel = week[1];
+      }else if((today+6)-6==3){
+        console.log("3");
+        todayLabel = week[2];
+      }else if((today+6)-6==4){
+        console.log("4");
+        todayLabel = week[3];
+      }else if((today+6)-6==5){
+        console.log("5");
+        todayLabel = week[4];
+      }else if((today+6)-6==6){
+        console.log("6");
+        todayLabel = week[5];
+      }else if((today+6)-6==7){
+        console.log("7");
+        todayLabel = week[6];
+      }else{
+        console.log("7");
+        todayLabel = week[today+6];
+      }
       if(todayLabel==undefined){
         todayLabel = week[this.flag];
         this.flag+=1;
         
       }
+     console.log("checking...");
+      console.log(this.today);
       this.sixthdate=this.today+6;
-      if(this.today+6>this.endofthismonth){
-        // todayLabel="false";
+      console.log(this.sixthdate);
+      if(this.sixthdate-this.endofthismonth==1){
+        this.newmonth=1;
         this.sixthdate=this.newmonth;
         this.newmonth=this.newmonth+1;
+      }else if(this.today+6>this.endofthismonth){
+        this.sixthdate=(this.today+6)-this.endofthismonth;
+        this.newmonth=this.newmonth+1;
       }
+
+      // if(this.today+6>this.endofthismonth){
+      //   // todayLabel="false";
+      //   this.sixthdate=this.newmonth;
+      //   this.newmonth=this.newmonth+1;
+      // }
     }else if(v==7){
-      todayLabel = week[today+7];
+      if((today+7)-6==1){
+        console.log("1");
+        todayLabel = week[0];
+      }else if((today+7)-6==2){
+        console.log("2");
+        todayLabel = week[1];
+      }else if((today+7)-6==3){
+        console.log("3");
+        todayLabel = week[2];
+      }else if((today+7)-6==4){
+        console.log("4");
+        todayLabel = week[3];
+      }else if((today+7)-6==5){
+        console.log("5");
+        todayLabel = week[4];
+      }else if((today+7)-6==6){
+        console.log("6");
+        todayLabel = week[5];
+      }else if((today+7)-6==7){
+        console.log("7");
+        todayLabel = week[6];
+      }else{
+        console.log("7");
+        todayLabel = week[today+7];
+      }
       if(todayLabel==undefined){
         todayLabel = week[this.flag];
         this.flag+=1;
       }
       this.seventhdate=this.today+7;
-      if(this.today+7>this.endofthismonth){
-        // todayLabel="false";
-        this.seventhdate=this.newmonth;
+      console.log(this.today+7);
+      console.log(this.endofthismonth);
+      console.log(this.newmonth);
+      console.log("kkkkk");
+      if(this.seventhdate-this.endofthismonth==1){
+        this.newmonth=1;
+        this.seventhdate=(this.today+7)-this.endofthismonth;
+        this.newmonth=this.newmonth+1;
+      }else if(this.today+7>this.endofthismonth){
+        this.seventhdate=(this.today+7)-this.endofthismonth;
         this.newmonth=this.newmonth+1;
       }
+
+      // if(this.today+7>this.endofthismonth){
+      //   // todayLabel="false";
+      //   this.seventhdate=this.newmonth;
+      //   this.newmonth=this.newmonth+1;
+      // }
     }
   
-  console.log(todayLabel);
+  console.log("label is ....."+todayLabel);
  
     
   
@@ -927,19 +1101,21 @@ reloadSchedule(){
   }
   this.matchedDay=[];
   console.log(this.selectedDesigner);
-  console.log(this.reservationDes);
-  console.log(this.reservationDes);
   for(var a in this.reservationDes){
-    console.log(a);
     console.log(this.reservationDes[a]);
-    console.log(this.reservationDes[a].designer);
-    console.log(this.reservationDes[a].time);
-    console.log(this.reservationDes[a].day);
     if(this.selectedDesigner==this.reservationDes[a].designer){
+      console.log("designer matched"+this.selectedDesigner);
+      console.log(this.month);
+      console.log(this.reservationDes[a]);
       if(this.month==this.reservationDes[a].month){
 
         console.log("matched month"+this.selectDay);
       
+        if(this.reservationDes[a].day==this.selectDay){
+          this.matchedDay.push(this.reservationDes[a].time);
+        }
+      }else if((this.month+1)==this.reservationDes[a].month){
+        console.log("matched22222 month"+this.selectDay);
         if(this.reservationDes[a].day==this.selectDay){
           this.matchedDay.push(this.reservationDes[a].time);
         }
@@ -966,29 +1142,30 @@ reloadSchedule(){
 clickdesigner2(v){
   this.selecteddesignernumber=v;
   if(v==0){
-    this.firstimage=!this.firstimage;
-    this.selectedDesigner=this.designername;
-    this.secondimage=true;
-    this.thirdimage=true;
-    this.fourthimage=true;
-    this.fifthimage=true;
-    this.sixthimage=true;
-    this.seventhimage=true;
-    this.image8=true;
-    this.image9=true;
-    this.image10=true;
-    this.image11=true;
-    this.image12=true;
-    this.image13=true;
-    this.image14=true;
-    this.image15=true;
-    this.image16=true;
-    this.image17=true;
-    this.image18=true;
-    this.image19=true;
-    this.image20=true;
-    console.log(this.firstimage);
-    console.log(this.secondimage);
+      this.firstimage=!this.firstimage;
+      this.selectedDesigner=this.designername;
+      this.secondimage=true;
+      this.thirdimage=true;
+      this.fourthimage=true;
+      this.fifthimage=true;
+      this.sixthimage=true;
+      this.seventhimage=true;
+      this.image8=true;
+      this.image9=true;
+      this.image10=true;
+      this.image11=true;
+      this.image12=true;
+      this.image13=true;
+      this.image14=true;
+      this.image15=true;
+      this.image16=true;
+      this.image17=true;
+      this.image18=true;
+      this.image19=true;
+      this.image20=true;
+      console.log(this.firstimage);
+      console.log(this.secondimage);
+  
    
   }
   if(v==1){
@@ -2515,13 +2692,46 @@ selectDayy(v){
     this.seventh=false;
     this.eighth=true;
   }
+  console.log("v is : "+v);
   this.selectDayOfWeek=this.getTodayLabel(v);
   this.selectDay=this.today+v;
 console.log(this.selecteddesignernumber);
-  this.reloadSchedule();
+  this.newmon=this.month;
+  if((this.today+v)-this.endofthismonth==1){
+    this.selectDay=1;
+    this.newmon=this.month+1;
+  }
+  if((this.today+v)-this.endofthismonth==2){
+    this.selectDay=2;
+    this.newmon=this.month+1;
+  }
+  if((this.today+v)-this.endofthismonth==3){
+    this.selectDay=3;
+    this.newmon=this.month+1;
+  }
+  if((this.today+v)-this.endofthismonth==4){
+    this.selectDay=4;
+    this.newmon=this.month+1;
+  }
+  if((this.today+v)-this.endofthismonth==5){
+    this.selectDay=5;
+    this.newmon=this.month+1;
+  }
+  if((this.today+v)-this.endofthismonth==6){
+    this.selectDay=6;
+    this.newmon=this.month+1;
+  }
+  if((this.today+v)-this.endofthismonth==7){
+    this.selectDay=7;
+    this.newmon=this.month+1;
+  }
+  console.log(this.month);
+  console.log(this.newmonth);
   console.log(this.today+v);
   console.log(this.selectDay);
   console.log(this.offduty);
+
+  this.reloadSchedule();
   for(var i=0; i<this.offduty.length; i++){
     console.log(this.offduty[i].split("-")[2])
     if(this.selectDay==this.offduty[i].split("-")[2]){
@@ -2543,16 +2753,81 @@ makeAllOff(){
   
   }
   join(r){
+    console.log(this.selectDay);
+    console.log(this.selectDayOfWeek)
+    console.log(this.newmon);
     if(this.logined=="false"||this.logined==null){
 
-      window.alert("로그인을 해주세요")
+      var alert = this.alertCtrl.create({
+        title: '로그인을 해야합니다.',
+        buttons: [
+          {
+            text: '취소',
+            handler: data => {
+
+            }
+          },
+          {
+            text: '로그인하기',
+            handler: data => {
+                            let loginOptions = {};
+                  loginOptions['authTypes'] = [
+                                                AuthTypes.AuthTypeTalk, 
+                                                AuthTypes.AuthTypeStory,
+                                                AuthTypes.AuthTypeAccount
+                                              ];
+                  
+                  this._kakaoCordovaSDK.login(loginOptions).then((res) => {
+                      console.log(res);
+                      localStorage.setItem("photo",res.properties.thumbnail_image)
+                          localStorage.setItem("name",res.properties.nickname);
+                          localStorage.setItem("id",res.id);
+                          localStorage.setItem("logined","true");
+
+                          this.userId=res.id;
+                          this.name=localStorage.getItem("name");
+                          this.logined="true";
+                          console.log(this.name);
+                          console.log(this.logined);
+
+                    }
+                  ).catch((e)=>{
+                    window.alert(e);
+                  })  
+            }
+          }
+        ]
+      });
+      alert.present();
+      
+    
     }else{
       if(this.selectedDesigner!="none"){
         console.log("r is :"+r);
        
-        this.navCtrl.push(JoinedPage,{"mainImage":this.mainImage,"idd":this.userId,"storeName":this.name,"time":r,"store":this.storeId,"dayofweek":this.selectDayOfWeek,"day":this.selectDay,"month":this.month,"designer":this.selectedDesigner})
+        this.navCtrl.push(JoinedPage,{"mainImage":this.mainImage,"idd":this.userId,"storeName":this.name,"time":r,"store":this.storeId,"dayofweek":this.selectDayOfWeek,"day":this.selectDay,"month":this.newmon,"designer":this.selectedDesigner})
       }else{
-        alert("디자이너를 선택해주세요")
+        let alert = this.alertCtrl.create({
+          title : "디자이너를 선택해주세요",
+          buttons: [
+          
+            {
+              text: '확인',
+              handler: data => {
+              }
+            }
+          ]
+        });
+        alert.present();
+        this.first=true;
+        this.second=false;
+        this.third=false;
+        this.fourth=false;
+        this.fifth=false;
+        this.sixth=false;
+        this.seventh=false;
+        this.eighth=false;
+        this.selectDayy(0);
       }
     }
     console.log(this.selectDayOfWeek);
@@ -2565,6 +2840,11 @@ makeAllOff(){
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad StoredetailPage');
+    setTimeout(()=>{
+
+      this.closeflag=false;
+    },300)
+    console.log(this.closeflag);
   }
 
 

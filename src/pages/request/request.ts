@@ -207,6 +207,7 @@ export class RequestPage {
     console.log("ogogogog")
     console.log(this.designarray);
     this.store.category="All";
+    var items=[];
     this.store.requestedby=this.userUid;
     this.store.arrayPrice=this.anArray;
     console.log(this.store);
@@ -214,18 +215,30 @@ export class RequestPage {
       address: this.address
   }, (status,response)=> {
       if (status !== naver.maps.Service.Status.OK) {
-          return alert('Something wrong!');
+          return alert('올바른 주소를 입력해주세요!');
       }
-      var result = response.result, // 검색 결과의 컨테이너
+ 
+      var result = response.result; // 검색 결과의 컨테이너
+     console.log("result is : "+result);
+     console.log(result);
           items = result.items; // 검색 결과의 배열
+          console.log("printing...")
           console.log(result);
-          console.log(items[0]);
-          console.log(items[0].point.x);
-          console.log(items[0].point.y);
-          console.log("65sss");
-          this.store.lat=items[0].point.y;
-          console.log("this isssssss 57")
-          this.store.lng=items[0].point.x;
+          if(items.length==0){
+            console.log("65sss");
+            this.store.lat="37.541";
+            console.log("this isssssss 57")
+            this.store.lng="126.986";
+          }else{
+            console.log(items[0]);
+            console.log(items[0].point.x);
+            console.log(items[0].point.y);
+            console.log("65sss");
+            this.store.lat=items[0].point.y;
+            console.log("this isssssss 57")
+            this.store.lng=items[0].point.x;
+          }
+        
           // this.storeKey=this.firedata.push(this.store).key;
          
           // console.log(this.firedata.push(this.store).key)
@@ -265,6 +278,7 @@ export class RequestPage {
           //   return;
           // }
          
+          
           this.store.regnumber=this.regnumber;
           this.store.representitive=this.representitive;
           this.store.emergencytel=this.emergencytel;
@@ -272,7 +286,6 @@ export class RequestPage {
           this.store.id=this.newRef.key;
 
 
-        
        
 
           // if(this.picurl==undefined){
@@ -674,7 +687,7 @@ export class RequestPage {
        
     //     
 
- });
+ })
   
    
   }
@@ -901,27 +914,30 @@ export class RequestPage {
     let modal = this.modal.create(Cameraselect2Page);
     modal.onDidDismiss(imagedata => {
       console.log("image data is : ");
-      console.log(imagedata);
-      console.log("flag is : ");
-      console.log(imagedata.flag);
-      console.log("///");
-      if(imagedata.flag=="multi"){
-        console.log(imagedata.data);
-        console.log(imagedata.data.length);
-
-      if(imagedata.data!=undefined){
-        console.log(this.picdata);
-       
-        console.log("data to input is  picccccc");
-        for(var i=0; i<imagedata.data.length; i++){
-          console.log("uploading..."+i);
-          this.picdata=imagedata.data[i];
-          this.uploadImageToFirebase(imagedata.data[i],i);
-
-          // this.uploadImage(this.picdata,i);
+      if(imagedata!=undefined){
+        console.log(imagedata);
+        console.log("flag is : ");
+        console.log(imagedata.flag);
+        console.log("///");
+        if(imagedata.flag=="multi"){
+          console.log(imagedata.data);
+          console.log(imagedata.data.length);
+  
+        if(imagedata.data!=undefined){
+          console.log(this.picdata);
+         
+          console.log("data to input is  picccccc");
+          for(var i=0; i<imagedata.data.length; i++){
+            console.log("uploading..."+i);
+            this.picdata=imagedata.data[i];
+            this.uploadImageToFirebase(imagedata.data[i],i);
+  
+            // this.uploadImage(this.picdata,i);
+          }
+         
         }
-       
       }
+    
     }
   });
   modal.present();

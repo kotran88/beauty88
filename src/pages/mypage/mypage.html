@@ -7,13 +7,13 @@
 <ion-header no-border>
 
     <ion-navbar>
-        <ion-icon style="color: black;
+        <ion-icon *ngIf="closerflag==false" style="color: black;
         float: left;
         font-size: 1.5em; " (click)="gotoback();" name="close"></ion-icon>
       <div style="    font-size: 16px;
       text-align: center;
       margin-top: 0.2em;" class="title">
-       내 예약 리스트
+       {{titlee}}
       </div>
     </ion-navbar>
   

@@ -7,7 +7,7 @@ border-bottom: none !important; z-index: 11 !important">
   background-image: none !important;
   border-bottom: none !important;">
      
-          <ion-icon style="color: black;
+          <ion-icon *ngIf="closeflag=='false'" style="color: black;
           margin-left:5px;
           float: left;
           font-size: 1.5em; " (click)="gotoback();" name="close"></ion-icon>
@@ -16,7 +16,7 @@ border-bottom: none !important; z-index: 11 !important">
       <div style="    font-size: 16px;
       text-align: center;
       margin-top: 0.2em;" class="title">
-       카테고리
+       {{titlee}}
       </div>
       <!-- <button style="right: 0px;
       position: absolute;" ion-button menuToggle>

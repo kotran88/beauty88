@@ -55,7 +55,8 @@ export class Cameraselect2Page {
       encodingType: this.camera.EncodingType.JPEG,      
       correctOrientation: true
     }
-    
+    console.log("!!!!")
+    console.log(this.ip);
   //   this.imagePicker.getPictures(
   //     function(results) {
   //         for (var i = 0; i < results.length; i++) {
@@ -66,12 +67,15 @@ export class Cameraselect2Page {
   //     }
   // );
 
+  setTimeout(()=>{
     this.ip.getPictures(options).then((results) => {
       for (var i = 0; i < results.length; i++) {
           console.log('Image URI: ' + results[i]);
           this.viewCtrl.dismiss({"flag":"multi","data":results});
       }
     }, (err) => { console.log(err)});
+  },2000)
+   
   }
   
   ionViewDidLoad() {

@@ -16,7 +16,11 @@ export class RulepagePage {
 
   rule:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.rule=this.navParams.get("rule");
+    console.log(this.navParams.get("rule"))
+    setTimeout(()=>{
+  document.getElementById("tt").innerHTML=this.navParams.get("rule");
+    },2000)
+  
   }
 
   ionViewDidLoad() {

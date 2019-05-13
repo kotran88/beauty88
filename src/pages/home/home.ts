@@ -21,16 +21,18 @@ declare var naver: any;
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html'  
 })
 
 export class HomePage {
   @ViewChild('scroll') scroll: any;
   superdistance:any;
   userUid:any;
+  titlee:any=""
   category3:any;
   categoryflag:any;
   x:any;
+  closeflag:any="false"
   y:any;
   stname:any;
   viewCtrl:any;
@@ -84,6 +86,10 @@ export class HomePage {
   ionViewDidLoad(){
     console.log("view did loadeddddd");
     console.log(this.scroll);
+    setTimeout(()=>{
+      this.titlee="카테고리"
+    },500)
+    
     // this.scroll.nativeElement.scrollLeft = 500;
   //   var el = document.getElementById('ha');
   //  el.scrollIntoView({ behavior: "smooth" });
@@ -139,8 +145,11 @@ if(this.flagtostart){
 
   }
   gotoback(){
+
+    this.closeflag="true";
     this.matchedStation="";
     // this.matchedKeyword="t";
+    this.titlee="";
     this.viewCtrl.dismiss();
   }
   // starttotrack(){
@@ -426,6 +435,7 @@ console.log("?????");
     this.viewCtrl=viewCtrl;
     this.category3=this.navParams.get("category");
 
+    this.logined=this.navParams.get("logined");
     this.nick=this.navParams.get("nick");
     this.x=this.navParams.get("x");
     this.y=this.navParams.get("y");
@@ -579,11 +589,14 @@ console.log("?????");
   }
   
   detail(store){
+
+    this.closeflag="true";
     console.log("thissssssss user id is :"+this.userUid);
     console.log(store);
-    this.navCtrl.push(StoredetailPage,{"storeId":store.id,"nick":this.nick,"userId":this.userId}).then(()=>{
+    this.navCtrl.push(StoredetailPage,{"logined":this.logined,"storeId":store.id,"nick":this.nick,"userId":this.userId}).then(()=>{
       this.navCtrl.getActive().onDidDismiss(data => {
        
+    this.closeflag="false";
         console.log("dismiss");
       });
     })
