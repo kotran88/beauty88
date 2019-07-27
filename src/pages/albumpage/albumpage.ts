@@ -54,7 +54,7 @@ this.selected=this.array[value];
 
   ionViewDidLoad() {
     setTimeout(()=>{
-      this.titlee="Design album page"
+      this.titlee="애프터뷰 앨범"
     },500)
     console.log('ionViewDidLoad AlbumpagePage');
   }

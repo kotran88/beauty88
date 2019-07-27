@@ -7,7 +7,7 @@
 <ion-header no-border>
 
   <ion-navbar>
-      <ion-icon style="color: black;
+      <ion-icon *ngIf="closeflag==false" style="color: black;
           float: left;
           font-size: 2em; " (click)="gotoback();" name="close"></ion-icon>
       
@@ -30,7 +30,7 @@
         
     </ion-item>
     <ion-item>
-      <ion-label color="primary">편의사항2</ion-label>
+      <ion-label color="primary">편의사항</ion-label>
       <ion-input placeholder="편의사항을 입력해주세요" [(ngModel)]="facility"></ion-input>
         
     </ion-item>
@@ -44,11 +44,15 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary">전화번호</ion-label>
-      <ion-input placeholder="전화번호" type="number" [(ngModel)]="tel"></ion-input>
+      <ion-input (ionChange)="telchanged()" placeholder="전화번호"  [(ngModel)]="tel"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">통신판매번호</ion-label>
+      <ion-input placeholder="통신판매번호"   [(ngModel)]="tongsinnumber"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">사업자 등록번호</ion-label>
-      <ion-input placeholder="사업자 등록번호" type="number" [(ngModel)]="regnumber"></ion-input>
+      <ion-input placeholder="사업자 등록번호" (ionChange)="regchanged()"  [(ngModel)]="regnumber"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary">업종업태</ion-label>
@@ -56,66 +60,63 @@
     </ion-item>
     <ion-item>
       <ion-label color="primary">비상연락번호</ion-label>
-      <ion-input placeholder="비상연락번호" type="number" [(ngModel)]="emergencytel"></ion-input>
+      <ion-input placeholder="비상연락번호" [(ngModel)]="emergencytel"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label color="primary">대표자명</ion-label>
         <ion-input placeholder="대표자명" [(ngModel)]="representitive"></ion-input>
       </ion-item>
   </ion-list>
-  
-  <hr>
   <div style="font-size: 13px; "> 카테고리 선택 </div>
   <ion-scroll class="scrolltest" style="margin-top:20px; margin-bottom:0;" scrollX="true">
              <button (click)="category('hair')" *ngIf="selectedbutton=='hair'" class="mybtnclicked" ion-button  >
-               Hair
+               헤어.메이크업
              </button>
              <button (click)="category('hair')" *ngIf="selectedbutton!='hair'"  class="mybtn" ion-button  >
-                Hair
+              헤어.메이크업
               </button>
              <button (click)="category('nail')"*ngIf="selectedbutton=='nail'" class="mybtnclicked"  ion-button  >
-                Nail
+              네일
               </button>
               <button (click)="category('nail')" *ngIf="selectedbutton!='nail'"  class="mybtn" ion-button  >
-                  Nail
+                네일
                 </button>
               <button (click)="category('skincare')"  *ngIf="selectedbutton=='skincare'" class="mybtnclicked" ion-button  >
-                  Skincare
+                  피부관리
                 </button>
               <button (click)="category('skincare')"  *ngIf="selectedbutton!='skincare'" class="mybtn" ion-button  >
-                  Skincare
+                피부관리
                 </button>
-                <button (click)="category('massage')" *ngIf="selectedbutton=='massage'" class="mybtnclicked" ion-button  >
-                    Theraphy
+                <button (click)="category('waxing')" *ngIf="selectedbutton=='waxing'" class="mybtnclicked" ion-button  >
+                    왁싱.태닝
                   </button>
-                <button (click)="category('massage')" *ngIf="selectedbutton!='massage'" class="mybtn" ion-button  >
-                    Theraphy
-                  </button>
-                  <button (click)="category('makeup')" *ngIf="selectedbutton=='makeup'" class="mybtnclicked" ion-button  >
-                      Makeup
-                    </button>
-                    <button (click)="category('makeup')"  *ngIf="selectedbutton!='makeup'" class="mybtn" ion-button  >
-                        Makeup
-                      </button>
-                  <button (click)="category('waxing')" *ngIf="selectedbutton=='waxing'" class="mybtnclicked" ion-button  >
-                      Waxing<br>&Tanning
-                  </button>
-                  <button (click)="category('waxing')" *ngIf="selectedbutton!='waxing'" class="mybtn" ion-button  >
-                      Waxing<br>&Tanning
-                  </button>
-                 
-                <button (click)="category('diet')" *ngIf="selectedbutton=='diet'" class="mybtnclicked"  ion-button  >
-                    Diet
-                  </button>
-                <button (click)="category('diet')"  *ngIf="selectedbutton!='diet'" class="mybtn" ion-button  >
-                    Diet
+                <button (click)="category('waxing')" *ngIf="selectedbutton!='waxing'" class="mybtn" ion-button  >
+                  왁싱.태닝
                   </button>
                   <button (click)="category('plastic')" *ngIf="selectedbutton=='plastic'" class="mybtnclicked" ion-button  >
-                    Plastic<br> surgery
+                   성형
                   </button>
                   <button (click)="category('plastic')"  *ngIf="selectedbutton!='plastic'" class="mybtn" ion-button  >
-                      Plastic <br>surgery
+                     성형
                     </button>
+                    <button (click)="category2('theraphy')" *ngIf="selectedbutton=='theraphy'" class="mybtnclicked" ion-button  >
+                      테라피
+                    </button>
+                  <button (click)="category2('theraphy')" *ngIf="selectedbutton!='theraphy'" class="mybtn" ion-button  >
+                      테라피
+                    </button>
+                <button (click)="category('diet')" *ngIf="selectedbutton=='diet'" class="mybtnclicked"  ion-button  >
+                    다이어트
+                  </button>
+                <button (click)="category('diet')"  *ngIf="selectedbutton!='diet'" class="mybtn" ion-button  >
+                    다이어트
+                  </button>
+                  <button (click)="category('health')" *ngIf="selectedbutton=='health'" class="mybtnclicked"  ion-button  >
+                    건강
+                  </button>
+                <button (click)="category('health')"  *ngIf="selectedbutton!='health'" class="mybtn" ion-button  >
+                    건강
+                  </button> 
 
   
 </ion-scroll>
@@ -131,7 +132,7 @@
   color: cornflowerblue;
   top: 2rem;
   width: 80%;
-  left: 10%;" ion-button (click)="takePhotoForMulti()" >디자인추가
+  left: 10%;" ion-button (click)="takePhotoForMulti()" >애프터뷰 추가
   </button>
 
   <hr style="    margin-top: 3em;">
@@ -148,7 +149,7 @@
     <ion-input style="    width: 20%;
     float: right;"   placeholder="소요시간" [(ngModel)]="anArray[idx].time"></ion-input>
     <ion-input style="    width: 20%;
-    float: right;"   placeholder="할인%" [(ngModel)]="anArray[idx].event"></ion-input>
+    float: right;"   placeholder="할인가" [(ngModel)]="anArray[idx].event"></ion-input>
 
         <!-- <ion-label color="primary">{{att.label}}{{idx+1}}</ion-label>
         <ion-input type="text"  text-right  [(ngModel)]="anArray[idx].value"></ion-input> -->
@@ -165,7 +166,7 @@
   
    <hr>
 
-  <div style="font-size: 13px; "> 디자이너 및 선생님 등록 </div>
+  <div style="font-size: 13px; "> 선생님(디자이너)등록 </div>
   <!-- <ion-scroll style="height: 250px !important; white-space: pre !important;" scrollX="true">
     <ion-row nowrap class="headerChip">
    
@@ -397,10 +398,26 @@
    color: cornflowerblue;
    top: 2rem;
    width: 80%;
-   left: 10%;" ion-button (click)="takePhoto('designer')" >디자이너 추가
+   left: 10%;" ion-button (click)="takePhoto('designer')" >선생님(디자이너) 추가
    </button>
    
    <hr style="    margin-top: 3em;">
+   <button style="    background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('regpicc')" >사업자등록증 업로드
+  </button>
+  <img *ngIf="regpic" class="im" style="width:50%; margintext-align: center" src="{{regpic}}"/>
+ 
+  <button style="    background: transparent;
+  color: cornflowerblue;
+  top: 2rem;
+  width: 80%;
+  left: 10%;" ion-button (click)="takePhoto('tongsin')" >통신판매신고증
+  </button>
+  <img *ngIf="tongsin" class="im" style="width:50%; margintext-align: center" src="{{tongsin}}"/>
+
   <button style="    background: transparent;
   color: cornflowerblue;
   top: 2rem;

@@ -10,7 +10,7 @@
       <ion-icon *ngIf="closeflag==false" style="color: black;
       float: left;
       font-size: 1.5em; " (click)="gotoback();" name="close"></ion-icon>
-       <div style="    font-size: 16px;
+       <div *ngIf="closeflag==false" style="    font-size: 16px;
        text-align: center;
        margin-top: 0.2em;" class="title">
         예약
@@ -23,11 +23,10 @@
 <ion-content padding>
 
   {{name}} 님<br>
-  놀러가실꺼죠?<br><br>
+  <br><br>
 
   {{storeName}} 예약시간은<br>
   {{newnewtime}} 입니다. 
-  {{newtime}}
 
 <hr>
   <ion-input class="inputi"  [(ngModel)]="reserver" placeholder="예약자 성함을 입력하세요(예: 홍길동)"></ion-input>
@@ -39,6 +38,11 @@
 
 <ion-input class="inputi"  [(ngModel)]="numberofpeople"  placeholder="원하시는 서비스를 입력해주세요(ex:긴머리바디펌)"></ion-input>
 <hr>
+<ion-checkbox [(ngModel)]="checked" (click)="checking($event)"></ion-checkbox> <span>개인정보 제 3자 제공에 동의</span> 
+<p style="font-size:10px;">예약 서비스 처리를 위해 개인 정보를 받는 대상은 {{storeName}}입니다. </p>
+<span style="font-size: 10px;
+text-decoration: underline;" (click)="openmodal();">자세히보기</span>
+
 <button style="    
 background: aliceblue;
 border-radius:10px;

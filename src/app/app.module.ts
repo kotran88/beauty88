@@ -13,6 +13,7 @@ import {LoginPage} from '../pages/login/login';
 import { StoredetailPage } from '../pages/storedetail/storedetail';
 import { Geolocation } from '@ionic-native/geolocation';
 import { MyApp } from './app.component';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
 import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 import { HomePage } from '../pages/home/home';
@@ -47,6 +48,7 @@ import { Cameraselect3Page } from '../pages/cameraselect3/cameraselect3';
 import { OffanddeletePage } from '../pages/offanddelete/offanddelete';
 import { Cameraselect4Page } from '../pages/cameraselect4/cameraselect4';
 import { AddproductPage } from '../pages/addproduct/addproduct';
+import { OpeningmodalPage } from '../pages/openingmodal/openingmodal';
 
 // import {
 //   CalendarCommonModule,
@@ -81,6 +83,7 @@ firebase.initializeApp(firebaseConfig);
   declarations: [
     RequestPage,
     Cameraselect3Page,
+    OpeningmodalPage,
     Rule2pagePage,
     OffanddeletePage,
     RulepagePage,
@@ -139,6 +142,7 @@ firebase.initializeApp(firebaseConfig);
     OffanddeletePage,
     MainPage,
     AlbumpagePage,
+    OpeningmodalPage,
     Cameraselect3Page,
     CameraselectPage,
     Cameraselect2Page,
@@ -172,6 +176,7 @@ firebase.initializeApp(firebaseConfig);
     Deeplinks,
     Camera,
     SplashScreen,
+    OpenNativeSettings,
     ImagePicker,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MetroProvider

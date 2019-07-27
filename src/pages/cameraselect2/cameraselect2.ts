@@ -46,40 +46,40 @@ export class Cameraselect2Page {
   }
   getPhoto(){
     console.log("get photo come ");
-    const options : CameraOptions={
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType:this.camera.DestinationType.DATA_URL,     
-      quality: 50,
-      targetWidth: 600,
-      targetHeight: 600,
-      encodingType: this.camera.EncodingType.JPEG,      
-      correctOrientation: true
+    
+  const options = {
+    // max images to be selected, defaults to 15. If this is set to 1, upon
+  // selection of a single image, the plugin will return it.
+  maximumImagesCount: 100,
+  
+  // max width and height to allow the images to be.  Will keep aspect
+  // ratio no matter what.  So if both are 800, the returned image
+  // will be at most 800 pixels wide and 800 pixels tall.  If the width is
+  // 800 and height 0 the image will be 800 pixels wide if the source
+  // is at least that wide.
+  width: 600,
+  height: 600,
+  outputType:1
+  
+  // quality of resized image, defaults to 100
+};
+setTimeout(()=>{
+  this.ip.getPictures(options).then((results) => {
+    
+    console.log(results);
+    for (var i = 0; i < results.length; i++) {
+        console.log('Image URI: ' + results[i]);
+       
     }
-    console.log("!!!!")
-    console.log(this.ip);
-  //   this.imagePicker.getPictures(
-  //     function(results) {
-  //         for (var i = 0; i < results.length; i++) {
-  //             console.log('Image URI: ' + results[i]);
-  //         }
-  //     }, function (error) {
-  //         console.log('Error: ' + error);
-  //     }
-  // );
-
-  setTimeout(()=>{
-    this.ip.getPictures(options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-          console.log('Image URI: ' + results[i]);
-          this.viewCtrl.dismiss({"flag":"multi","data":results});
-      }
-    }, (err) => { console.log(err)});
-  },2000)
-   
+    this.viewCtrl.dismiss({"flag":"multi","data":results});
+  }, (err) => { console.log(err)});
+ 
+},1000)
+  
   }
   
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CameraselectPage');
+    console.log('ionViewDidLoad CameraselectPage22222');
   }
   confirm(){
     this.viewCtrl.dismiss();

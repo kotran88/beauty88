@@ -6,6 +6,7 @@ export interface Store{
     keywords:string;
     lat:string;
     lng:string;
+    regpic:string;
     mainImage:string
     firstImage:string;
     secondImage:string;

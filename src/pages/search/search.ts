@@ -2,6 +2,9 @@ import { Component ,ViewChild,ElementRef} from '@angular/core';
 import { IonicPage,ViewController,AlertController, NavController, NavParams } from 'ionic-angular';
 import { MetroProvider } from '../../providers/metro/metro';
 import { HomePage } from '../home/home';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+
+import { Geolocation } from '@ionic-native/geolocation';
 declare var naver: any;
  
 /**
@@ -18,13 +21,16 @@ declare var naver: any;
 export class SearchPage {
   map:any;
 
+  geoflag:any=false;
+  count:any=0;
+
   selectedStation:any;
   lat:any;
   lng:any;
   result_metro=[];
 userId:any;
 location:any;
-  constructor(public view : ViewController,public metro:MetroProvider, public alertCtrl: AlertController,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public setting:OpenNativeSettings,public geo:Geolocation,public view : ViewController,public metro:MetroProvider, public alertCtrl: AlertController,public navCtrl: NavController, public navParams: NavParams) {
 
  
     this.userId=this.navParams.get("userId");
@@ -40,7 +46,7 @@ location:any;
       inputs: [
         {
           name: 'keyword',
-          placeholder: '검색 원하는 주소를 입력해주세요(Ex: 삼성동)'
+          placeholder: '주소를 입력해주세요(Ex: 삼성동)'
         }
       ],
       buttons: [
@@ -94,8 +100,140 @@ location:any;
     alert.present();
   }
   nowlocation(){
-    
+    this.getGeo();
   }
+  getGeo(){
+    console.log("get geo come");
+    var options = {
+      timeout: 10000,
+      enableHighAccuracy: false
+      }
+    this.geo.getCurrentPosition(options).then((success)=>{
+  
+      console.log(success);
+    
+      this.lat=success.coords.latitude;
+      this.lng=success.coords.longitude;
+      // this.lat=37.565924;
+      // this.lng=126.976895;
+      console.log("currentlocatipn"+this.lat+"///"+this.lng);
+  
+      naver.maps.Service.reverseGeocode({
+        location: new naver.maps.LatLng(this.lat, this.lng),
+    }, (status,response)=> {
+        if (status !== naver.maps.Service.Status.OK) {
+          console.log("status not ok");
+            console.log(status);
+        }else{
+          console.log("status  ok");
+          console.log(status);
+        }
+  
+        this.geoflag=true;
+        var result = response.result, // 검색 결과의 컨테이너
+            items = result.items; // 검색 결과의 배열
+            console.log(result);
+            console.log(items[0].address);
+            var res=items[0].address.split(" ");
+            console.log(res.length);
+            for (var i=0; i<res.length; i++){
+              console.log(res[i]); // 시 
+  
+            }
+      
+            console.log(res[0]+"/"+res[1]+"//"+res[2]);
+             this.location=res[0]+" "+res[1]+" "+res[2];
+             localStorage.setItem("lat",this.lat);
+             localStorage.setItem("lng",this.lng);
+             localStorage.setItem("location",this.location);
+             this.map=this.loadMap();
+             var marker = new naver.maps.Marker({
+               position: new naver.maps.LatLng(this.lat,this.lng),
+               map: this.map
+           });
+            console.log("dooooooooo");
+        // do Something
+    });
+    }).catch((e)=>{
+      console.log("failed");
+      console.log(e);
+  
+      console.log("count is : "+this.count);
+      // if(this.loading!=null){
+      //   this.loading.dismiss();
+      // }
+      if(this.geoflag!=true){
+        if(this.count<5){
+          setTimeout(()=>{
+            this.count++;
+          
+            if(e.code==1){
+
+
+              let alert = this.alertCtrl.create({
+                title: "[설정 > 개인정보보호 > 위치서비스 > 네가 젤 예뻐]에서 위치 정보 사용을 허용해주세요."
+                ,
+                buttons: [
+                  {
+                    text: '취소',
+                    handler: data => {
+                    }
+                  },
+                  {
+                    text: '위치 설정 바로가기',
+                    handler: data => {
+
+
+              setTimeout(()=>{
+
+
+
+                this.setting.open("application_details").then(()=>{
+                  console.log("open!!!")
+                  this.getGeo();
+              this.geoflag=false;
+                }).catch((e)=>{
+                  console.log(e);
+                })
+                },2000)
+
+                    }
+                  }
+                ]
+              });
+              alert.present();
+
+
+
+              
+            }else{
+              console.log("gggg");
+              this.getGeo();
+              // this.generateStore("서울특별시");
+              // this.generateId();
+            console.log("geo loading error:");
+    
+            console.log(e);
+            }
+          },500)
+         
+            
+        }
+       
+      
+      }else{
+      }
+     
+        // this.loading.dismiss();
+        // this.lat=37.565924;
+        // this.lng=126.976895;
+        
+        // this.generateStore("서울특별시");
+    
+      return;
+    })
+  }
+
   subway(){
     let alert = this.alertCtrl.create({
       inputs: [

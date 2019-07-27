@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController,ViewController,ModalController, LoadingController,NavParams } from 'ionic-angular';
-import {Store} from './../../models/store';
+import {Store} from '../../models/store';
 import firebase from 'firebase';
 import { normalizeURL } from 'ionic-angular';
 
@@ -20,6 +20,9 @@ declare var naver: any;
   templateUrl: 'request.html',
 })
 export class RequestPage {
+
+  closeflag:boolean=false;
+
   inputcount:number=0;
   public anArray:any=[];
   designarray=[];
@@ -89,6 +92,9 @@ export class RequestPage {
   descriptionurl:string;
   keywords:string;
   picurl:any;
+  regpic:any;
+  tongsin:any;
+  tongsinnumber:any;
   lat:string;
   lng:string;
   mainImage:string
@@ -138,6 +144,7 @@ export class RequestPage {
     this.viewCtrl=viewCtrl;
     today.setHours(today.getHours()+9);
     this.anArray.push({'value':'','price':'','time':'','event':''});
+
     this.mypicref=firebase.storage().ref('/');
     
     this.count=0;
@@ -171,6 +178,7 @@ export class RequestPage {
      this.nowtime = ""+(month+1)+date+(hour)+minute+second;
   }
   gotoback(){
+     this.closeflag=true;
     this.viewCtrl.dismiss();
   }
   addInput(){
@@ -180,6 +188,22 @@ export class RequestPage {
       this.anArray.push({'value':'','price':'',"time":'','event':''});
     }
     
+    
+  }
+  testgeo(){
+    var result="";
+    naver.maps.Service.geocode({
+      address: this.address
+  }, (status,response)=> {
+      if (status !== naver.maps.Service.Status.OK) {
+          return alert('올바른 주소를 입력해주세요!');
+      }
+ 
+      var result = response.result; // 검색 결과의 컨테이너
+     console.log("result is : "+result);
+     console.log(result);
+     return result;
+    });
     
   }
   requesting(){
@@ -217,6 +241,10 @@ export class RequestPage {
       if (status !== naver.maps.Service.Status.OK) {
           return alert('올바른 주소를 입력해주세요!');
       }
+ 
+      var result = response.result; // 검색 결과의 컨테이너
+     console.log("result is : "+result);
+     console.log(result);
  
       var result = response.result; // 검색 결과의 컨테이너
      console.log("result is : "+result);
@@ -277,7 +305,12 @@ export class RequestPage {
           //   alert("메인 이미지를 입력해주세요")
           //   return;
           // }
-         
+         if(this.tongsin==undefined){
+           alert("통신판매신고증을 넣어주세요")
+         }
+         if(this.tongsinnumber==undefined){
+          alert("통신판매번호를 넣어주세요")
+        }
           
           this.store.regnumber=this.regnumber;
           this.store.representitive=this.representitive;
@@ -287,7 +320,9 @@ export class RequestPage {
 
 
        
-
+          if(this.regpic==undefined){
+            this.regpic="none";
+          }
           // if(this.picurl==undefined){
           //   this.picurl="none";
           // }
@@ -480,6 +515,7 @@ export class RequestPage {
         console.log(this.designerurl5);
           console.log("aaaaaaaaaaaaaaaaaaaaaaa")
          this.store.mainImage=this.picurl;
+         this.store.regpic=this.regpic;
          this.store.firstImage=this.firsturl;
          this.store.secondImage=this.secondurl;
          this.store.thirdImage=this.thirdurl;
@@ -546,7 +582,8 @@ export class RequestPage {
              "approval":false,"address":this.store.address,"requestedDate":this.store.requestedDate,"tel":this.store.tel,"emergencytel":this.store.emergencytel,"representitive":this.store.representitive,"regnumber":this.store.regnumber,"type":this.store.type,"description":this.store.description,"facility":this.store.facility,
          "designarray":this.store.designarray,
          "category":this.store.category,"requestedby":this.userUid,"arrayPrice":this.store.arrayPrice,"lat":this.store.lat,"lng":this.store.lng,"id":this.store.id,
-         "mainImage":this.store.mainImage,
+         "mainImage":this.store.mainImage,"tongsin":this.tongsin,
+         "tongsinnumber":this.tongsinnumber,
          "firstImage":this.store.firstImage,"secondImage":this.store.secondImage,"thirdImage":this.store.thirdImage,"fourthImage":this.store.fourthImage,"fifthImage":this.store.fifthImage,"sixthImage":this.store.sixthImage,"seventhImage":this.store.seventhImage,"eighthImage":this.store.eighthImage,"ninethImage":this.store.ninethImage,"tenthImage":this.store.tenthImage,"eleventhImage":this.store.eleventhImage,"twelvethImage":this.store.twelvethImage,
          "designerImage":this.store.designerImage,
          "designerImage1":this.store.designerImage1,"designerImage2":this.store.designerImage2,"designerImage3":this.store.designerImage3,"designerImage4":this.store.designerImage4,"designerImage5":this.store.designerImage5,"designerImage6":this.store.designerImage6,"designerImage7":this.store.designerImage7,
@@ -584,16 +621,12 @@ export class RequestPage {
           * "designername3":"none","designername4":"none","designername5":"none","designername6":"none","designername7":"none","designername8":"none","designername9":"none"
           * 
           */
-         console.log("dddddaoss");
-         console.log(this.store.designername10);
-         console.log(this.store.designername11);
-           console.log(this.store.designername12);
-           console.log(this.store.designername13);
-             console.log(this.store.designername14);
-         console.log(this.store.designername15);
-         console.log(this.store.designername19);
-         console.log("sdfsf")
+         console.log("ddddddddddddaoss");
+        console.log(this.store);
          this.newRef.set({
+           "reservationStart":"13:00",
+           "reservationEnd":"23:00","timeinterval":60,
+           "regpic":this.store.regpic,"tongsin":this.tongsin,"tongsinnumber":this.tongsinnumber,
           "approval":false,"address":this.store.address,"requestedDate":this.store.requestedDate,"tel":this.store.tel,"emergencytel":this.store.emergencytel,"representitive":this.store.representitive,"regnumber":this.store.regnumber,"type":this.store.type,"name":this.store.name,"description":this.store.description,"facility":this.store.facility,
           "designarray":this.store.designarray,
           "category":this.store.category,"requestedby":this.userUid,"arrayPrice":this.store.arrayPrice,"lat":this.store.lat,"lng":this.store.lng,"id":this.store.id,
@@ -691,6 +724,20 @@ export class RequestPage {
   
    
   }
+  telchanged(){
+    if(this.tel.indexOf("-")>0){
+
+      window.alert("- 는 입력할 수 없습니다");
+      this.tel="";
+    }
+  }
+  regchanged(){
+    if(this.regnumber.indexOf("-")>0){
+
+      window.alert("- 는 입력할 수 없습니다");
+      this.regnumber="";
+    }
+  }
   keywordchanged(){
     // console.log(this.keyword);
     // console.log(this.newkey);
@@ -731,7 +778,12 @@ export class RequestPage {
     console.log("key and index is : "+this.newRef.key);
       let storageRef = firebase.storage().ref();
       var result="design"+(index+1);
-      console.log("result is : "+result);
+
+      console.log(imageURI);
+      imageURI=  "data:image/jpeg;base64," + imageURI;
+
+      console.log("sssssssssss : "+result);
+      console.log(imageURI);
           var a = this.mypicref.child(this.newRef.key).child(result)
       this.encodeImageUri(imageURI, (image64)=>{
         console.log("image64 converted done");
@@ -782,9 +834,15 @@ export class RequestPage {
       console.log("saving pic for main"+v);
       console.log(savepic);
       this.mypicref.child(this.newRef.key).child(v).getDownloadURL().then((url)=> {
-        console.log("main new url is : "+url);
+        console.log(v+"main new url is : "+url);
         if(v=="mainImage"){
           this.picurl=url;
+        }
+        if(v=="regpic"){
+          this.regpic=url;
+        }
+        if(v=="tongsin"){
+          this.tongsin=url;
         }
         if(v=="firstImage"){
           this.firsturl=url;
@@ -895,7 +953,7 @@ export class RequestPage {
   uploadImageToFirebase(image,index){
     console.log("upload iamge to firebase");
     console.log(image);
-    image = normalizeURL(image);
+    // image = normalizeURL(image);
     console.log(image);
     //uploads img to firebase storage
     this.uploadImage(image,index)
@@ -924,12 +982,12 @@ export class RequestPage {
           console.log(imagedata.data.length);
   
         if(imagedata.data!=undefined){
-          console.log(this.picdata);
          
           console.log("data to input is  picccccc");
           for(var i=0; i<imagedata.data.length; i++){
-            console.log("uploading..."+i);
+            console.log("uploading........"+i);
             this.picdata=imagedata.data[i];
+            console.log(this.picdata);
             this.uploadImageToFirebase(imagedata.data[i],i);
   
             // this.uploadImage(this.picdata,i);
@@ -949,7 +1007,7 @@ export class RequestPage {
     var value="";
     let modal = this.modal.create(CameraselectPage);
     modal.onDidDismiss(imagedata => {
-      console.log("image data is : ");
+      console.log("image data isㄴㄴㄴㄴ : ");
       console.log(imagedata);
       console.log("flag is : ");
       console.log(imagedata.flag);
@@ -975,12 +1033,20 @@ export class RequestPage {
       }
       if(imagedata.flag=="single"){
 
+        console.log(imagedata.data);
         console.log("single come!!!");
        
-        console.log(imagedata.data);
         if(imagedata.data!=undefined){
           this.picdata=imagedata.data;
           this.base64Image = "data:image/jpeg;base64," + imagedata.data;
+          if(flag=="regpicc"){
+            value="regpic";
+            this.regpic=this.base64Image;
+          }
+          if(flag=="tongsin"){
+            value="tongsin";
+            this.tongsin=this.base64Image;
+          }
           if(flag=="main"){
             value="mainImage";
            

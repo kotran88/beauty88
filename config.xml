@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.kaka.hamms2222" version="3.8" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.ionic.kaka.hamms2222" version="18.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>네가 젤 예뻐</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -21,12 +21,12 @@
     <preference name="SplashScreenDelay" value="0" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
-        <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
-        <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
-        <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi-icon.png" />
-        <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" />
-        <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
+        <icon density="ldpi" src="resources/android/icon/icon.png" />
+        <icon density="mdpi" src="resources/android/icon/icon.png" />
+        <icon density="hdpi" src="resources/android/icon/icon.png" />
+        <icon density="xhdpi" src="resources/android/icon/icon.png" />
+        <icon density="xxhdpi" src="resources/android/icon/icon.png" />
+        <icon density="xxxhdpi" src="resources/android/icon/icon.png" />
         <splash density="land-ldpi" src="resources/android/splash/drawable-land-ldpi-screen.png" />
         <splash density="land-mdpi" src="resources/android/splash/drawable-land-mdpi-screen.png" />
         <splash density="land-hdpi" src="resources/android/splash/drawable-land-hdpi-screen.png" />
@@ -44,7 +44,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <config-file parent="NSPhotoLibraryUsageDescription" platform="ios" target="*-Info.plist">
-            <string>유저가 사진을 올릴수있도록 합니다.</string>
+            <string>유저가 사진을 올릴수있도록 사진 권한을 요청합니다.</string>
         </config-file>
         <config-file parent="NSCameraUsageDescription" platform="ios" target="*-Info.plist">
             <string>유저가 카메라에서 찍은 사진을 올릴수 있도록 합니다.</string>
@@ -52,6 +52,9 @@
         <config-file parent="NSPhotoLibraryAddUsageDescription" platform="ios" target="*-Info.plist">
             <string>유저가 카메라에서 찍은 사진을 올릴수 있도록 합니다.</string>
         </config-file>
+        <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
+            <string>유저가 사진을 올릴수있도록 사진 권한을 요청합니다.</string>
+        </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
             <string>현재 위치를 파악해서 근처의 가게를 소개해드립니다.</string>
         </edit-config>
@@ -95,22 +98,15 @@
     <plugin name="cordova-plugin-statusbar" spec="~2.4.2" />
     <plugin name="cordova-plugin-device" spec="~2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="~5.0.2" />
-    <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-camera" spec="~4.0.3" />
     <plugin name="cordova-sqlite-storage" spec="~2.5.0" />
     <plugin name="com-sarriaroman-photoviewer" spec="^1.2.0" />
     <plugin name="cordova-plugin-screen-orientation" spec="~3.0.2-dev" />
-    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
-        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
-    </plugin>
     <plugin name="cordova-plugin-uniquedeviceid" spec="1.3.2" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
     <plugin name="cordova-plugin-kakao-sdk" spec="^3.0.0">
         <variable name="KAKAO_APP_KEY" value="467587dc7df1c6eb51814e3734951125" />
-    </plugin>
-    <plugin name="cordova-plugin-image-picker" spec="^1.1.3">
-        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
     <plugin name="cordova.plugins.diagnostic" spec="4.0.12">
         <variable name="ANDROID_SUPPORT_VERSION" value="28.+" />
@@ -118,6 +114,17 @@
     <plugin name="cordova-android-support-gradle-release" spec="^3.0.0">
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
-    <engine name="android" spec="6.3.0" />
+    <plugin name="cordova-plugin-android-permissions" spec="1.0.0" />
+    <plugin name="cordova-plugin-telerik-imagepicker" spec="2.3.2">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value=" " />
+    </plugin>
+    <plugin name="cordova-plugin-ionic-webview" spec="^4.1.1">
+        <variable name="ANDROID_SUPPORT_ANNOTATIONS_VERSION" value="27.+" />
+    </plugin>
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
+    </plugin>
+    <plugin name="cordova-open-native-settings" spec="1.5.2" />
     <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="7.1.4" />
 </widget>

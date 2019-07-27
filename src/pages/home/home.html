@@ -32,64 +32,67 @@ border-bottom: none !important; z-index: 11 !important">
   
   </ion-header>
   
-  <ion-content class="home">
-      <ion-scroll #scroll class="scrolltest" style="margin-top:20px; margin-bottom: -15px;" scrollX="true">
+  <ion-content  class="home">
+      <ion-scroll #scroll class="scrolltest" style=" margin-top:40px; margin-bottom: -15px;" scrollX="true">
         <button (click)="category2('All')" *ngIf="selectedbutton=='All'" class="mybtnclicked" ion-button  >
           All
         </button>
         <button (click)="category2('All')"  *ngIf="selectedbutton!='All'"  class="mybtn" ion-button  >
             All
           </button>
-               <button (click)="category2('hair')" *ngIf="selectedbutton=='hair'" class="mybtnclicked" ion-button  >
-                 Hair
+               <button (click)="category2('hair')" *ngIf="selectedbutton=='hair'||selectedbutton=='makeup'" class="mybtnclicked" ion-button  >
+                 헤어.메이크업
                </button>
-               <button (click)="category2('hair')" *ngIf="selectedbutton!='hair'"  class="mybtn" ion-button  >
-                  Hair
+               <button (click)="category2('hair')" *ngIf="selectedbutton!='hair'&&selectedbutton!='makeup'"  class="mybtn" ion-button  >
+                  헤어.메이크업
                 </button>
                <button (click)="category2('nail')"*ngIf="selectedbutton=='nail'" class="mybtnclicked"  ion-button  >
-                  Nail
+                  네일
                 </button>
                 <button (click)="category2('nail')" *ngIf="selectedbutton!='nail'"  class="mybtn" ion-button  >
-                    Nail
+                    네일
                   </button>
                 <button (click)="category2('skincare')"  *ngIf="selectedbutton=='skincare'" class="mybtnclicked" ion-button  >
-                    Skincare
+                    피부관리
                   </button>
                 <button (click)="category2('skincare')"  *ngIf="selectedbutton!='skincare'" class="mybtn" ion-button  >
-                    Skincare
+                  피부관리
                   </button>
-                  <button (click)="category2('massage')" *ngIf="selectedbutton=='massage'" class="mybtnclicked" ion-button  >
-                      Theraphy
+                  <button (click)="category2('waxing')" *ngIf="selectedbutton=='waxing'" class="mybtnclicked" ion-button  >
+                    왁싱.태닝
+                 </button>
+                 <button (click)="category2('waxing')" *ngIf="selectedbutton!='waxing'" class="mybtn" ion-button  >
+                   왁싱.태닝
+                 </button>
+              
+                 <button (click)="category2('plastic')" *ngIf="selectedbutton=='plastic'" class="mybtnclicked" ion-button  >
+                   성형
+                 </button>
+                 <button (click)="category2('plastic')"  *ngIf="selectedbutton!='plastic'" class="mybtn" ion-button  >
+                   성형
+                   </button>
+
+                  <button (click)="category2('theraphy')" *ngIf="selectedbutton=='theraphy'" class="mybtnclicked" ion-button  >
+                      테라피
                     </button>
-                  <button (click)="category2('massage')" *ngIf="selectedbutton!='massage'" class="mybtn" ion-button  >
-                      Theraphy
+                  <button (click)="category2('theraphy')" *ngIf="selectedbutton!='theraphy'" class="mybtn" ion-button  >
+                      테라피
                     </button>
-                    <button (click)="category2('makeup')" *ngIf="selectedbutton=='makeup'" class="mybtnclicked" ion-button  >
-                        Makeup
-                      </button>
-                      <button (click)="category2('makeup')"  *ngIf="selectedbutton!='makeup'" class="mybtn" ion-button  >
-                          Makeup
-                        </button>
-                    <button (click)="category2('waxing')" *ngIf="selectedbutton=='waxing'" class="mybtnclicked" ion-button  >
-                        Waxing<br>&Tanning
-                    </button>
-                    <button (click)="category2('waxing')" *ngIf="selectedbutton!='waxing'" class="mybtn" ion-button  >
-                        Waxing<br>&Tanning
-                    </button>
+                    
                  
-                    <button (click)="category2('plastic')" *ngIf="selectedbutton=='plastic'" class="mybtnclicked" ion-button  >
-                      Plastic <br> surgery
-                    </button>
-                    <button (click)="category2('plastic')"  *ngIf="selectedbutton!='plastic'" class="mybtn" ion-button  >
-                        Plastic <br> surgery
-                      </button>
                   <button (click)="category2('diet')" *ngIf="selectedbutton=='diet'" class="mybtnclicked"  ion-button  >
-                      Diet
+                      다이어트
                     </button>
                   <button id="ha" (click)="category2('diet')"  *ngIf="selectedbutton!='diet'" class="mybtn" ion-button  >
-                      Diet
+                    다이어트
                     </button>
 
+                    <button (click)="category2('health')" *ngIf="selectedbutton=='health'" class="mybtnclicked"  ion-button  >
+                      건강
+                    </button>
+                  <button id="ha" (click)="category2('health')"  *ngIf="selectedbutton!='health'" class="mybtn" ion-button  >
+                    건강
+                    </button>
 
     
   </ion-scroll>

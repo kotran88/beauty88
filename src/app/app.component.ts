@@ -36,7 +36,7 @@ export class MyApp {
 
       if(platform.is("android")||platform.is("ios")){
     
-        screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT);
+        screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT_PRIMARY);
   
       }
 

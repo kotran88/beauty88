@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, AlertController,NavController,ViewController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
-import {Reservation} from './../../models/reservation';
+import {Reservation} from '../../models/reservation';
 import { JoinedPage } from '../joined/joined';
 import { Store } from '../../models/store';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
@@ -9,6 +9,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { AlbumpagePage } from '../albumpage/albumpage';
 
 import { KakaoCordovaSDK, AuthTypes } from 'kakao-sdk';
+import { isDifferent } from '@angular/core/src/render3/util';
 /**
  * Generated class for the StoredetailPage page.
  *
@@ -33,6 +34,7 @@ export class StoredetailPage {
   designImage1:any;
   designImage2:any;
 
+  hour:any;
   designImage5:any;
   designImage6:any;
   designImage7:any;
@@ -206,6 +208,7 @@ export class StoredetailPage {
   reservationDes=[];
   endofthismonth:any;
   categoryy:any;
+  nowdate:any;
   firedataa = firebase.database();
   firedata = firebase.database().ref('store');
   constructor(public alertCtrl:AlertController,public _kakaoCordovaSDK: KakaoCordovaSDK,viewCtrl:ViewController,public callNumber:CallNumber,public viewer:PhotoViewer,public navCtrl: NavController, public navParams: NavParams) {
@@ -224,9 +227,12 @@ export class StoredetailPage {
      console.log("ngOnInit")
      var thisday = new Date();
      thisday.toLocaleString('ko-KR', { hour: 'numeric', minute: 'numeric', hour12: true })
+     console.log(thisday);
      var month = thisday.getMonth();
      var date = thisday.getDate();
      var hour = thisday.getHours();
+     this.nowdate=date;
+     this.hour=thisday.getHours();
      var minute = thisday.getMinutes();
      var fullyear = thisday.getFullYear();
      var second=thisday.getSeconds();
@@ -476,7 +482,11 @@ export class StoredetailPage {
          timeinterval=60;
        }
 
-       console.log("timeinterval : "+timeinterval);
+       if(timeinterval==undefined){
+
+        timeinterval=60;
+       }
+       console.log("ttttttttttimeinterval : "+timeinterval);
        if(timeinterval==30){
    
         console.log("minus start");
@@ -605,9 +615,10 @@ export class StoredetailPage {
           //     }
           //   }
           // }
-          console.log("all reserve");
+          console.log("alllllllll reserve");
           console.log(this.allreservation);
           console.log("disabled reserve");
+          console.log(hour);
           console.log(this.disabledreservation);
           for(var i=0; i<this.allreservation.length; i++){
             for(var j=0; j<this.disabledreservation.length; j++){
@@ -629,6 +640,14 @@ export class StoredetailPage {
       //  })
       //    console.log(array3);
          this.reservationfinal=this.allreservation;
+        }
+      }
+      console.log('this reservationfinal');
+      console.log(this.reservationfinal);
+      for(var i=0; i<this.reservationfinal.length; i++){
+        console.log(this.reservationfinal[i].time.split(":")[0]+"////"+(Number(hour)+3));
+        if(this.reservationfinal[i].time.split(":")[0]<(Number(hour)+3)){
+          this.reservationfinal[i].disabled=true;
         }
       }
        console.log("search comeeee"+timeinterval);
@@ -711,10 +730,10 @@ export class StoredetailPage {
     title: '토탈 뷰티 앱 “네가 젤 예뻐”',
     desc:this.name+"("+this.address+")/"+this.categoryy,
     link: feedLink,
-    imageURL: 'http://i1.ruliweb.com/img/19/04/20/16a3a295ff73051.png'
+    imageURL: 'http://i1.ruliweb.com/img/19/06/09/16b3880b7e63051.jpeg'
   };
-  feedContent.imageWidth="750";
-  feedContent.imageHeight="500";
+  feedContent.imageWidth="700";
+  feedContent.imageHeight="342";
   let feedTemplate: KLFeedTemplate = {
     content: feedContent
   };
@@ -733,6 +752,10 @@ export class StoredetailPage {
       console.log(err);
     });
   }
+  number_format(num) {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    return num.toString().replace(regexp, ',');
+}
   gotoback(){
     // this.matchedKeyword="t";
     this.closeflag=true;
@@ -1076,7 +1099,10 @@ enlarge(v){
 reloadSchedule(){
   console.log("reloadschedule");
   console.log(this.designermanagement);
-  
+  console.log(this.hour);
+  for(var i=0; i<this.reservationfinal.length; i++){
+    this.reservationfinal[i].disabled=false;
+  }
   console.log(this.designermanagement[0]);
   for(var q in this.designermanagement[0]){
     console.log(this.designermanagement[0][q]);
@@ -1093,12 +1119,9 @@ reloadSchedule(){
   //   }
     
   // }
-  console.log(this.offduty);
-  for(var i=0; i<this.reservationfinal.length; i++){
 
-        this.reservationfinal[i].disabled=false;
-   
-  }
+  console.log(this.offduty);
+
   this.matchedDay=[];
   console.log(this.selectedDesigner);
   for(var a in this.reservationDes){
@@ -1111,6 +1134,7 @@ reloadSchedule(){
 
         console.log("matched month"+this.selectDay);
       
+        console.log(this.reservationDes[a].day+"????"+this.selectDay);
         if(this.reservationDes[a].day==this.selectDay){
           this.matchedDay.push(this.reservationDes[a].time);
         }
@@ -1130,17 +1154,32 @@ reloadSchedule(){
 
     for(var j=0; j<this.matchedDay.length; j++){
       if(this.reservationfinal[i].time==this.matchedDay[j]){
-        console.log(this.reservationfinal[i]);
+        
+       
         this.reservationfinal[i].disabled=true;
       }
     }
    
   }
+  console.log(this.reservationfinal);
+  for(var i=0; i<this.reservationfinal.length; i++){
+    if(this.selectDay==this.nowdate){
+      console.log(this.reservationfinal[i].time.split(":")[0]);
+      console.log(this.hour+3)
+      if(this.reservationfinal[i].time.split(":")[0]<this.hour+3){
+        this.reservationfinal[i].disabled=true;
+      }else{
  
-
+      }
+    }
+    
+      
+ }
+ console.log(this.reservationfinal);
 }
-clickdesigner2(v){
+clickdesigner2(v,f){
   this.selecteddesignernumber=v;
+
   if(v==0){
       this.firstimage=!this.firstimage;
       this.selectedDesigner=this.designername;
@@ -1616,984 +1655,14 @@ clickdesigner2(v){
   }
 
   console.log(this.selectedDesigner);
+
+  if(f==false){
+    this.selectedDesigner="none";
+    return;
+  }
   this.reloadSchedule();
 }
-clickdesigner(v){
-  
-  console.log(v);
-  console.log(this.image8);
-  this.selecteddesignernumber=v;
-  if(v==0){
-    if(this.firstimage==false){
-      //나를 false 로 만들어야한다. 
-      this.selectedDesigner="none";
-      console.log(this.selectedDesigner)
-    }else{
-      //나 제외하곤 모두 false; 나만 true
-      this.secondimage=false;
-      this.thirdimage=false;
-      this.fourthimage=false;
-      this.fifthimage=false;
-      this.sixthimage=false;
-      this.seventhimage=false;
-      this.image9=false;
-      this.image10=false;
-      this.image11=false;
-      this.image12=false;
-      this.image13=false;
-      this.image14=false;
-      this.image15=false;
-      this.image16=false;
-      this.image17=false;
-      this.image18=false;
-      this.image19=false;
 
-      console.log(this.secondimage);
-      console.log(this.thirdimage);
-      console.log(this.image8);
-      // this.clickdesigner(1);
-      // this.clickdesigner(2);
-      // this.clickdesigner(3);
-      // this.clickdesigner(4);
-      // this.clickdesigner(5);
-      // this.clickdesigner(6);
-      console.log(this.image8);
-      this.selectedDesigner=this.designername;
-    console.log(this.selectedDesigner)
-      this.reloadSchedule();
-    }
-    console.log(this.selectedDesigner)
-    this.firstimage=!this.firstimage;
-    console.log(this.image8);
-  }else if(v==1){
-    if(this.secondimage==false){
-      //reload schedule 
-      this.selectedDesigner="none";
-      console.log(this.selectedDesigner)
-    }else{
-      this.firstimage=false;
-      this.thirdimage=false;
-      this.fourthimage=false;
-      this.fifthimage=false;
-      this.sixthimage=false;
-      this.seventhimage=false;
-      this.image9=false;
-      this.image10=false;
-      this.image11=false;
-      this.image12=false;
-      this.image13=false;
-      this.image14=false;
-      this.image15=false;
-      this.image16=false;
-      this.image17=false;
-      this.image18=false;
-      this.image19=false;
-      this.clickdesigner(0);
-      this.clickdesigner(2);
-      this.clickdesigner(3);
-      this.clickdesigner(4);
-      this.clickdesigner(5);
-      this.clickdesigner(6);
-      
-      this.selectedDesigner=this.designername1;
-    console.log("selected designer "+this.selectedDesigner)
-      this.reloadSchedule();
-    }
-    console.log(this.selectedDesigner)
-    this.secondimage=!this.secondimage;
-    this.selectedDesigner=this.designername1;
-  }else if(v==2){
-    if(this.thirdimage==false){
-      //reload schedule 
-      this.selectedDesigner="none";
-      console.log(this.selectedDesigner)
-    }else{
-      this.firstimage=false;
-     
-      this.secondimage=false;
-      this.fourthimage=false;
-      this.fifthimage=false;
-      this.sixthimage=false;
-      this.seventhimage=false;
-      this.image9=false;
-      this.image10=false;
-      this.image11=false;
-      this.image12=false;
-      this.image13=false;
-      this.image14=false;
-      this.image15=false;
-      this.image16=false;
-      this.image17=false;
-      this.image18=false;
-      this.image19=false;
-      this.clickdesigner(1);
-      this.clickdesigner(0);
-      this.clickdesigner(3);
-      this.clickdesigner(4);
-      this.clickdesigner(5);
-      this.clickdesigner(6);
-     
-      this.selectedDesigner=this.designername2;
-    console.log("selected designer "+this.selectedDesigner)
-      this.reloadSchedule();
-    }
-    console.log(this.selectedDesigner)
-    this.thirdimage=!this.thirdimage;
-    this.selectedDesigner=this.designername2;
-  }else if(v==3){
-    if(this.fourthimage==false){
-      //reload schedule 
-      this.selectedDesigner="none";
-      console.log(this.selectedDesigner)
-    }else{
-      this.firstimage=false;
-   
-      this.secondimage=false;
-      this.thirdimage=false;
-      this.fifthimage=false;
-      this.sixthimage=false;
-      this.seventhimage=false;
-      this.image9=false;
-      this.image10=false;
-      this.image11=false;
-      this.image12=false;
-      this.image13=false;
-      this.image14=false;
-      this.image15=false;
-      this.image16=false;
-      this.image17=false;
-      this.image18=false;
-      this.image19=false;
-      this.clickdesigner(1);
-      this.clickdesigner(2);
-      this.clickdesigner(0);
-      this.clickdesigner(4);
-      this.clickdesigner(5);
-      this.clickdesigner(6);
-     
-      this.selectedDesigner=this.designername3;
-    console.log("selected designer "+this.selectedDesigner)
-      this.reloadSchedule();
-    }
-    console.log(this.selectedDesigner)
-    this.fourthimage=!this.fourthimage;
-    this.selectedDesigner=this.designername3;
-  }else if(v==4){
-    if(this.fifthimage==false){
-      //reload schedule 
-      this.selectedDesigner="none";
-      console.log(this.selectedDesigner)
-    }else{
-      this.firstimage=false;
-      this.secondimage=false;
-      this.thirdimage=false;
-      this.fourthimage=false;
-      this.sixthimage=false;
-      this.seventhimage=false;
-      this.image9=false;
-      this.image10=false;
-      this.image11=false;
-      this.image12=false;
-      this.image13=false;
-      this.image14=false;
-      this.image15=false;
-      this.image16=false;
-      this.image17=false;
-      this.image18=false;
-      this.image19=false;
-      this.clickdesigner(1);
-      this.clickdesigner(2);
-      this.clickdesigner(3);
-      this.clickdesigner(0);
-    
-      this.clickdesigner(19);
-      this.selectedDesigner=this.designername4;
-    console.log("selected designer "+this.selectedDesigner)
-      this.reloadSchedule();
-    }
-    console.log(this.selectedDesigner)
-    this.fifthimage=!this.fifthimage;
-    this.selectedDesigner=this.designername4;
-  }else if(v==5){
-    if(this.sixthimage==false){
-      //reload schedule 
-      this.selectedDesigner="none";
-      console.log(this.selectedDesigner)
-    }else{
-      this.firstimage=false;
-      this.secondimage=false;
-      this.thirdimage=false;
-      this.fourthimage=false;
-      this.fifthimage=false;
-      
-      this.seventhimage=false;
-      this.image9=false;
-      this.image10=false;
-      this.image11=false;
-      this.image12=false;
-      this.image13=false;
-      this.image14=false;
-      this.image15=false;
-      this.image16=false;
-      this.image17=false;
-      this.image18=false;
-      this.image19=false;
-      this.clickdesigner(1);
-      this.clickdesigner(2);
-      this.clickdesigner(3);
-      this.clickdesigner(4);
-      this.clickdesigner(0);
-     
-      this.selectedDesigner=this.designername5;
-    console.log("selected designer "+this.selectedDesigner)
-      this.reloadSchedule();
-    }
-    console.log(this.selectedDesigner)
-    this.sixthimage=!this.sixthimage;
-    this.selectedDesigner=this.designername5;
-  }else if(v==6){
-    if(this.seventhimage==false){
-      //reload schedule 
-      this.selectedDesigner="none";
-      console.log(this.selectedDesigner)
-    }else{
-      this.firstimage=false;
-      this.secondimage=false;
-      this.thirdimage=false;
-      this.fourthimage=false;
-      this.fifthimage=false;
-      this.sixthimage=false;
-      this.image9=false;
-      this.image10=false;
-      this.image11=false;
-      this.image12=false;
-      this.image13=false;
-      this.image14=false;
-      this.image15=false;
-      this.image16=false;
-      this.image17=false;
-      this.image18=false;
-      this.image19=false;
-      this.clickdesigner(1);
-      this.clickdesigner(2);
-      this.clickdesigner(3);
-      this.clickdesigner(4);
-      this.clickdesigner(5);
-      this.clickdesigner(0);
-     
-      this.selectedDesigner=this.designername6;
-    console.log("selected designer "+this.selectedDesigner)
-      this.reloadSchedule();
-    }
-    console.log(this.selectedDesigner)
-    this.seventhimage=!this.seventhimage;
-    this.selectedDesigner=this.designername6;
-  }
-  // else if(v==7){
-
-  //   if(this.image8==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(6);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername7;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.image8;
-  //   this.selectedDesigner=this.designername7;
-  // }
-  // else if(v==8){
-  //   if(this.image9==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(6);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername8;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.image9=!this.image9;
-  //   this.selectedDesigner=this.designername8;
-  // }else if(v==9){
-  //   if(this.image10==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername9;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.image10=!this.image10;
-  //   this.selectedDesigner=this.designername9;
-  // }
-  //else if(v==10){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }else if(v==11){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }else if(v==12){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }else if(v==13){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }else if(v==14){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }else if(v==15){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }else if(v==16){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }else if(v==17){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(18);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }else if(v==18){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.clickdesigner(19);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }
-  // else if(v==19){
-  //   if(this.seventhimage==false){
-  //     //reload schedule 
-  //     this.selectedDesigner="none";
-  //     console.log(this.selectedDesigner)
-  //   }else{
-  //     this.firstimage=false;
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false; 
-  //     this.secondimage=false;
-  //     this.thirdimage=false;
-  //     this.fourthimage=false;
-  //     this.fifthimage=false;
-  //     this.sixthimage=false;
-  //     this.seventhimage=false;
-  //     this.image8=false;
-  //     this.image9=false;
-  //     this.image10=false;
-  //     this.image11=false;
-  //     this.image12=false;
-  //     this.image13=false;
-  //     this.image14=false;
-  //     this.image15=false;
-  //     this.image16=false;
-  //     this.image17=false;
-  //     this.image18=false;
-  //     this.image19=false;
-  //     this.clickdesigner(1);
-  //     this.clickdesigner(2);
-  //     this.clickdesigner(3);
-  //     this.clickdesigner(4);
-  //     this.clickdesigner(5);
-  //     this.clickdesigner(0);
-  //     this.clickdesigner(7);
-  //     this.clickdesigner(8);
-  //     this.clickdesigner(9);
-  //     this.clickdesigner(10);
-  //     this.clickdesigner(11);
-  //     this.clickdesigner(12);
-  //     this.clickdesigner(13);
-  //     this.clickdesigner(14);
-  //     this.clickdesigner(15);
-  //     this.clickdesigner(16);
-  //     this.clickdesigner(17);
-  //     this.selectedDesigner=this.designername6;
-  //   console.log("selected designer "+this.selectedDesigner)
-  //     this.reloadSchedule();
-  //   }
-  //   console.log(this.selectedDesigner)
-  //   this.seventhimage=!this.seventhimage;
-  //   this.selectedDesigner=this.designername6;
-  // }
-
-}
 getToday(v) {
   var today = new Date().getDay();
   console.log("today is "+today);
@@ -2756,7 +1825,7 @@ makeAllOff(){
     console.log(this.selectDay);
     console.log(this.selectDayOfWeek)
     console.log(this.newmon);
-    if(this.logined=="false"||this.logined==null){
+    if(this.logined=="false"){
 
       var alert = this.alertCtrl.create({
         title: '로그인을 해야합니다.',
@@ -2785,7 +1854,7 @@ makeAllOff(){
                           localStorage.setItem("logined","true");
 
                           this.userId=res.id;
-                          this.name=localStorage.getItem("name");
+                          // this.name=localStorage.getItem("name");
                           this.logined="true";
                           console.log(this.name);
                           console.log(this.logined);
@@ -2808,7 +1877,7 @@ makeAllOff(){
         this.navCtrl.push(JoinedPage,{"mainImage":this.mainImage,"idd":this.userId,"storeName":this.name,"time":r,"store":this.storeId,"dayofweek":this.selectDayOfWeek,"day":this.selectDay,"month":this.newmon,"designer":this.selectedDesigner})
       }else{
         let alert = this.alertCtrl.create({
-          title : "디자이너를 선택해주세요",
+          title : "선생님을 선택해주세요",
           buttons: [
           
             {

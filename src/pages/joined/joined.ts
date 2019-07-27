@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,ViewController} from 'ionic-angular';
+import { IonicPage,ModalController, NavController, NavParams ,ViewController} from 'ionic-angular';
 import { Store } from '../../models/store';
 import firebase from 'firebase';
 import { ReserveFinishPage } from '../reserve-finish/reserve-finish';
+import { OpeningmodalPage } from '../openingmodal/openingmodal';
 /**
  * Generated class for the JoinedPage page.
  *
@@ -21,6 +22,7 @@ export class JoinedPage {
   reserver:any;
   phone:any;
   newtime:any;
+  checked:any;
   time:any;
   name:any;
   storeName:any;
@@ -39,7 +41,7 @@ export class JoinedPage {
   mainImage:any;
   id:any;
 
-  constructor(public view : ViewController,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public modal:ModalController,public view : ViewController,public navCtrl: NavController, public navParams: NavParams) {
     this.name=localStorage.getItem("name");
     this.userId=this.navParams.get("idd");
     this.mainImage=this.navParams.get("mainImage");
@@ -71,6 +73,7 @@ export class JoinedPage {
     console.log(minute);
     console.log(fullyear)
 
+    console.log(this.store);
 
      this.nowtime = ""+(month+1)+"월"+date+"일"+(hour)+"시"+minute+"분";
 
@@ -93,10 +96,21 @@ export class JoinedPage {
     }
     console.log(this.h);
     console.log(this.m);
-    this.newtime=this.h+"시"+" "+this.m+"분까지 와주세요";
     console.log(this.name);
     console.log(this.storeName);
     console.log(this.time);
+  }
+  openmodal(){
+    console.log("oepn")
+
+    let modal = this.modal.create(OpeningmodalPage);
+    modal.onDidDismiss(imagedata => {
+      console.log("image data isㄴㄴㄴㄴ : ");
+     
+     
+    });
+      modal.present();
+
   }
   gotoback(){
 
@@ -104,18 +118,29 @@ export class JoinedPage {
     // this.matchedKeyword="t";
     this.view.dismiss();
   }
+  checking(e){
+    var isChecked = e.currentTarget.checked;
+    console.log(e.currentTarget);//undefined
+    console.log(this.checked);//it is working !!!
+  }
   finishing(){
 
     console.log(this.reserver);
     console.log(this.phone);
     console.log(this.store);
-    console.log(this.month+"가 ㅡㅐㅜ소");
     console.log(this.day);
     console.log(this.dayofweek);
     console.log(this.userId);
+    if(this.checked){
+
     if(this.numberofpeople==undefined){
       this.numberofpeople="-";
     }
+    if(this.reserver==''&&this.phone==''){
+      window.alert("정보를 입력해주세요");
+      return;
+    }
+    this.userId="test"
     var newRef = this.firedata.child(this.store).child("reservationList").push();
     var newItem = { "name":this.reserver,
     "flag":"normal",
@@ -154,8 +179,11 @@ export class JoinedPage {
   newRef2.set(newItem2);
 
    this.navCtrl.push(ReserveFinishPage,{"name":this.reserver,"time":this.newnewtime})
-    // this.view.dismiss();
+    this.view.dismiss();
     
+  }else{
+      window.alert("개인정보 3자동의 체크를 해주세요")
+  }
   }
   
   ionViewDidLoad() {

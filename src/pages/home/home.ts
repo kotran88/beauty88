@@ -3,11 +3,11 @@ import { NavController,IonicPage,ViewController,AlertController,MenuController,P
 import { KakaoCordovaSDK, AuthTypes } from 'kakao-sdk';
 import firebase from 'firebase';
 import { Scroll } from 'ionic-angular';
-import {SearchPage}from './../search/search';
-import { StoredetailPage } from './../storedetail/storedetail';
+import {SearchPage}from '../search/search';
+import { StoredetailPage } from '../storedetail/storedetail';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Store } from './../../models/store';
-import {LoginPage} from './../../pages/login/login';
+import { Store } from '../../models/store';
+import {LoginPage} from '../login/login';
 import { RequestPage } from '../request/request';
 import { Storage } from '@ionic/storage';
 import { MypagePage } from '../mypage/mypage';
@@ -224,17 +224,13 @@ if(this.flagtostart){
       this.navCtrl.getActive().onDidDismiss(data => {
         //on dismiss from menu add page
         console.log("SearchPage add on dismiss");
-        console.log(data);
         if(data!=undefined){
-          console.log("distance is :");
           var flag=data.flag;
-          console.log(flag);
   
           this.firedata.once('value').then((snapshot) =>{
             this.storearray=[];
             var value:any;
             for(var result in snapshot.val()){
-              console.log(result);
              
              
                 var arrayX = [];
@@ -243,17 +239,9 @@ if(this.flagtostart){
                 arrayX.push(snapshot.val()[result].lat)
                 arrayY.push(snapshot.val()[result].lng);
                 arrayApproval.push(snapshot.val()[result].approval);
-                console.log(arrayX);
-                console.log(arrayY);
                 for(var i=0; i<arrayX.length; i++){
-                  console.log(arrayX[i]);
-                  console.log("distance is :");
-                  console.log(this.calcCrow(arrayX[i],arrayY[i],data.x,data.y).toFixed(2));
                   var distance=this.calcCrow(arrayX[i],arrayY[i],data.x,data.y).toFixed(2);
-                  console.log("final distance : "+Number(distance)*1000);
                  if(Number(distance)*1000<this.superdistance){
-                    console.log("20km 이내는 : ")
-                    console.log(snapshot.val()[result])
                     if(arrayApproval[i]==true||arrayApproval[i]=="true"){
                       if(this.selectedbutton=="All"){
                         if(snapshot.val()[result].reservationStart!=undefined){
@@ -323,15 +311,13 @@ if(this.flagtostart){
     }
     generateStore(flagCategory){
 
-      if(flagCategory=="massage"||flagCategory=="waxing"||flagCategory=="diet"||flagCategory=="plastic"||flagCategory=="makeup"){
+      if(flagCategory=="health"||flagCategory=="diet"||flagCategory=="theraphy"){
         this.scroll._scrollContent.nativeElement.scrollTo({ left: 500, top: 0, behavior: 'smooth' });
       }
-      console.log("come to generating store..."+flagCategory);
       this.firedata.once('value').then((snapshot) =>{
         this.storearray=[];
         var value:any;
         for(var result in snapshot.val()){
-          console.log(this.lat+"????"+this.lng);
          
           
           if(snapshot.val()[result].approval==true||snapshot.val()[result].approval=="true"){
@@ -339,31 +325,18 @@ if(this.flagtostart){
 
             
               if(flagCategory!="All"){
-                console.log("category is :"+snapshot.val()[result].category);
                 if(flagCategory=="keyword"){
                 
-                  console.log("showinggg keyboard!!!");
-                  console.log(this.storearrayfromkeyword);
                   this.storearray=this.storearrayfromkeyword;
                   // for(var i=0; i<this.storearrayfromkeyword.length; i++){
                   //   this.storearray=this.storearrayfromkeyword[i]
                   // }
                 }else{
-                  console.log("iterating...");
-                  console.log(snapshot.val()[result].category);
-                  console.log(flagCategory);
                   if(snapshot.val()[result].category==flagCategory){
-                    console.log(snapshot.val()[result])
-                    console.log(this.x);
-                    console.log(this.y);
                     var newdistance=this.calcCrow(snapshot.val()[result].lat,snapshot.val()[result].lng,this.x,this.y).toFixed(2);
                
                     var nnewdistance=Number(newdistance)*1000;
-                    console.log(nnewdistance);
-                    console.log(this.superdistance);
                     if(this.superdistance>nnewdistance){
-                      console.log("show this : "+nnewdistance);
-                      console.log(snapshot.val()[result]);
                       this.storearray.push({"promotion":snapshot.val()[result].promotion,"id":snapshot.val()[result].id,"address":snapshot.val()[result].address,"name":snapshot.val()[result].name,"approval":snapshot.val()[result].approval,"category":snapshot.val()[result].category,"distance":nnewdistance,"mainImage":snapshot.val()[result].mainImage})
                     }
                     
@@ -373,15 +346,9 @@ if(this.flagtostart){
               
                
               }else{
-                console.log("showinggg else!!!");
                 var newdistance=this.calcCrow(snapshot.val()[result].lat,snapshot.val()[result].lng,this.x,this.y).toFixed(2);
-               
                 var nnewdistance=Number(newdistance);
-                console.log(nnewdistance);
-                console.log(this.superdistance);
                 if(this.superdistance>nnewdistance){
-                  console.log("shgggggow this : "+nnewdistance);
-                  console.log(snapshot.val()[result]);
                   this.storearray.push({"promotion":snapshot.val()[result].promotion,"id":snapshot.val()[result].id,"address":snapshot.val()[result].address,"name":snapshot.val()[result].name,"approval":snapshot.val()[result].approval,"category":snapshot.val()[result].category,"distance":nnewdistance,"mainImage":snapshot.val()[result].mainImage})
                 }
 
@@ -397,13 +364,8 @@ if(this.flagtostart){
           }
 
           
-  console.log(this.storearray);
-  console.log("this.storearray");
-  
-
       
   console.log(this.storearray);
-  console.log("after promotion");
   var sortingField = "distance";
 
   this.storearray.sort(function(a,b) { // 오름차순
@@ -412,7 +374,6 @@ if(this.flagtostart){
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
 
 });
-console.log("?????");
   console.log(this.storearray);
   var sortingField = "promotion";
 
@@ -421,7 +382,6 @@ console.log("?????");
 
     var x = a[sortingField]; 
     var y = b[sortingField];
-    console.log("x and y : "+x+"///"+y);
     return (x === y)? 0 : x? -1 : 1;
 });
         
@@ -444,8 +404,6 @@ console.log("?????");
 
     this.storearrayfromkeyword=this.navParams.get("storearray");
 
-    console.log("come to constructor in homepage")
-    console.log(this.storearrayfromkeyword);
     this.userId=this.navParams.get("userId");
     this.selectedbutton=this.category3;
     this.location=this.navParams.get("location");
@@ -458,12 +416,9 @@ console.log("?????");
    
   
 
-    console.log("constructor");
 
     this.rootdata.ref().child("distance").on('value',(snap)=>{
 
-      console.log("newdistance")
-      console.log(snap.val());
       this.superdistance=snap.val().value;
     })
     var photo="";

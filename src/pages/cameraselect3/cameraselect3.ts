@@ -80,7 +80,7 @@ export class Cameraselect3Page {
     this.viewCtrl.dismiss({"flag":"delete"});
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CameraselectPage');
+    console.log('ionViewDidLoad CameraselectPage33333');
   }
   confirm(){
     this.viewCtrl.dismiss();

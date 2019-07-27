@@ -91,7 +91,7 @@ export class Cameraselect4Page{
     
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CameraselectPage');
+    console.log('ionViewDidLoad CameraselectPage4444');
   }
   confirm(){
     this.viewCtrl.dismiss();

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {HomePage}from './../home/home';
+import {HomePage}from '../home/home';
 import { KakaoCordovaSDK, AuthTypes } from 'kakao-sdk';
 /**
  * Generated class for the LoginPage page.

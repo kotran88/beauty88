@@ -18,7 +18,7 @@
     margin-top: 0.2em;" class="title">
      {{name}}
     </div>
-    <img src="assets/imgs/shareindetail.png" style="
+    <img *ngIf="closeflag==false" src="assets/imgs/shareindetail.png" style="
     font-size: 1.8em;
     right: 2%;
     width:22px;
@@ -32,7 +32,8 @@
 
 <ion-content padding>
 
-  <ion-slides pager style="max-height:200px">
+  <ion-slides class="firstslide" pager style="
+  margin-top: 20px; max-height:200px">
     <ion-slide style="width:100% !important;" *ngFor="let slide of slides">
         <img style='width: 100%;'  [src]="slide">
     </ion-slide>
@@ -60,7 +61,7 @@
           <div *ngIf="arrayPrice.length!=0" style="padding:16px; font-size: 15px;"> 가격정보  </div>
           <div class="priceIndex">
             <div [ngClass]="i==0?'centeralign_first':'centeralign'" *ngFor="let r of arrayPrice let i = index ">
-              <p class="ff">{{r.value}}</p>  <p class="ss">{{r.price}}원</p> <p class="tt">{{r.time}}분 소요</p> <p class="fff" *ngIf="r.event!=''" style="color:red;">{{r.event}}% 할인제공 </p>
+              <p class="ff">{{r.value}}</p>  <p class="ss">{{number_format(r.price)}}만원</p> <p class="tt">{{r.time}}분 소요</p> <p class="fff" *ngIf="r.event!=''" style="color:red;"> 할인가&nbsp;{{number_format(r.event)}}&nbsp;만원 </p>
             </div>
           </div>
    
@@ -73,7 +74,7 @@
              
           </div>
           <hr style="    height: 1px;">
-          <div *ngIf="designarray!=undefined" style="font-size: 15px; padding:16px;"> 디자인 </div>
+          <div *ngIf="designarray!=undefined" style="font-size: 15px; padding:16px;"> 애프터뷰 </div>
           <ion-scroll *ngIf="designarray!=undefined"  scrollX="true">
                 <img  class="imagedesign" *ngFor="let a of designarray; let i = index"  (click)="gotoalbum(i)" src="{{a}}">
                
@@ -83,106 +84,91 @@
           <div *ngIf="designerImage!=undefined" style="font-size: 15px;padding:16px;"> 예약하기</div>
           <ion-scroll style="height:130px !important;" *ngIf="designerImage!=undefined" scrollX="true">
        
-                <img *ngIf="designerImage!='none'" style="margin-left:1em;   
-                margin-right: 2em;"  [ngClass]="(firstimage == true) ? 'imagereservation' : 'selectedimagereservation'"  (click)="clickdesigner2(0)" src="{{designerImage}}">
-              <span *ngIf="designername!='none'&&designername.length>6" style="margin-left:-7.5em;"  class="scrollspan">{{designername}}</span>
-              <span *ngIf="designername!='none'&&designername.length==6" style="margin-left:-7em;"  class="scrollspan">{{designername}}</span>
-              <span *ngIf="designername!='none'&&designername.length==5" style="margin-left:-6.5em;"  class="scrollspan">{{designername}}</span>
-              <span *ngIf="designername!='none'&&designername.length==4" style="margin-left:-6em;"  class="scrollspan">{{designername}}</span>
-              <span *ngIf="designername!='none'&&designername.length==3"  style="margin-left:-5.5em;" class="scrollspan">{{designername}}</span>
-              <span *ngIf="designername!='none'&&designername.length==2"  style="margin-left:-5em;" class="scrollspan">{{designername}}</span>
-              <img  *ngIf="designerImage1!='none'" style="margin-left:2.2em;" [ngClass]="(secondimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(1)" src="{{designerImage1}}">
-              <span *ngIf="designername1!='none'&&designername1.length>6" style="margin-left:-5.5em;"  class="scrollspan">{{designername1}}</span>
-              <span *ngIf="designername1!='none'&&designername1.length==6" style="margin-left:-5em;"  class="scrollspan">{{designername1}}</span>
-              <span *ngIf="designername1!='none'&&designername1.length==5" style="margin-left:-4.5em;"  class="scrollspan">{{designername1}}</span>
-              <span *ngIf="designername1!='none'&&designername1.length==4" style="margin-left:-4em;"  class="scrollspan">{{designername1}}</span>
-              <span *ngIf="designername1!='none'&&designername1.length==3"  style="margin-left:-3.8em;" class="scrollspan">{{designername1}}</span>
-              <span *ngIf="designername1!='none'&&designername1.length==2"  style="margin-left:-3.3em;" class="scrollspan">{{designername1}}</span>
+            <div class="tttttt">
 
-              <img *ngIf="designerImage2!='none'" style="margin-left:2.2em;" [ngClass]="(thirdimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(2)" src="{{designerImage2}}">
-              <span *ngIf="designername2!='none'&&designername2.length>6" style="margin-left:-5.5em;"  class="scrollspan">{{designername2}}</span>
-              <span *ngIf="designername2!='none'&&designername2.length==6" style="margin-left:-5em;"  class="scrollspan">{{designername2}}</span>
-              <span *ngIf="designername2!='none'&&designername2.length==5" style="margin-left:-4.5em;"  class="scrollspan">{{designername2}}</span>
-              <span *ngIf="designername2!='none'&&designername2.length==4" style="margin-left:-4em;"  class="scrollspan">{{designername2}}</span>
-              <span *ngIf="designername2!='none'&&designername2.length==3"  style="margin-left:-3.8em;" class="scrollspan">{{designername2}}</span>
-              <span *ngIf="designername2!='none'&&designername2.length==2"  style="margin-left:-3.3em;" class="scrollspan">{{designername2}}</span>
-              <img *ngIf="designerImage3!='none'" vstyle="margin-left:2.2em;" [ngClass]="(fourthimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(3)" src="{{designerImage3}}">
-              <span *ngIf="designername3!='none'&&designername3.length>6" style="margin-left:-5.5em;"  class="scrollspan">{{designername3}}</span>
-              <span *ngIf="designername3!='none'&&designername3.length==6" style="margin-left:-5em;"  class="scrollspan">{{designername3}}</span>
-              <span *ngIf="designername3!='none'&&designername3.length==5" style="margin-left:-4.5em;"  class="scrollspan">{{designername3}}</span>
-              <span *ngIf="designername3!='none'&&designername3.length==4" style="margin-left:-4em;"  class="scrollspan">{{designername3}}</span>
-              <span *ngIf="designername3!='none'&&designername3.length==3"  style="margin-left:-3.8em;" class="scrollspan">{{designername3}}</span>
-              <span *ngIf="designername3!='none'&&designername3.length==2"  style="margin-left:-3.3em;" class="scrollspan">{{designername3}}</span>
-              <img *ngIf="designerImage4!='none'" style="margin-left:2.2em;" [ngClass]="(fifthimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(4)" src="{{designerImage4}}">
-              <span *ngIf="designername4!='none'&&designername4.length>6" style="margin-left:-5.5em;"  class="scrollspan">{{designername4}}</span>
-              <span *ngIf="designername4!='none'&&designername4.length==6" style="margin-left:-5em;"  class="scrollspan">{{designername4}}</span>
-              <span *ngIf="designername4!='none'&&designername4.length==5" style="margin-left:-4.5em;"  class="scrollspan">{{designername4}}</span>
-              <span *ngIf="designername4!='none'&&designername4.length==4" style="margin-left:-4em;"  class="scrollspan">{{designername4}}</span>
-              <span *ngIf="designername4!='none'&&designername4.length==3"  style="margin-left:-3.8em;" class="scrollspan">{{designername4}}</span>
-              <span *ngIf="designername4!='none'&&designername4.length==2"  style="margin-left:-3.3em;" class="scrollspan">{{designername4}}</span>
-              <img *ngIf="designerImage5!='none'" style="margin-left:2.2em;" [ngClass]="(sixthimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(5)" src="{{designerImage5}}">
-              <span *ngIf="designername5!='none'&&designername5.length>6" style="margin-left:-5.5em;"  class="scrollspan">{{designername5}}</span>
-              <span *ngIf="designername5!='none'&&designername5.length==6" style="margin-left:-5em;"  class="scrollspan">{{designername5}}</span>
-              <span *ngIf="designername5!='none'&&designername5.length==5" style="margin-left:-4.5em;"  class="scrollspan">{{designername5}}</span>
-              <span *ngIf="designername5!='none'&&designername5.length==4" style="margin-left:-4em;"  class="scrollspan">{{designername5}}</span>
-              <span *ngIf="designername5!='none'&&designername5.length==3"  style="margin-left:-3.8em;" class="scrollspan">{{designername5}}</span>
-              <span *ngIf="designername5!='none'&&designername5.length==2"  style="margin-left:-3.3em;" class="scrollspan">{{designername5}}</span>
-              <img *ngIf="designerImage6!='none'" style="margin-left:2.2em;" [ngClass]="(seventhimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(6)" src="{{designerImage6}}">
-              <span *ngIf="designername6!='none'&&designername6.length>6" style="margin-left:-5.5em;"  class="scrollspan">{{designername6}}</span>
-              <span *ngIf="designername6!='none'&&designername6.length==6" style="margin-left:-5em;"  class="scrollspan">{{designername6}}</span>
-              <span *ngIf="designername6!='none'&&designername6.length==5" style="margin-left:-4.5em;"  class="scrollspan">{{designername6}}</span>
-              <span *ngIf="designername6!='none'&&designername6.length==4" style="margin-left:-4em;"  class="scrollspan">{{designername6}}</span>
-              <span *ngIf="designername6!='none'&&designername6.length==3"  style="margin-left:-3.8em;" class="scrollspan">{{designername6}}</span>
-              <span *ngIf="designername6!='none'&&designername6.length==2"  style="margin-left:-3.3em;" class="scrollspan">{{designername6}}</span>
-              <img  *ngIf="designerImag7!='none'" [ngClass]="(image8 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(7)" src="{{designerImage7}}">
-              <span *ngIf="designername7!='none'&&designername7.length>6" style="margin-left:-5.5em;"  class="scrollspan">{{designername7}}</span>
-              <span *ngIf="designername7!='none'&&designername7.length==6" style="margin-left:-5em;"  class="scrollspan">{{designername7}}</span>
-              <span *ngIf="designername7!='none'&&designername7.length==5" style="margin-left:-4.5em;"  class="scrollspan">{{designername7}}</span>
-              <span *ngIf="designername7!='none'&&designername7.length==4" style="margin-left:-4em;"  class="scrollspan">{{designername7}}</span>
-              <span *ngIf="designername7!='none'&&designername7.length==3"  style="margin-left:-3.8em;" class="scrollspan">{{designername7}}</span>
-              <span *ngIf="designername7!='none'&&designername7.length==2"  style="margin-left:-3.3em;" class="scrollspan">{{designername7}}</span>
-              <img  *ngIf="designerImage8!='none'" [ngClass]="(image9 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(8)" src="{{designerImage8}}">
-              <span *ngIf="designername8!='none'&&designername8.length>6" style="margin-left:-5.5em;"  class="scrollspan">{{designername8}}</span>
-              <span *ngIf="designername8!='none'&&designername8.length==6" style="margin-left:-5em;"  class="scrollspan">{{designername8}}</span>
-              <span *ngIf="designername8!='none'&&designername8.length==5" style="margin-left:-4.5em;"  class="scrollspan">{{designername8}}</span>
-              <span *ngIf="designername8!='none'&&designername8.length==4" style="margin-left:-4em;"  class="scrollspan">{{designername8}}</span>
-              <span *ngIf="designername8!='none'&&designername8.length==3"  style="margin-left:-3.8em;" class="scrollspan">{{designername8}}</span>
-              <span *ngIf="designername8!='none'&&designername8.length==2"  style="margin-left:-3.3em;" class="scrollspan">{{designername8}}</span>
-              <img  *ngIf="designerImage9!='none'" [ngClass]="(image10 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(9)" src="{{designerImage9}}">
-              <span *ngIf="designername9!='none'&&designername9.length>3"  style=" margin-left: -5.3em;" class="scrollspan">{{designername9}}</span>
-              <span *ngIf="designername9!='none'&&designername9.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername9}}</span>
-              <img  *ngIf="designerImage10!='none'" [ngClass]="(image11 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(10)" src="{{designerImage10}}">
-              <span *ngIf="designername10!='none'&&designername10.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername10}}</span>
-              <span *ngIf="designername10!='none'&&designername10.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername10}}</span>
-              <img  *ngIf="designerImage11!='none'"[ngClass]="(image12 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(11)" src="{{designerImage11}}">
-              <span *ngIf="designername11!='none'&&designername11.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername11}}</span>
-              <span *ngIf="designername11!='none'&&designername11.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername11}}</span>
-              <img  *ngIf="designerImage12!='none'"[ngClass]="(image13 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(12)" src="{{designerImage12}}">
-              <span *ngIf="designername12!='none'&&designername12.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername12}}</span>
-              <span *ngIf="designername12!='none'&&designername12.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername12}}</span>
-
-              <img  *ngIf="designerImage13!='none'" [ngClass]="(image14 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(13)" src="{{designerImage13}}">
-              <span *ngIf="designername13!='none'&&designername13.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername13}}</span>
-              <span *ngIf="designername13!='none'&&designername13.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername13}}</span>
-              <img  *ngIf="designerImage14!='none'"[ngClass]="(image15 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(14)" src="{{designerImage14}}">
-              <span *ngIf="designername14!='none'&&designername14.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername14}}</span>
-              <span *ngIf="designername14!='none'&&designername14.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername14}}</span>
-              <img  *ngIf="designerImage15!='none'" [ngClass]="(image16 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(15)" src="{{designerImage15}}">
-              <span *ngIf="designername15!='none'&&designername15.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername15}}</span>
-              <span *ngIf="designername15!='none'&&designername15.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername15}}</span> 
-              <img  *ngIf="designerImage16!='none'" [ngClass]="(image17 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(16)" src="{{designerImage16}}">
-              <span *ngIf="designername16!='none'&&designername16.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername16}}</span>
-              <span *ngIf="designername16!='none'&&designername16.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername16}}</span> 
-              <img  *ngIf="designerImage17!='none'" [ngClass]="(image18 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(17)" src="{{designerImage17}}">
-              <span *ngIf="designername17!='none'&&designername17.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername17}}</span>
-              <span *ngIf="designername17!='none'&&designername17.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername17}}</span> 
-              <img  *ngIf="designerImage18!='none'" [ngClass]="(image19 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(18)" src="{{designerImage18}}">
-              <span *ngIf="designername18!='none'&&designername18.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername18}}</span>
-              <span *ngIf="designername18!='none'&&designername18.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername18}}</span> 
-              <img  *ngIf="designerImage19!='none'" [ngClass]="(image20 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(19)" src="{{designerImage19}}">
-              <span *ngIf="designername19!='none'&&designername19.length>3"  style=" margin-left: -5.2em;" class="scrollspan">{{designername19}}</span>
-              <span *ngIf="designername19!='none'&&designername19.length<4"  style="margin-left:-3.8em;" class="scrollspan">{{designername19}}</span> 
+                <img *ngIf="designerImage!='none'" style="
+                "  [ngClass]="(firstimage == true) ? 'imagereservation' : 'selectedimagereservation'"  (click)="clickdesigner2(0,firstimage)" src="{{designerImage}}">
+              <span *ngIf="designername!='none'"   class="sspan">{{designername}}</span>
              
+
+            </div>
+            <div class="tttttt">
+                <img  *ngIf="designerImage1!='none'"  [ngClass]="(secondimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(1,secondimage)" src="{{designerImage1}}">
+                <span *ngIf="designername1!='none'"  class="sspan">{{designername1}}</span>
+  
+              
+            </div>
+            <div class="tttttt">
+                <img *ngIf="designerImage2!='none'"  [ngClass]="(thirdimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(2,thirdimage)" src="{{designerImage2}}">
+                <span *ngIf="designername2!='none'"   class="sspan">{{designername2}}</span>
+                
+            </div>
+            <div class="tttttt">
+                <img *ngIf="designerImage3!='none'"  [ngClass]="(fourthimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(3,fourthimage)" alt="3" src="{{designerImage3}}">
+                <span *ngIf="designername3!='none'"  class="sspan">{{designername3}}</span>
+                
+            </div>
+            <div class="tttttt">
+                <img *ngIf="designerImage4!='none'"  [ngClass]="(fifthimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(4,fifthimage)" alt="4"  src="{{designerImage4}}">
+                <span *ngIf="designername4!='none'"  class="sspan">{{designername4}}</span>
+                
+            </div>
+            <div class="tttttt">
+                <img *ngIf="designerImage5!='none'"[ngClass]="(sixthimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(5,sixthimage)" alt="5"  src="{{designerImage5}}">
+                <span *ngIf="designername5!='none'"   class="sspan">{{designername5}}</span>
+               
+              </div>
+              <div class="tttttt">
+                  <img *ngIf="designerImage6!='none'" [ngClass]="(seventhimage == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(6,seventhimage)" alt="6" src="{{designerImage6}}">
+                  <span *ngIf="designername6!='none'"   class="sspan">{{designername6}}</span>
+                   
+              </div>
+              <div class="tttttt">
+                  <img  *ngIf="designerImage7!='none'" [ngClass]="(image8 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(7,image8)" alt="7" src="{{designerImage7}}">
+                  <span *ngIf="designername7!='none'"  class="sspan">{{designername7}}</span>
+                
+              </div>
+              <div class="tttttt">
+                  <img  *ngIf="designerImage8!='none'" [ngClass]="(image9 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(8,image9)" alt="8" src="{{designerImage8}}">
+                  <span *ngIf="designername8!='none'"   class="sspan">{{designername8}}</span>
+                  
+              </div>
+              <div class="tttttt">
+                  <img  *ngIf="designerImage9!='none'" [ngClass]="(image10 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(9,image10)" alt="9" src="{{designerImage9}}">
+                  <span *ngIf="designername9!='none'"  class="sspan">{{designername9}}</span>
+                 
+                </div>
+                <div class="tttttt">
+                    <img  *ngIf="designerImage10!='none'" [ngClass]="(image11 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(10,image11)"alt="10"  src="{{designerImage10}}">
+                    <span *ngIf="designername10!='none'"   class="sspan">{{designername10}}</span>
+                      
+                </div>
+                <div class="tttttt">
+                    <img  *ngIf="designerImage11!='none'"[ngClass]="(image12 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(11,image12)" src="{{designerImage11}}">
+                    <span *ngIf="designername11!='none'"  class="sspan">{{designername11}}</span>
+                    
+                </div>
+                <div class="tttttt">
+                    <img  *ngIf="designerImage12!='none'"[ngClass]="(image13 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(12,image13)" src="{{designerImage12}}">
+                    <span *ngIf="designername12!='none'"   class="sspan">{{designername12}}</span>
+      
+                    <!-- <img  *ngIf="designerImage13!='none'" [ngClass]="(image14 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(13,image14)" src="{{designerImage13}}">
+                    <span *ngIf="designername13!='none'"  style=" margin-left: -5.2em;" class="scrollspan">{{designername13}}</span>
+                    <img  *ngIf="designerImage14!='none'"[ngClass]="(image15 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(14,image15)" src="{{designerImage14}}">
+                    <span *ngIf="designername14!='none'"  style=" margin-left: -5.2em;" class="scrollspan">{{designername14}}</span>
+                    <img  *ngIf="designerImage15!='none'" [ngClass]="(image16 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(15,image16)" src="{{designerImage15}}">
+                    <span *ngIf="designername15!='none'"  style=" margin-left: -5.2em;" class="scrollspan">{{designername15}}</span>
+                    <img  *ngIf="designerImage16!='none'" [ngClass]="(image17 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(16,image17)" src="{{designerImage16}}">
+                    <span *ngIf="designername16!='none'"  style=" margin-left: -5.2em;" class="scrollspan">{{designername16}}</span>
+                    <img  *ngIf="designerImage17!='none'" [ngClass]="(image18 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(17,image18)" src="{{designerImage17}}">
+                    <span *ngIf="designername17!='none'"  style=" margin-left: -5.2em;" class="scrollspan">{{designername17}}</span>
+                    <img  *ngIf="designerImage18!='none'" [ngClass]="(image19 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(18,image19)" src="{{designerImage18}}">
+                    <span *ngIf="designername18!='none'"  style=" margin-left: -5.2em;" class="scrollspan">{{designername18}}</span>
+                    <img  *ngIf="designerImage19!='none'" [ngClass]="(image20 == true) ? 'imagereservation' : 'selectedimagereservation'" (click)="clickdesigner2(19,image20)" src="{{designerImage19}}">
+                    <span *ngIf="designername19!='none'"  style=" margin-left: -5.2em;" class="scrollspan">{{designername19}}</span>
+                -->
+                </div>    
+
            </ion-scroll>
 
           <div class='reservationclass' style=" padding-bottom: 0 !important; padding:16px;" >
@@ -321,7 +307,6 @@ border-radius: 20px;
                         {{r.time}}
                      </button>
                 </span>
-          
         </ion-scroll>
        
    <!-- <p style="    font-size: 13px;">{{name}}</p>   -->

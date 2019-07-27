@@ -8,6 +8,8 @@ import { HomePage } from '../home/home';
 import { SearchPage } from '../search/search';
 import { ManagementPage } from '../management/management';
 import { RequestPage } from '../request/request';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+
 import { StoremanagementPage } from '../storemanagement/storemanagement';
 import { MypagePage } from '../mypage/mypage';
 
@@ -31,6 +33,7 @@ declare var naver: any;
   templateUrl: 'main.html',
 })
 export class MainPage {
+  designerImage:any="http://i1.ruliweb.com/img/19/06/09/16b3880b7e63051.jpeg";
   categoryselected:any;
   rule:any;
   rule2:any;
@@ -38,6 +41,7 @@ export class MainPage {
   count:any=0;
   requestFlag:any="입점신청";
   flag:any;
+  loadingdone:boolean=false;
   imageUrl:any;
   denyreason:any;
   myStoreId:any;
@@ -63,11 +67,17 @@ export class MainPage {
   haha:any;
   alertC:any;
   
-  constructor(public device:Device,private uniqueDeviceID: UniqueDeviceID,public _kakaoCordovaSDK: KakaoCordovaSDK,public menuCtrl: MenuController,alertC:AlertController,platform:Platform,loading:LoadingController,public geo:Geolocation,public viewer:PhotoViewer,public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public setting:OpenNativeSettings,public device:Device,private uniqueDeviceID: UniqueDeviceID,public _kakaoCordovaSDK: KakaoCordovaSDK,public menuCtrl: MenuController,alertC:AlertController,platform:Platform,loading:LoadingController,public geo:Geolocation,public viewer:PhotoViewer,public navCtrl: NavController, public navParams: NavParams) {
 this.alertC=alertC;
     this.platform=platform;
     this.loading=loading;
   
+  this.loading = this.loading.create({
+              content: `Loading..`,
+              });
+              this.loading.present();
+           
+              this.generateStoredistance();
    console.log("constructor come!!!");
    this.rootdata.ref().child("rule").on('value',(snap)=>{
 
@@ -161,11 +171,7 @@ this.alertC=alertC;
         
         
     //         console.log("ioniv view did loaded');")
-    //         // this.loading = this.loading.create({
-    //         //   content: `Loading..`,
-    //         //   });
-    //         //   this.loading.present();
-           
+    
     //         setTimeout(()=>{
     //           this.getGeo();
             
@@ -300,7 +306,7 @@ this.alertC=alertC;
             }
           },
           {
-            text: '검색',
+            text: '입력',
             handler: data => {
   
               console.log(data.code);
@@ -376,7 +382,7 @@ this.alertC=alertC;
           }
         },
         {
-          text: '검색',
+          text: '등록',
           handler: data => {
 
             console.log(data.code);
@@ -397,14 +403,13 @@ this.alertC=alertC;
     });
     alert.present();
   }
-  ionViewDidLoad(){
-
+  ionViewWillEnter(){
     if(this.lat!=null){
 
 
       this.generateStore("서울특별시");
       this.generateId();
-
+      this.getGeo();
         }else{
           setTimeout(()=>{ this.generateStore("서울특별시");
           // this.generateId();
@@ -413,19 +418,23 @@ this.alertC=alertC;
           },1000)
         }
 
-  //  if(this.platform.is("android")){
-    
-      // this.loading = this.loading.create({
-      //         content: `Loading..`,
-      //         });
-      //         this.loading.present();
+        setTimeout(()=>{
 
-   
+          this.loadingdone=true;
+        },600)
+  }
+  ionViewDidLoad(){
+
   
+   
 }
 generateId(){
 
   console.log("come to generateId")
+
+   
+
+  console.log(this.loadingdone)
   var photo="";
   var name="";
   var id="";
@@ -434,6 +443,8 @@ generateId(){
   name =localStorage.getItem("name");
   id =localStorage.getItem("id");
   this.logined =localStorage.getItem("logined");
+  if(this.logined=="true"){
+  }
   console.log("this is basic")
   console.log(photo);
   console.log(name);
@@ -451,15 +462,14 @@ generateId(){
     this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
  
     this.generateStore("서울특별시");
-    this.generateId();
     console.log("photo is null!")
-  //   this.logined="true";
-  // this.id="1000334014";
-  // this.userUid="1000334014"
+    this.logined="true";
+  this.id="1000334014";
+  this.userUid="1000334014"
 
-  // this.name="마스터이름2";
+  this.name="마스터이름2";
   
-  // this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
+  this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
 
   }else{
 
@@ -470,28 +480,28 @@ generateId(){
     this.logined="true";
     
     this.userUid=this.id;
-  //   console.log("photo is null!")
-  //   this.logined="true";
-  // this.id="1000334014";
-  // this.userUid="1000334014"
+    console.log("photo is null!")
+    this.logined="true";
+  this.id="1000334014222";
+  this.userUid="1000334014222"
 
-  // this.name="마스터이름112";
+  this.name="마스터이름112";
   
-  // this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
+  this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
 
    }
   
     }else{
       console.log("photo is null!")
-      
+      console.log("photo is null!")
       this.logined="true";
-    this.id="10003340143";
-    this.userUid="10003340143"
+    this.id="1000334014222";
+    this.userUid="1000334014222"
   
-    this.name="마스터이름3";
+    this.name="마스터이름112";
     
     this.imageUrl="https://k.kakaocdn.net/dn/yBGEM/btqo9Jhcla5/nxAiHGASvr8gI8Mx0muCHK/profile_110x110c.jpg"
- 
+  
     }
 
   this.firedata2.once('value',(snapshot)=>{
@@ -536,12 +546,12 @@ getGeo(){
     timeout: 10000,
     enableHighAccuracy: false
     }
+
   this.geo.getCurrentPosition(options).then((success)=>{
 
     console.log(success);
-  
     this.lat=success.coords.latitude;
-    this.lng=success.coords.longitude;
+    this.lng=success.coords.longitude; 
     // this.lat=37.565924;
     // this.lng=126.976895;
     console.log("currentlocatipn"+this.lat+"///"+this.lng);
@@ -580,22 +590,22 @@ getGeo(){
           console.log(this.userUid);
           this.generateId();
       // do Something
-  });
+  })
   }).catch((e)=>{
     console.log("failed");
     console.log(e);
+    console.log(this.geoflag+"count is : "+this.count);
    
-
-    console.log("count is : "+this.count);
-    // if(this.loading!=null){
-    //   this.loading.dismiss();
-    // }
     if(this.geoflag!=true){
       if(this.count<5){
+      
+        this.count++;
+       
         setTimeout(()=>{
           if(e.code==1){
             
             this.geoflag=false;
+            this.getGeo();
             this.generateStore("서울특별시");
             this.generateId();
           }else{
@@ -687,6 +697,67 @@ requesttoopen(){
   
   
 }
+gotoshop(a){
+  console.log(a);
+  this.navCtrl.push(StoredetailPage,{"logined":this.logined,"storeId":a.id,"nick":this.name,"userId":this.userUid})
+
+}
+generateStoredistance(){
+
+  this.firedata2.once('value').then((snapshot) =>{
+    this.storearray=[];
+    var value:any;
+    for(var result in snapshot.val()){
+     
+      console.log(snapshot.val()[result])
+      if(snapshot.val()[result].approval==true||snapshot.val()[result].approval=="true"){
+        // if(this.superdistance>Number(distance)*1000){
+
+        
+           
+
+          
+           
+            var newdistance=this.calcCrow(snapshot.val()[result].lat,snapshot.val()[result].lng,this.lat,this.lng).toFixed(2);
+            var nnewdistance=Number(newdistance);
+              this.storearray.push({"promotion":snapshot.val()[result].promotion,"id":snapshot.val()[result].id,"address":snapshot.val()[result].address,"name":snapshot.val()[result].name,"approval":snapshot.val()[result].approval,"category":snapshot.val()[result].category,"distance":nnewdistance,"mainImage":snapshot.val()[result].mainImage})
+
+
+           
+         
+        // }
+        }
+      }
+      
+
+      
+  
+console.log(this.storearray);
+var sortingField = "distance";
+
+this.storearray.sort(function(a,b) { // 오름차순
+// return (a[sortingField] === b[sortingField])? 0 : a[sortingField]? -1 : 1;
+var x = a[sortingField]; var y = b[sortingField];
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+
+});
+console.log(this.storearray);
+var sortingField = "promotion";
+
+this.storearray.sort(function(a,b) { // 오름차순
+// return (a[sortingField] === b[sortingField])? 0 : a[sortingField]? -1 : 1;
+
+var x = a[sortingField]; 
+var y = b[sortingField];
+return (x === y)? 0 : x? -1 : 1;
+});
+if(this.loading!=null){
+  this.loading.dismiss();
+}
+
+  });
+}
+
   generateStore(sii){
      
     var si="";
@@ -721,6 +792,9 @@ requesttoopen(){
       //   this.loading.dismiss();
       // }
     });
+    //  if(this.loading!=null){
+    //   this.loading.dismiss();
+    // }
   }
   
   
@@ -752,13 +826,11 @@ requesttoopen(){
               var value:any;
               var flag=false;
               for(var result in snapshot.val()){
-                console.log(result);
-                console.log(snapshot.val()[result])
+                var storename=snapshot.val()[result].name;
                 var keywords=snapshot.val()[result].keywords;
-                console.log(keywords);
-                if(keywords!=undefined){
+                if(keywords!=undefined||storename!=undefined){
                   var array = [];
-                 
+                 if(snapshot.val()[result].keywords!=undefined){
                   array=snapshot.val()[result].keywords.split(',');
                   for(var i=0; i<array.length; i++){
                     console.log(array[i]);
@@ -771,6 +843,17 @@ requesttoopen(){
                   
                     }
                   }
+                 }
+                  console.log(storename);
+                  console.log(storename.indexOf(data.keyword));
+                  if(storename.indexOf(data.keyword)>-1){
+
+                    console.log("storematching"+storename);
+                    flag=true;
+                  console.log(snapshot.val()[result]);
+                  this.storearray.push({"name":snapshot.val()[result].name,"id":snapshot.val()[result].id,"address":snapshot.val()[result].address,"mainImage":snapshot.val()[result].mainImage})
+                
+                  }
                   if(flag){
                     
                   }
@@ -782,7 +865,7 @@ requesttoopen(){
               }else{
                 console.log(this.storearray);
                 console.log("go to home");
-                this.navCtrl.push(HomePage,{"storearray":this.storearray,"flag":"keyword","category":value,"userId":this.userUid,"nick":this.name,"location":this.location})
+                this.navCtrl.push(HomePage,{"storearray":this.storearray,"flag":"keyword","category":value,"userId":this.userUid,"nick":this.name,"logined":this.logined,"location":this.location})
 
               }
             });
@@ -910,7 +993,7 @@ requesttoopen(){
   }
   locate(){
 
-    this.navCtrl.push(HomePage,{"flag":"normal","category":"All","userId":this.userUid,"nick":this.name,"x":this.lat,"y":this.lng,"location":this.location})
+    this.navCtrl.push(HomePage,{"flag":"normal","category":"All","userId":this.userUid,"nick":this.name,"logined":this.logined,"x":this.lat,"y":this.lng,"location":this.location})
 
   }
 
@@ -939,7 +1022,11 @@ requesttoopen(){
   }
 enlarge(v){
   console.log(v);
-  this.navCtrl.push(StoredetailPage,{"userId":this.userUid,"storeId":v.id,"nick":this.name,"category":this.categoryselected})
+  if(v.flag=="imageonly"){
+
+  }else{
+    this.navCtrl.push(StoredetailPage,{"userId":this.userUid,"storeId":v.id,"nick":this.name,"category":this.categoryselected})
+  }
   // this.viewer.show(v);
 }
 share(){
@@ -951,10 +1038,10 @@ share(){
     let feedContent: KLContentObject = {
       title: '토탈 뷰티 앱 “네가 젤 예뻐”',
       link: feedLink,
-      imageURL: 'http://i1.ruliweb.com/img/19/04/20/16a3a295ff73051.png'
+      imageURL: 'http://i1.ruliweb.com/img/19/06/09/16b3880b7e63051.jpeg'
     };
-    feedContent.imageWidth="750";
-    feedContent.imageHeight="500";
+    feedContent.imageWidth="700";
+    feedContent.imageHeight="342";
     let feedTemplate: KLFeedTemplate = {
       content: feedContent
     };
